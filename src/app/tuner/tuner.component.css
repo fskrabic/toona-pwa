@@ -1,0 +1,65 @@
+.canvasContainer {
+  height: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#responsive {
+  display:block;
+  margin-top: -24%;
+  width:50%;
+  height:50%;
+}
+.gaugeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.gaugeContainer > h1 {
+  margin-top: 2em;
+}
+.mat-fab  {
+  background-color: white;
+  border: 0.5px solid black;
+  color: black;
+  margin-right: 1em;
+}
+mat-button-toggle-group {
+  border: none;
+}
+.cdk-focused {
+  background-color: green;
+}
+.buttons {
+  margin-top: 5em;
+  display:flex;
+  justify-content: center;
+  gap: 2%;
+}
+:host .mat-raised-button {
+  color: red;
+  border-radius: 50%;
+}
+mwl-gauge {
+  width: 300px;
+  height: 300px;
+  display: block;
+  padding: 10px;
+}
+mwl-gauge > .gauge > .dial {
+  stroke: #ff0000;
+  stroke-width: 2;
+  fill: #8fce00;
+}
+
+mwl-gauge > .gauge > .value {
+  stroke: rgb(47, 227, 255);
+  stroke-width: 2;
+  fill: rgba(0, 0, 0, 0);
+}
+mwl-gauge > .gauge > .value-text {
+  fill: rgb(47, 227, 255);
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+}

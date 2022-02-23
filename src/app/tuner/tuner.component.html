@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="gaugeContainer">
+    <h1 style="margin-bottom:2em"> {{ closestNote.note ? closestNote.note : 'E2'}}</h1>
+    <!-- <mwl-gauge
+      #foo
+      [max]="closestNote.freq * 2"
+      [dialStartAngle]="0"
+      [dialEndAngle]="180"
+      [dialRadius]="50"
+      [value]="frequency ? frequency : null"
+      [animated]="true"
+      [animationDuration]="1"
+      [showValue] = "false"
+    >
+    </mwl-gauge> -->
+    <canvas width=400 height=400  id="responsive" #foo></canvas>
+    <h2> {{ frequency ? frequency : 0}} Hz</h2>
+    <h2> Target freq: {{ closestNote.freq ? closestNote.freq : 0}} Hz</h2>
+  </div>
+ 
+  <div class="buttons">
+    <mat-button-toggle-group name="buttons">
+    <button *ngFor="let note of tuning" (click)="selectString(note);" mat-fab> {{note.note}}</button>
+  </mat-button-toggle-group>
+  </div>
+</div>
