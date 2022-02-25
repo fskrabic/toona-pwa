@@ -9,6 +9,7 @@ import { Gauge } from 'gaugeJS';
 import {
   filter,
   map,
+  throttleTime,
 } from 'rxjs/operators';
 import { TunerService } from '../../tuner-service/tuner.service';
 import {
@@ -124,7 +125,8 @@ export class TunerComponent implements OnInit, AfterViewInit {
     this.tunerService.setup();
     this.tunerService.pitchSubject
       .pipe(
-        filter((value) => value < this.closestNote.freq * 1.5),
+        throttleTime(300),
+        filter((value) => value > 30 && value < this.closestNote.freq * 1.5),
         map((value) => Math.round(value * 100 + Number.EPSILON) / 100)
       )
       .subscribe((value) => {
@@ -167,6 +169,6 @@ export class TunerComponent implements OnInit, AfterViewInit {
       let target = this.el.nativeElement as HTMLCanvasElement;
       this.gauge = new Gauge(target).setOptions(this.opts);
       this.gauge.set(this.gauge.maxValue / 2);
-    }, 500);
+    }, 300);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import ml5 from 'ml5';
-import { Subject } from 'rxjs';
+import { Subject, interval } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +19,9 @@ export class TunerService {
       audio: true,
       video: false,
     });
-    this.audioContext.resume();
+    //this.audioContext.resume();
     this.startPitch(stream, this.audioContext);
-    this.audioContext.resume();
+    //this.audioContext.resume();
   };
 
   public startPitch = (stream: MediaStream, audioContext: AudioContext) => {
@@ -35,7 +35,8 @@ export class TunerService {
 
   public modelLoaded = () => {
     console.log('model loaded');
-    setInterval(this.getPitch, 300);
+    interval(500).subscribe(this.getPitch)
+    //setInterval(this.getPitch, 500);
   };
 
   public getPitch = () => {
