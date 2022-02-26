@@ -34,7 +34,6 @@ export class TunerService {
   };
 
   public modelLoaded = () => {
-    console.log('model loaded');
     interval(500).subscribe(this.getPitch)
     //setInterval(this.getPitch, 500);
   };

@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -27,7 +28,7 @@ export interface Note {
   templateUrl: './tuner.component.html',
   styleUrls: ['./tuner.component.css'],
 })
-export class TunerComponent implements OnInit, AfterViewInit {
+export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
   public frequency: number;
   public selectedInstrument: Instrument;
   public selectedTuning: any;
@@ -170,5 +171,9 @@ export class TunerComponent implements OnInit, AfterViewInit {
       this.gauge = new Gauge(target).setOptions(this.opts);
       this.gauge.set(this.gauge.maxValue / 2);
     }, 300);
+  }
+
+  ngOnDestroy(): void {
+      this.tunerService.pitchSubject.unsubscribe();
   }
 }
