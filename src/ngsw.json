@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1646589746886,
+  "timestamp": 1646591369821,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -11,6 +11,8 @@
         "ignoreVary": true
       },
       "urls": [
+        "/assets/sounds/click1.mp3",
+        "/assets/sounds/click2.mp3",
         "/favicon.ico",
         "/index.html",
         "/main.dc6f75bbbb62775a.js",
@@ -51,9 +53,7 @@
         "/assets/icons/icon-384x384.png",
         "/assets/icons/icon-512x512.png",
         "/assets/icons/icon-72x72.png",
-        "/assets/icons/icon-96x96.png",
-        "/assets/sounds/click1.mp3",
-        "/assets/sounds/click2.mp3"
+        "/assets/icons/icon-96x96.png"
       ],
       "patterns": []
     }
