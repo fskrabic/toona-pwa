@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import ml5 from 'ml5';
-import { Subject, interval } from 'rxjs';
+import { Subject, interval, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TunerService {
+export class TunerService implements OnDestroy {
   private audioContext: AudioContext;
   private pitch: any;
 
   public pitchSubject: Subject<number> = new Subject();
+
+  private pitchSubscription: Subscription;
 
   constructor() {}
 
@@ -34,7 +36,8 @@ export class TunerService {
   };
 
   public modelLoaded = () => {
-    interval(0).subscribe(this.getPitch)
+    const src = interval(200);
+    this.pitchSubscription = src.subscribe(this.getPitch);
     //setInterval(this.getPitch, 500);
   };
 
@@ -43,4 +46,8 @@ export class TunerService {
       this.pitchSubject.next(this.pitch.frequency);
     }
   };
+
+  ngOnDestroy(): void {
+    this.pitchSubscription.unsubscribe();
+  }
 }
