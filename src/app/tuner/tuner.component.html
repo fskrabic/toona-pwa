@@ -1,19 +1,7 @@
 <div class="container">
-  <!-- <div #test class="test"></div> -->
   <div class="gaugeContainer">
-    <!-- <mwl-gauge
-      #foo
-      [max]="closestNote.freq * 2"
-      [dialStartAngle]="0"
-      [dialEndAngle]="180"
-      [dialRadius]="50"
-      [value]="frequency ? frequency : null"
-      [animated]="true"
-      [animationDuration]="1"
-      [showValue] = "false"
-    >
-    </mwl-gauge> -->
-    <!-- <canvas width=400 height=400  id="responsive" #foo></canvas> -->
+    <h2> {{closestNote.note}}</h2>
+    <canvas width=400 height=400  id="responsive" #foo></canvas>
     <h2> {{ frequency ? frequency : 0}} Hz</h2>
     <h2> Target freq: {{ closestNote.freq ? closestNote.freq : 0}} Hz</h2>
   </div>

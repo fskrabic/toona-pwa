@@ -10,6 +10,16 @@
   width:50%;
   height:50%;
 }
+.test {
+  width: 50px;
+  height: 400px;
+  background: red;
+  display: flex;
+  justify-content: center;
+}
+.rot {
+  -webkit-transform: blue;
+}
 .gaugeContainer {
   display: flex;
   flex-direction: column;
