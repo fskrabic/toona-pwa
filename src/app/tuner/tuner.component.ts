@@ -42,6 +42,8 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   private pitchSubscription: Subscription;
+  private instrumentSubscription: Subscription;
+  private tuningSubscription: Subscription;
 
   constructor(
     private tunerService: TunerService,
@@ -130,7 +132,7 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.frequency);
         if (this.settingsService.getAutoDetection()) {
           this.closestNote.freq = this.findClosest(
-            this.tuning.map((notes) => notes.freq),
+            this.tuning.map((notes: Note) => notes.freq),
             this.frequency
           );
           this.closestNote.note = this.tuning.find(
@@ -163,13 +165,16 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.askForMic();
-    this.settingsService.selectedInstrument$.subscribe((selected) => {
-      this.selectedInstrument = selected;
-    });
-    this.settingsService.selectedTuning$.subscribe((selected) => {
-      this.selectedTuning = selected;
-      this.tuning = this.selectedTuning.notes;
-    });
+    this.instrumentSubscription =
+      this.settingsService.selectedInstrument$.subscribe((selected) => {
+        this.selectedInstrument = selected;
+      });
+    this.tuningSubscription = this.settingsService.selectedTuning$.subscribe(
+      (selected) => {
+        this.selectedTuning = selected;
+        this.tuning = this.selectedTuning.notes;
+      }
+    );
     this.setGaugeOptions();
     this.setupAndSubscribeToPitchSubject();
   }
@@ -183,5 +188,7 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.pitchSubscription.unsubscribe();
+    this.instrumentSubscription.unsubscribe();
+    this.tuningSubscription.unsubscribe();
   }
 }
