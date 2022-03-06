@@ -20,7 +20,8 @@ export class OpenSidebarOnSwipeDirective {
   endX: number;
   width: number;
 
-  @HostBinding('style.width') hostWidth;
+  // @HostBinding('style.width') hostWidth;
+
   @Input('sideNav') set sideNav(sideNav: MatSidenav) {
     this.sidebar = sideNav;
   }
@@ -35,26 +36,26 @@ export class OpenSidebarOnSwipeDirective {
         navigator.userAgent
       )
     ) {
-      this.setWidth.emit(80);
+     // this.setWidth.emit(80);
      // this.startOnTouch();
-    this.startTouchMove();
+      this.startTouchMove();
       this.touchEnd();
     }
   }
-  // startOnTouch() {
-  //   fromEvent(document, 'touchstart')
-  //     .pipe(
-  //       tap((e: TouchEvent) =>
-  //         e.touches[0].clientX <= 20 && e.touches[0].clientY >= 65
-  //           ? (this.sidebar.open(),
-  //             (this.startTime = new Date().getTime()),
-  //             (this.startX = e.touches[0].clientX),
-  //             this.setWidth.emit(e.touches[0].clientX))
-  //           : ''
-  //       )
-  //     )
-  //     .subscribe();
-  // }
+  startOnTouch() {
+    fromEvent(document, 'touchstart')
+      .pipe(
+        tap((e: TouchEvent) =>
+          e.touches[0].clientX <= 20 && e.touches[0].clientY >= 65
+            ? (this.sidebar.open(),
+              (this.startTime = new Date().getTime()),
+              (this.startX = e.touches[0].clientX),
+              this.setWidth.emit(e.touches[0].clientX))
+            : ''
+        )
+      )
+      .subscribe();
+  }
   startTouchMove() {
     fromEvent(document, 'touchmove')
       .pipe(debounceTime(0))

@@ -34,7 +34,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
 
   private metronome: any;
 
-  public bpm: number = 140;
+  public bpm: number = 150;
   public beatsPerMeasure: number = 4;
   public tempoTextString: string = 'Medium';
   public count: number = 0;

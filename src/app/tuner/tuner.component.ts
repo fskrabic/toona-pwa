@@ -4,14 +4,11 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { Gauge } from 'gaugeJS';
-import {
-  filter,
-  map,
-  throttleTime,
-} from 'rxjs/operators';
+import { filter, map, throttleTime } from 'rxjs/operators';
 import { TunerService } from '../../tuner-service/tuner.service';
 import {
   Instrument,
@@ -34,8 +31,10 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
   public selectedTuning: any;
   public tuning: any;
   @ViewChild('foo', { static: true }) el: ElementRef<Gauge>;
+  @ViewChild('test', { static: false }) test: ElementRef<HTMLDivElement>;
   public gauge: any;
   public opts: any;
+  elem: any;
   public closestNote: Note = {
     note: 'E2',
     freq: 82.41,
@@ -43,7 +42,8 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private tunerService: TunerService,
-    private settingsService: SettingsService
+    public settingsService: SettingsService,
+    private renderer: Renderer2
   ) {}
 
   public selectString(note: Note) {
@@ -115,6 +115,7 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.askForMic();
     this.settingsService.selectedInstrument$.subscribe((selected) => {
       this.selectedInstrument = selected;
     });
@@ -122,16 +123,17 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedTuning = selected;
       this.tuning = this.selectedTuning.notes;
     });
-    this.setGaugeOptions();
+    // this.setGaugeOptions();
     this.tunerService.setup();
     this.tunerService.pitchSubject
       .pipe(
-        throttleTime(300),
-        filter((value) => value > 30 && value < this.closestNote.freq * 1.5),
+        throttleTime(500),
+        filter((value) => (value < 30 || value < this.closestNote.freq * 2.2 )),
         map((value) => Math.round(value * 100 + Number.EPSILON) / 100)
       )
       .subscribe((value) => {
         this.frequency = value;
+        console.log(this.frequency);
         if (this.settingsService.getAutoDetection()) {
           this.closestNote.freq = this.findClosest(
             this.tuning.map((notes) => notes.freq),
@@ -142,38 +144,38 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
           ).note;
         }
 
-        this.gauge.set(this.frequency);
-        this.gauge.maxValue = this.closestNote.freq * 2; // set max gauge value
-        this.gauge.minValue = 0; // Prefer setter over gauge.minValue = 0
-        this.gauge.animationSpeed = 20; // set animation speed (32 is default value)
-        this.gauge.options.staticZones = [
-          {
-            strokeStyle: '#eeeeee',
-            min: 0,
-            max: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
-          },
-          {
-            strokeStyle: '#30B32D',
-            min: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
-            max: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
-          }, // Green
-          {
-            strokeStyle: '#eeeeee',
-            min: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
-            max: this.gauge.maxValue,
-          },
-        ];
+        //   this.gauge.set(this.frequency);
+        //   this.gauge.maxValue = this.closestNote.freq * 2; // set max gauge value
+        //   this.gauge.minValue = 0; // Prefer setter over gauge.minValue = 0
+        //   this.gauge.animationSpeed = 20; // set animation speed (32 is default value)
+        //   this.gauge.options.staticZones = [
+        //     {
+        //       strokeStyle: '#eeeeee',
+        //       min: 0,
+        //       max: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
+        //     },
+        //     {
+        //       strokeStyle: '#30B32D',
+        //       min: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
+        //       max: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
+        //     }, // Green
+        //     {
+        //       strokeStyle: '#eeeeee',
+        //       min: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
+        //       max: this.gauge.maxValue,
+        //     },
+        //   ];
       });
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
-      let target = this.el.nativeElement as HTMLCanvasElement;
-      this.gauge = new Gauge(target).setOptions(this.opts);
-      this.gauge.set(this.gauge.maxValue / 2);
+      // let target = this.el.nativeElement as HTMLCanvasElement;
+      // this.gauge = new Gauge(target).setOptions(this.opts);
+      // this.gauge.set(this.gauge.maxValue / 2);
     }, 300);
   }
 
   ngOnDestroy(): void {
-      this.tunerService.pitchSubject.unsubscribe();
+    // this.tunerService.pitchSubject.unsubscribe();
   }
 }
