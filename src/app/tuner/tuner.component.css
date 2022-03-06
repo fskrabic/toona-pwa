@@ -32,7 +32,7 @@
   background-color: white;
   border: 0.5px solid black;
   color: black;
-  margin-right: 1em;
+  margin-right: 0.5em;
 }
 mat-button-toggle-group {
   border: none;
@@ -44,32 +44,9 @@ mat-button-toggle-group {
   margin-top: 5em;
   display:flex;
   justify-content: center;
-  gap: 2%;
+  gap: 1%;
 }
 :host .mat-raised-button {
   color: red;
   border-radius: 50%;
-}
-mwl-gauge {
-  width: 300px;
-  height: 300px;
-  display: block;
-  padding: 10px;
-}
-mwl-gauge > .gauge > .dial {
-  stroke: #ff0000;
-  stroke-width: 2;
-  fill: #8fce00;
-}
-
-mwl-gauge > .gauge > .value {
-  stroke: rgb(47, 227, 255);
-  stroke-width: 2;
-  fill: rgba(0, 0, 0, 0);
-}
-mwl-gauge > .gauge > .value-text {
-  fill: rgb(47, 227, 255);
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 1em;
 }
