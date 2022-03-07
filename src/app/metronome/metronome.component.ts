@@ -113,7 +113,6 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     }
   };
   private playClick = () => {
-    console.log(this);
     if (this.count === this.beatsPerMeasure) {
       this.count = 0;
     }
