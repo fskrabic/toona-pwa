@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1646591369821,
+  "timestamp": 1648409618845,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,7 +15,7 @@
         "/assets/sounds/click2.mp3",
         "/favicon.ico",
         "/index.html",
-        "/main.dc6f75bbbb62775a.js",
+        "/main.f4492a20e4e8c3ee.js",
         "/manifest.webmanifest",
         "/model/group1-shard1of1",
         "/model/group10-shard1of1",
@@ -34,7 +34,7 @@
         "/ngsw-worker.js",
         "/polyfills.2d06d92619a5575d.js",
         "/runtime.9a470010a6d5c2cf.js",
-        "/styles.8b6609e16bf28d0c.css"
+        "/styles.4ef8ea6e71dc03b0.css"
       ],
       "patterns": []
     },
@@ -46,6 +46,8 @@
         "ignoreVary": true
       },
       "urls": [
+        "/Digital.9c7b3b699450cd86.ttf",
+        "/assets/fonts/digital.ttf",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -60,6 +62,8 @@
   ],
   "dataGroups": [],
   "hashTable": {
+    "/Digital.9c7b3b699450cd86.ttf": "1ce1ed312b41a237cb253c706290c0fd7287859d",
+    "/assets/fonts/digital.ttf": "1ce1ed312b41a237cb253c706290c0fd7287859d",
     "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
     "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
     "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
@@ -71,8 +75,8 @@
     "/assets/sounds/click1.mp3": "97a2877390b57970fefb4be2c32bb5c653b114b6",
     "/assets/sounds/click2.mp3": "d9d113360a770fe18acd684147dccf3f97acd6f3",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "9f8ff7072b249798693115913e1140eb43047d27",
-    "/main.dc6f75bbbb62775a.js": "fc50773fa642a4756e4ef4be4b47198338fab784",
+    "/index.html": "4506594c730accb9da02f872b23494f588c957db",
+    "/main.f4492a20e4e8c3ee.js": "55442d0534c460b83eef4f4114351ce6e396b0fe",
     "/manifest.webmanifest": "01f1806fe8c27457e3df2acbfcf7ff66f6f2a8be",
     "/model/group1-shard1of1": "80387c4af8c1ac3e84041fed2eb93cd6782a4658",
     "/model/group10-shard1of1": "b306b1bf07fce29ee4e590a5709dc979a431865d",
@@ -91,7 +95,7 @@
     "/ngsw-worker.js": "c2cff8e738825c033f11529d53556fd9061084b9",
     "/polyfills.2d06d92619a5575d.js": "d1e8537d27d314e4fb1d3486830c6498339de9b9",
     "/runtime.9a470010a6d5c2cf.js": "ccc4d46e3dbf8439acbfc0af8d03310e7326b079",
-    "/styles.8b6609e16bf28d0c.css": "d1876b85e019cf018e0ac34fb27fb96e847ca847"
+    "/styles.4ef8ea6e71dc03b0.css": "a97a966298ab8357c31473022d0253b6bb46b02d"
   },
   "navigationUrls": [
     {

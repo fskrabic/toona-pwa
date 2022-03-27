@@ -1,45 +1,35 @@
-.canvasContainer {
-  height: 30%;
+.container {
+  height: 90%;
+}
+.displayContainer {
+  height: 70%;
   width: 100%;
   display: flex;
   justify-content: center;
-}
-#responsive {
-  display:block;
-  margin-top: -24%;
-  width:50%;
-  height:50%;
-}
-.test {
-  width: 50px;
-  height: 400px;
-  background: red;
-  display: flex;
-  justify-content: center;
-}
-.rot {
-  -webkit-transform: blue;
-}
-.gaugeContainer {
-  display: flex;
-  flex-direction: column;
   align-items: center;
 }
-.gaugeContainer > h1 {
-  margin-top: 2em;
+.freqContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.mat-fab  {
+.displayContainer h2 {
+  font-family: "Digital";
+  font-size: 20em;
+}
+/* .mat-fab  {
   background-color: white;
   border: 0.5px solid black;
   color: black;
   margin-right: 0.5em;
-}
+} */
 mat-button-toggle-group {
   border: none;
 }
-.cdk-focused {
+/* .cdk-focused {
   background-color: green;
-}
+} */
 .buttons {
   margin-top: 5em;
   display:flex;

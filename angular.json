@@ -26,6 +26,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/sounds",
+              "src/assets/fonts",
               "src/manifest.webmanifest",
               "src/ngsw-worker.js",
               "src/ngsw.json",

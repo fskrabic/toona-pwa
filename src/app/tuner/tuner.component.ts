@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Gauge } from 'gaugeJS';
 import { Subscription } from 'rxjs';
-import { filter, map, throttleTime } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap, throttleTime } from 'rxjs/operators';
 import { TunerService } from '../../tuner-service/tuner.service';
 import {
   Instrument,
@@ -108,7 +108,7 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public askForMic() {
     let ac = new AudioContext();
-    ac.resume();
+  //  ac.resume();
     const stream = navigator.mediaDevices
       .getUserMedia({
         audio: true,
@@ -123,13 +123,13 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tunerService.setup();
     this.pitchSubscription = this.tunerService.pitchSubject
       .pipe(
-        throttleTime(500),
+        throttleTime(200),
+        distinctUntilChanged(),
         filter((value) => value < 30 || value < this.closestNote.freq * 2.2),
-        map((value) => Math.round(value * 100 + Number.EPSILON) / 100)
+        map((value) => Math.round(value * 100 + Number.EPSILON) / 100),
+        switchMap(async (value) => this.frequency = value)
       )
       .subscribe((value) => {
-        this.frequency = value;
-        console.log(this.frequency);
         if (this.settingsService.getAutoDetection()) {
           this.closestNote.freq = this.findClosest(
             this.tuning.map((notes: Note) => notes.freq),
@@ -139,32 +139,32 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
             (note: Note) => note.freq === this.closestNote.freq
           ).note;
         }
-        this.gauge.set(this.frequency);
-        this.gauge.maxValue = this.closestNote.freq * 2; // set max gauge value
-        this.gauge.minValue = 0; // Prefer setter over gauge.minValue = 0
-        this.gauge.animationSpeed = 20; // set animation speed (32 is default value)
-        this.gauge.options.staticZones = [
-          {
-            strokeStyle: '#eeeeee',
-            min: 0,
-            max: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
-          },
-          {
-            strokeStyle: '#30B32D',
-            min: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
-            max: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
-          }, // Green
-          {
-            strokeStyle: '#eeeeee',
-            min: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
-            max: this.gauge.maxValue,
-          },
-        ];
+        // this.gauge.set(this.frequency);
+        // this.gauge.maxValue = this.closestNote.freq * 2; // set max gauge value
+        // this.gauge.minValue = 0; // Prefer setter over gauge.minValue = 0
+        // this.gauge.animationSpeed = 20; // set animation speed (32 is default value)
+        // this.gauge.options.staticZones = [
+        //   {
+        //     strokeStyle: '#eeeeee',
+        //     min: 0,
+        //     max: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
+        //   },
+        //   {
+        //     strokeStyle: '#30B32D',
+        //     min: this.gauge.maxValue / 2 - this.gauge.maxValue * 0.014,
+        //     max: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
+        //   }, // Green
+        //   {
+        //     strokeStyle: '#eeeeee',
+        //     min: this.gauge.maxValue / 2 + this.gauge.maxValue * 0.014,
+        //     max: this.gauge.maxValue,
+        //   },
+        // ];
       });
   }
 
   ngOnInit() {
-    this.askForMic();
+  //  this.askForMic();
     this.instrumentSubscription =
       this.settingsService.selectedInstrument$.subscribe((selected) => {
         this.selectedInstrument = selected;
@@ -175,15 +175,15 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
         this.tuning = this.selectedTuning.notes;
       }
     );
-    this.setGaugeOptions();
+   // this.setGaugeOptions();
     this.setupAndSubscribeToPitchSubject();
   }
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      let target = this.el.nativeElement as HTMLCanvasElement;
-      this.gauge = new Gauge(target).setOptions(this.opts);
-      this.gauge.set(this.gauge.maxValue / 2);
-    }, 300);
+    // setTimeout(() => {
+    //   let target = this.el.nativeElement as HTMLCanvasElement;
+    //   this.gauge = new Gauge(target).setOptions(this.opts);
+    //   this.gauge.set(this.gauge.maxValue / 2);
+    // }, 300);
   }
 
   ngOnDestroy(): void {
