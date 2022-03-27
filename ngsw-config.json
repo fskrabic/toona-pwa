@@ -13,7 +13,8 @@
           "/*.css",
           "/*.js",
           "/model/**",
-          "/assets/sounds/**"
+          "/assets/sounds/**",
+          "/assets/fonts/**"
         ]
       }
     },

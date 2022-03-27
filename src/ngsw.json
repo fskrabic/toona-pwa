@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1648409618845,
+  "timestamp": 1648409986063,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -11,6 +11,7 @@
         "ignoreVary": true
       },
       "urls": [
+        "/assets/fonts/digital.ttf",
         "/assets/sounds/click1.mp3",
         "/assets/sounds/click2.mp3",
         "/favicon.ico",
@@ -47,7 +48,6 @@
       },
       "urls": [
         "/Digital.9c7b3b699450cd86.ttf",
-        "/assets/fonts/digital.ttf",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
