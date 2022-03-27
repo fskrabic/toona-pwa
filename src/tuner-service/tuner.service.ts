@@ -37,7 +37,9 @@ export class TunerService implements OnDestroy {
 
   public modelLoaded = () => {
     const src = interval(200);
-    this.pitchSubscription = src.subscribe(this.getPitch);
+    if (!this.pitchSubscription) {
+      this.pitchSubscription = src.subscribe(this.getPitch);
+    }
     //setInterval(this.getPitch, 500);
   };
 

@@ -4,8 +4,6 @@
     (click)="sidenav.toggle()"
     class="sidenav"
     fixedInViewport
-    [sideNav]="sidenav"
-    appOpenSidebarOnSwipe
     #sidenav
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
