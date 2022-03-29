@@ -7,7 +7,6 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { Gauge } from 'gaugeJS';
 import { of, Subscription } from 'rxjs';
 import { concatMap, distinctUntilChanged, filter, map, switchMap, throttleTime } from 'rxjs/operators';
 import { TunerService } from '../../tuner-service/tuner.service';
@@ -31,7 +30,6 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
   public selectedInstrument: Instrument;
   public selectedTuning: any;
   public tuning: any;
-  @ViewChild('foo', { static: true }) el: ElementRef<Gauge>;
   @ViewChild('test', { static: false }) test: ElementRef<HTMLDivElement>;
   public gauge: any;
   public opts: any;

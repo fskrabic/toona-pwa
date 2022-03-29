@@ -1,12 +1,12 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import ml5 from 'ml5';
 import { Subject, interval, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TunerService implements OnDestroy {
-  private audioContext: AudioContext;
+export class TunerService implements OnDestroy, OnInit{
+  private audioContext: AudioContext = new AudioContext();
   private pitch: any;
 
   public pitchSubject: Subject<number> = new Subject();
@@ -15,15 +15,22 @@ export class TunerService implements OnDestroy {
 
   constructor() {}
 
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    console.log(document);
+   
+  }
+
   setup = async () => {
-    this.audioContext = new AudioContext();
+   
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: false,
     });
-    //this.audioContext.resume();
     this.startPitch(stream, this.audioContext);
-    //this.audioContext.resume();
+    document.addEventListener('visibilitychange', this.checkTabFocused);
   };
 
   public startPitch = (stream: MediaStream, audioContext: AudioContext) => {
@@ -40,7 +47,6 @@ export class TunerService implements OnDestroy {
     if (!this.pitchSubscription) {
       this.pitchSubscription = src.subscribe(this.getPitch);
     }
-    //setInterval(this.getPitch, 500);
   };
 
   public getPitch = () => {
@@ -51,5 +57,17 @@ export class TunerService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.pitchSubscription.unsubscribe();
+  }
+
+  checkTabFocused = () => {
+    if (document.visibilityState === 'visible') {
+      if (this.audioContext.state === 'suspended') {
+        this.audioContext.resume();
+      }
+    } else {
+      if (this.audioContext.state === 'running') {
+        this.audioContext.suspend();
+      }
+    }
   }
 }

@@ -58,7 +58,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   private metronome: any;
   public bpm: number = 150;
   public beatsPerMeasure: number = 4;
-  public tempoTextString: string = 'Medium';
+  public tempoTextString: string = 'Allegro';
   public count: number = 0;
   private isRunning: boolean = false;
 
@@ -92,7 +92,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
           } else {
             this.renderer.listen(clickArea, 'click', () => this.tapTempo());
           }
-        }, 100);
+        }, 0);
       }
     });
   }
@@ -155,6 +155,40 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   private updateMetronome = () => {
     this.slider.nativeElement.value = this.bpm.toString();
     this.metronome.timeInterval = 60000 / this.bpm;
+
+    if (this.bpm <= 45) {
+      this.tempoTextString = 'Grave';
+    }
+    if (this.bpm > 40 && this.bpm < 45) {
+      this.tempoTextString = 'Largo';
+    }
+    if (this.bpm > 45 && this.bpm < 60) {
+      this.tempoTextString = 'Lento';
+    }
+    if (this.bpm > 60 && this.bpm < 66) {
+      this.tempoTextString = 'Larghetto';
+    }
+    if (this.bpm > 66 && this.bpm < 76) {
+      this.tempoTextString = 'Adagio';
+    }
+    if (this.bpm > 76 && this.bpm < 108) {
+      this.tempoTextString = 'Andante';
+    }
+    if (this.bpm > 108 && this.bpm < 120) {
+      this.tempoTextString = 'Moderato';
+    }
+    if (this.bpm > 120 && this.bpm <= 156) {
+      this.tempoTextString = 'Allegro';
+    }
+    if (this.bpm > 156 && this.bpm <= 176) {
+      this.tempoTextString = 'Vivace';
+    }
+    if (this.bpm > 176 && this.bpm <= 200) {
+      this.tempoTextString = 'Presto';
+    }
+    if (this.bpm > 200 && this.bpm <= 280) {
+      this.tempoTextString = 'Prestissimo';
+    }
   };
   private validateTempo = () => {
     if (this.bpm <= 20 || this.bpm >= 280) {
@@ -216,6 +250,9 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     this.tapDiff = this.lastTap - this.groundZero;
     if (this.tapDiff !== 0) {
       this.bpm = Math.round((60000 * this.counter) / this.tapDiff);
+      if (this.bpm > 280) {
+        this.bpm = 280;
+      }
     }
     // eslint-disable-next-line no-plusplus
     this.counter++;
@@ -223,6 +260,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     if (this.elapsed > 3000) {
       this.lastTap = 0;
     }
+    this.updateMetronome();
   }
 
   // public detectDoubleTapCloseure() {
