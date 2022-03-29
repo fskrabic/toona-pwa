@@ -19,6 +19,9 @@ export class NavigationComponent {
       shareReplay()
     );
 
+  public width: number;
+  public activeRoute: string;
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private cdr: ChangeDetectorRef,
@@ -28,17 +31,13 @@ export class NavigationComponent {
   ) {
     this.router.events.subscribe((val) => {
       if (val instanceof ActivationEnd) {
-        this.activatedComponentName = val.snapshot.component['name'];
+        this.activeRoute = this.router.url;
       }
     });
   }
 
-  public width: number;
-  public activatedComponentName: string;
-
   openSnackbar() {
-    console.log(this.settingsService.showTapTempo$.getValue());
-    if (this.activatedComponentName === 'MetronomeComponent') {
+    if (this.activeRoute === '/metronome') {
       this.settingsService.showTapTempo$.next(
         !this.settingsService.showTapTempo$.getValue()
       );
