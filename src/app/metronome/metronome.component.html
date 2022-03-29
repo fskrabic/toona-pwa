@@ -38,9 +38,9 @@
   class="tapContainer"
   *ngIf="settingsService.showTapTempo$.getValue()"
 >
-  <div class="tapTempoText">
-    <p>{{ tapTempoMsg }}</p>
-    <div class="bpm">{{ bpm }}</div>
-    <div class="bpm-text">BPM</div>
+  <div class="tap-bpm-display">
+    <h1>{{ tapTempoMsg }}</h1>
+    <span class="tempo">{{ bpm }}</span>
+    <span class="bpm">BPM</span>
   </div>
 </div>

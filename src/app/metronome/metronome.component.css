@@ -28,18 +28,40 @@
 .metronome {
   display: flex;
   flex-direction: column;
-  width: 75%;
-  height: 60%;
+  width: 100vw;
+  height: 65vh;
   justify-content: space-between;
 }
 .bpm-display {
-  width: 100%;
   text-align: center;
-  color: #3f51b5;
   font-weight: bold;
 }
 .bpm-display .tempo {
   font-size: 4em;
+}
+.bpm-display h1 {
+  font-size: 3em;
+  margin-bottom: 1em;
+  width: 70vw;
+}
+.tap-bpm-display {
+  text-align: center;
+  font-weight: bold;
+  height: 70vh;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+.tap-bpm-display .tempo {
+  font-size: 8em;
+}
+.tap-bpm-display .bpm {
+  font-size: 4em;
+}
+.tap-bpm-display h1 {
+  font-size: 3em;
+  margin-bottom: 1em;
+  width: 70vw;
 }
 .tempo-text {
   font-size: 0.8em;
@@ -47,69 +69,27 @@
   text-align: center;
 }
 .tempo-settings {
+  width: 85%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 .tempo-settings .adjust-tempo-btn {
-  width: 30px;
-  height: 30px;
-  font-size: 25px;
+  width: 48px;
+  height: 48px;
+  font-size: 40px;
   border-radius: 50%;
   border: 1px solid #ddd;
   text-align: center;
   cursor: pointer;
 }
-.tempo-settings .adjust-tempo-btn:hover {
-  background-color: #3f51b5;
-  color: #fff;
-}
 .tempo-settings .decrease-tempo {
-  line-height: 25px;
-  margin-right: 15px;
+  line-height: 40px;
+  margin-right: 2%;
 }
 .tempo-settings .increase-tempo {
-  line-height: 30px;
-  margin-left: 15px;
-}
-input[type="range"] {
-  -webkit-appearance: none;
-  background: transparent;
-  width: 70%;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-}
-input[type="range"]:focus {
-  outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #3f51b5;
-  cursor: pointer;
-  margin-top: -8px;
-}
-input[type="range"]::-moz-range-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #3f51b5;
-  cursor: pointer;
-  border: none;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 1px;
-  background: #ddd;
-}
-input[type="range"]::-moz-range-track {
-  width: 100%;
-  height: 1px;
-  background: #ddd;
+  line-height: 48px;
+  margin-left: 2%;
 }
 
 .start-stop {
@@ -118,15 +98,10 @@ input[type="range"]::-moz-range-track {
   border-radius: 50%;
   font-size: 0.7em;
   text-align: center;
-  background-color: #ddd;
   color: black;
   line-height: 50px;
   margin: 0 auto;
   cursor: pointer;
-}
-.start-stop:hover {
-  background-color: #3f51b5;
-  color: white;
 }
 .measures {
   display: flex;
@@ -143,10 +118,7 @@ input[type="range"]::-moz-range-track {
   text-align: center;
   cursor: pointer;
 }
-.measures .stepper:hover {
-  background: #3f51b5;
-  color: #fff;
-}
+
 .measures .add-beats {
   line-height: 30px;
 }
@@ -158,4 +130,42 @@ input[type="range"]::-moz-range-track {
   font-size: 2em;
   line-height: 35px;
   text-transform: uppercase;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+  width: 70%;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -8px;
+}
+input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 1px;
+  background: #ddd;
+}
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 1px;
+  background: #ddd;
 }

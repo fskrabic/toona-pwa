@@ -9,8 +9,8 @@
 @include mat.core();
 
 
-$toona-pwa-primary: mat.define-palette(mat.$light-blue-palette, A700);
-$toona-pwa-accent: mat.define-palette(mat.$green-palette, A400);
+$toona-pwa-primary: mat.define-palette($mat-blue-grey,A700);
+$toona-pwa-accent: mat.define-palette($mat-green,A400);
 
 $toona-pwa-warn: mat.define-palette(mat.$red-palette, A700);
 
@@ -24,6 +24,9 @@ $toona-pwa-warn: mat.define-palette(mat.$red-palette, A700);
 //   )
 // ));
 $toona-pwa-theme: mat-light-theme($toona-pwa-primary, $toona-pwa-accent, $toona-pwa-warn);
+$primary: mat-color($toona-pwa-primary);
+$accent: mat-color($toona-pwa-accent);
+$warn: mat-color($toona-pwa-warn);
 
 $toona-dark-primary: mat-palette($mat-blue-gray, 50);
 $toona-dark-accent: mat-palette($mat-blue, 400, 600, 800);
@@ -33,11 +36,14 @@ $toona-dark-theme: mat-dark-theme($toona-dark-primary, $toona-dark-accent, $toon
 @include angular-material-theme($toona-pwa-theme);
 [theme='light'] {
   @include angular-material-theme($toona-pwa-theme);
+  @include test($toona-pwa-theme);
 }
 [theme='dark'] {
   @include angular-material-theme($toona-dark-theme);
+  @include test($toona-dark-theme);
 }
-
 @include test($toona-pwa-theme);
+
+
 
 

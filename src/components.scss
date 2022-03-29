@@ -1,16 +1,54 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 @mixin test($theme) {
-    
-    .displayContainer h2 {
-        color: mat-color($toona-pwa-primary);
-    }
+  .displayContainer h2 {
+    color: $primary;
+  }
 
-    mat-button-toggle-group > .mat-fab {
-        background-color: white!important;
-    }
+  .bpm-display .tempo {
+    color: $primary;
+  }
+  .bpm-display .bpm {
+    color: $primary;
+  }
+  .tempo-text {
+    color: $primary;
+  }
+  .tap-bpm-display{
+      color: $primary;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+      background: $accent;
+  }
+  .start-stop {
+    border-color: $primary!important;
+      font-weight: 750;
+      &:hover {
+          background-color: $accent!important;
+          color: $primary!important;
+      }
+  }
+  .adjust-tempo-btn {
+    border-color: $primary!important;
+      &:hover {
+        background-color: $accent!important;
+        color: $primary!important;
+      }
+  }
+  .stepper {
+      border-color: $primary!important;
+      &:hover {
+          background: $accent;
+          color: $primary;
+      }
+  }
 
-    mat-button-toggle-group > .cdk-focused {
-        background-color: mat-color($toona-pwa-accent)!important;
-    }
+
+  mat-button-toggle-group > .mat-fab {
+    background-color: white !important;
+  }
+
+  mat-button-toggle-group > .cdk-focused {
+    background-color: mat-color($toona-pwa-accent) !important;
+  }
 }

@@ -33,9 +33,6 @@
 mat-button-toggle-group {
   border: none;
 }
-/* .cdk-focused {
-  background-color: green;
-} */
 .buttons {
   margin-top: 5em;
   width: 100%;
