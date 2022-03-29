@@ -11,7 +11,7 @@
 
   <div class="buttons">
     <mat-button-toggle-group name="buttons">
-      <button *ngFor="let note of tuning" (click)="selectString(note)" mat-fab>
+      <button class="noteButton" *ngFor="let note of tuning" (click)="selectString(note)" mat-fab>
         {{ note.note }}
       </button>
     </mat-button-toggle-group>

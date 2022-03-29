@@ -125,10 +125,10 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         throttleTime(300),
         distinctUntilChanged(),
-        filter((value) => value < 30 || value < this.closestNote.freq * 2.1),
+        filter((value) => value < 30 || value < this.closestNote.freq * 2.3),
         concatMap(value => {
           if (this.inRange(value, value*1.98, value*2.02)) {
-            return of(value /2) 
+            return of(value /2); 
           } else {
             return of(value);
           }

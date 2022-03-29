@@ -9,11 +9,27 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { SettingsService } from '../settings-service/settings.service';
 import Timer from './timer';
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+  state,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-metronome',
   templateUrl: './metronome.component.html',
   styleUrls: ['./metronome.component.css'],
+  animations: [
+    trigger('flyIn', [
+      state('in', style({})),
+      transition('void => *', [
+        style({ transform: 'translateY(-100%)' }),
+        animate(300),
+      ]),
+    ]),
+  ],
 })
 export class MetronomeComponent implements OnInit, AfterViewInit {
   constructor(
@@ -53,6 +69,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public previousTap = 0;
   public elapsed = 0;
   public showTapTempo: boolean = false;
+  public tapTempoMsg: string;
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -61,19 +78,21 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
       }
     });
 
+    this.isTouchDevice()
+      ? (this.tapTempoMsg = 'Tap to find BPM!')
+      : (this.tapTempoMsg = 'Click left mouse button to find BPM!');
     this.settingsService.showTapTempo$.subscribe((val) => {
       if (val) {
         setTimeout(() => {
           const clickArea = this.tapContainer.nativeElement;
           if (this.isTouchDevice()) {
-            this.renderer.listen(clickArea, 'touchstart', () => this.tapTempo());
+            this.renderer.listen(clickArea, 'touchstart', () =>
+              this.tapTempo()
+            );
           } else {
             this.renderer.listen(clickArea, 'click', () => this.tapTempo());
           }
         }, 100);
-       
-        //const container = this.container.nativeElement;
-       
       }
     });
   }
