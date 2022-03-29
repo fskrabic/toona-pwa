@@ -8,8 +8,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Gauge } from 'gaugeJS';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged, filter, map, switchMap, throttleTime } from 'rxjs/operators';
+import { of, Subscription } from 'rxjs';
+import { concatMap, distinctUntilChanged, filter, map, switchMap, throttleTime } from 'rxjs/operators';
 import { TunerService } from '../../tuner-service/tuner.service';
 import {
   Instrument,
@@ -123,13 +123,20 @@ export class TunerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tunerService.setup();
     this.pitchSubscription = this.tunerService.pitchSubject
       .pipe(
-        throttleTime(200),
+        throttleTime(300),
         distinctUntilChanged(),
-        filter((value) => value < 30 || value < this.closestNote.freq * 2.2),
+        filter((value) => value < 30 || value < this.closestNote.freq * 2.1),
+        concatMap(value => {
+          if (this.inRange(value, value*1.98, value*2.02)) {
+            return of(value /2) 
+          } else {
+            return of(value);
+          }
+        }),
         map((value) => Math.round(value * 100 + Number.EPSILON) / 100),
         switchMap(async (value) => this.frequency = value)
       )
-      .subscribe((value) => {
+      .subscribe(() => {
         if (this.settingsService.getAutoDetection()) {
           this.closestNote.freq = this.findClosest(
             this.tuning.map((notes: Note) => notes.freq),
