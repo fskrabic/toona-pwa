@@ -114,7 +114,7 @@
   height: 30px;
   font-size: 25px;
   border-radius: 50%;
-  border: 1px solid #ddd;
+  border: 1.5px solid #ddd;
   text-align: center;
   cursor: pointer;
 }
