@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="metronome">
+<div *ngIf="!settingsService.showTapTempo$.getValue()" #container class="container">
+  <div  class="metronome">
     <div class="bpm-display">
       <span class="tempo"> {{bpm}} </span>
       <span class="bpm"> BPM </span>
@@ -16,5 +16,17 @@
       <div class="measure-count">{{ beatsPerMeasure }} / 4 </div>
       <div #increaseMeasureCountBtn class="add-beats stepper">+</div>
     </div>
+  </div>
+
+</div>
+
+<button class="closeButton" *ngIf="settingsService.showTapTempo$.getValue()" (click)="close()" mat-icon-button mat-dialog-close>
+  <mat-icon>keyboard_arrow_left</mat-icon>
+</button>
+<div #tapContainer class="tapContainer" *ngIf="settingsService.showTapTempo$.getValue()">
+  <div class="tapTempoText">
+    <p>Tap or click any key to get BPM!</p>
+    <div class="bpm">{{ bpm }}</div>
+    <div class="bpm-text">BPM</div>
   </div>
 </div>

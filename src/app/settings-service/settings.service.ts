@@ -22,6 +22,8 @@ export class SettingsService {
 
   private autoDetectionMode: boolean = true;
 
+  public showTapTempo$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   public selectedInstrument$: BehaviorSubject<Instrument> = new BehaviorSubject( {code: 'guitar' , name: 'Guitar', numberOfStrings: 6 });
   public selectedTuning$: BehaviorSubject<Tuning> = new BehaviorSubject({code: 'guitar-standard', name: 'Standard', notes:  [
     {

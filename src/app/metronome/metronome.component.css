@@ -8,6 +8,23 @@
   align-items: center;
   height: 90vh;
 }
+* {
+  margin: 0 auto;
+}
+.tapContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  width: 100%;
+}
+.closeButton {
+  position: absolute;
+  left: 1em;
+  height: 40px;
+}
+
 .metronome {
   display: flex;
   flex-direction: column;
@@ -134,7 +151,7 @@ input[type="range"]::-moz-range-track {
   line-height: 30px;
 }
 .measures .subtract-beats {
-    line-height: 27px;
+  line-height: 27px;
 }
 .measures .measure-count {
   text-align: center;

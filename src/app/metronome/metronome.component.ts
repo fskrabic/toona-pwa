@@ -7,7 +7,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-
+import { SettingsService } from '../settings-service/settings.service';
 import Timer from './timer';
 
 @Component({
@@ -16,7 +16,14 @@ import Timer from './timer';
   styleUrls: ['./metronome.component.css'],
 })
 export class MetronomeComponent implements OnInit, AfterViewInit {
-  constructor(private renderer: Renderer2, private router: Router) {}
+  constructor(
+    private renderer: Renderer2,
+    private router: Router,
+    public settingsService: SettingsService
+  ) {}
+
+  //@ViewChild('container') container: ElementRef<HTMLElement>;
+  @ViewChild('tapContainer') tapContainer: ElementRef<HTMLElement>;
 
   @ViewChild('increaseTempoBtn')
   increaseTempoBtn: ElementRef<HTMLButtonElement>;
@@ -33,17 +40,40 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   private click2 = new Audio('assets/sounds/click2.mp3');
 
   private metronome: any;
-
   public bpm: number = 150;
   public beatsPerMeasure: number = 4;
   public tempoTextString: string = 'Medium';
   public count: number = 0;
   private isRunning: boolean = false;
 
+  public groundZero = 0;
+  public lastTap = 0;
+  public counter = 0;
+  public tapDiff = 0;
+  public previousTap = 0;
+  public elapsed = 0;
+  public showTapTempo: boolean = false;
+
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.metronome.stop();
+      }
+    });
+
+    this.settingsService.showTapTempo$.subscribe((val) => {
+      if (val) {
+        setTimeout(() => {
+          const clickArea = this.tapContainer.nativeElement;
+          if (this.isTouchDevice()) {
+            this.renderer.listen(clickArea, 'touchstart', () => this.tapTempo());
+          } else {
+            this.renderer.listen(clickArea, 'click', () => this.tapTempo());
+          }
+        }, 100);
+       
+        //const container = this.container.nativeElement;
+       
       }
     });
   }
@@ -125,4 +155,72 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     }
     this.count++;
   };
+
+  close() {
+    this.settingsService.showTapTempo$.next(false);
+  }
+
+  isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
+
+  tapTempo() {
+    window.addEventListener('keydown', function (e) {
+      if (e.code === 'space' && e.target === document.body) {
+        e.preventDefault();
+      }
+    });
+
+    // changeBGColor();
+    // const element = document.getElementsByTagName('.bpmContainer');
+    // element[0].classList.add('addAnimation');
+
+    // This function runs when the CSS animation is completed
+    //   const listener = element[0].addEventListener('animationend', function() {
+    //     element[0].classList.remove('addAnimation');
+
+    //     // this removes the listener after it runs so that it doesn't get re-added every time the button is clicked
+    //     element[0].removeEventListener('animationend', listener);
+    //     console.log('remove class element');
+    //   });
+
+    // if first time then record first tap
+    if (this.lastTap === 0) {
+      this.groundZero = new Date().getTime();
+      this.counter = 0;
+    }
+
+    this.lastTap = new Date().getTime();
+    this.elapsed = new Date().getTime() - this.previousTap;
+
+    this.previousTap = this.lastTap;
+    this.tapDiff = this.lastTap - this.groundZero;
+    if (this.tapDiff !== 0) {
+      this.bpm = Math.round((60000 * this.counter) / this.tapDiff);
+    }
+    // eslint-disable-next-line no-plusplus
+    this.counter++;
+    // console.log(`elapsed: ${elapsed} avgbpm: ${avgbpm}`);
+    if (this.elapsed > 3000) {
+      this.lastTap = 0;
+    }
+  }
+
+  // public detectDoubleTapCloseure() {
+  //   let lastTap = 0;
+  //   let timeout;
+  //   return function detectDoubleTap(event) {
+  //     const curTime = new Date().getTime();
+  //     const tapLen = curTime - lastTap;
+  //     if (tapLen < 500 && tapLen > 0) {
+  //       console.log('xd')
+  //       event.preventDefault();
+  //     } else {
+  //       timeout = setTimeout(() => {
+  //         clearTimeout(timeout);
+  //       }, 500);
+  //     }
+  //     lastTap = curTime;
+  //   };
+  // }
 }
