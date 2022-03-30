@@ -41,12 +41,6 @@ export class NavigationComponent {
       this.settingsService.showTapTempo$.next(
         !this.settingsService.showTapTempo$.getValue()
       );
-      let message = this.settingsService.showTapTempo$.getValue()
-        ? 'enabled.'
-        : 'disabled.';
-      this.snackbar.open('Tap tempo ' + message, 'Dismiss', {
-        duration: 3000,
-      });
     } else {
       this.settingsService.setAutoDetection(
         !this.settingsService.getAutoDetection()
@@ -58,10 +52,5 @@ export class NavigationComponent {
         duration: 3000,
       });
     }
-  }
-
-  setWidth(widthNumber: number) {
-    this.width = widthNumber;
-    this.cdr.detectChanges();
   }
 }

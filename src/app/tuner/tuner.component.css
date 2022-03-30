@@ -39,6 +39,7 @@ mat-button-toggle-group {
   display:flex;
   justify-content: center;
   height: 15vh;
+  margin-bottom: 3vh;
 }
 .noteButton {
   margin-right: 1.5vw;

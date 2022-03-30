@@ -1,30 +1,20 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import ml5 from 'ml5';
+import { Injectable, OnDestroy } from '@angular/core';
+import { pitchDetection } from 'ml5';
 import { Subject, interval, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TunerService implements OnDestroy, OnInit{
+export class TunerService implements OnDestroy {
   private audioContext: AudioContext = new AudioContext();
   private pitch: any;
 
   public pitchSubject: Subject<number> = new Subject();
-
   private pitchSubscription: Subscription;
 
   constructor() {}
 
-
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    console.log(document);
-   
-  }
-
   setup = async () => {
-   
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: false,
@@ -34,7 +24,7 @@ export class TunerService implements OnDestroy, OnInit{
   };
 
   public startPitch = (stream: MediaStream, audioContext: AudioContext) => {
-    this.pitch = ml5.pitchDetection(
+    this.pitch = pitchDetection(
       '../../model',
       audioContext,
       stream,
@@ -69,5 +59,5 @@ export class TunerService implements OnDestroy, OnInit{
         this.audioContext.suspend();
       }
     }
-  }
+  };
 }

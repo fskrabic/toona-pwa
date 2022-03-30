@@ -19,16 +19,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { TunerComponent } from './tuner/tuner.component';
-import { GaugeModule } from 'angular-gauge';
 import { MatSelectModule } from '@angular/material/select';
 import { AboutComponent } from './about/about.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MetronomeComponent } from './metronome/metronome.component';
-
-import { OpenSidebarOnSwipeDirective } from './navigation/open-sidenav-onswipe.directive';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +33,6 @@ import { OpenSidebarOnSwipeDirective } from './navigation/open-sidenav-onswipe.d
     SettingsComponent,
     AboutComponent,
     MetronomeComponent,
-    OpenSidebarOnSwipeDirective,
   ],
   imports: [
     BrowserModule,
@@ -59,10 +54,9 @@ import { OpenSidebarOnSwipeDirective } from './navigation/open-sidenav-onswipe.d
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    GaugeModule.forRoot(),
   ],
   providers: [TunerService],
   bootstrap: [AppComponent],
-  exports: [OpenSidebarOnSwipeDirective]
+  exports: []
 })
 export class AppModule {}
