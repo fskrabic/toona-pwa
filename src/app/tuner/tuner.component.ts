@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -29,6 +31,7 @@ export interface Note {
   selector: 'app-tuner',
   templateUrl: './tuner.component.html',
   styleUrls: ['./tuner.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TunerComponent implements OnInit, OnDestroy {
   public frequency: number;
@@ -50,7 +53,8 @@ export class TunerComponent implements OnInit, OnDestroy {
 
   constructor(
     private tunerService: TunerService,
-    public settingsService: SettingsService
+    public settingsService: SettingsService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public selectString(note: Note) {
@@ -88,6 +92,7 @@ export class TunerComponent implements OnInit, OnDestroy {
         switchMap(async (value) => (this.frequency = value))
       )
       .subscribe(() => {
+        this.cdr.detectChanges();
         if (this.settingsService.getAutoDetection()) {
           this.closestNote.freq = this.findClosest(
             this.tuning.map((notes: Note) => notes.freq),
