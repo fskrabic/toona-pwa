@@ -10,7 +10,7 @@ export class TunerService implements OnDestroy {
   private pitch: any;
 
   public pitchSubject: Subject<number> = new Subject();
-  private pitchSubscription: Subscription;
+  public pitchSubscription: Subscription;
 
   constructor() {}
 
@@ -33,6 +33,9 @@ export class TunerService implements OnDestroy {
   };
 
   public modelLoaded = () => {
+    if (this.audioContext.state !== 'running') {
+      this.audioContext.resume();
+    }
     const src = interval(300);
     if (!this.pitchSubscription) {
       this.pitchSubscription = src.subscribe(this.getPitch);
@@ -40,6 +43,9 @@ export class TunerService implements OnDestroy {
   };
 
   public getPitch = () => {
+    if (this.audioContext.state !== 'running') {
+      this.audioContext.resume();
+    }
     if (this.pitch.frequency) {
       this.pitchSubject.next(this.pitch.frequency);
     }

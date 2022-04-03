@@ -1,10 +1,10 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { of, Subscription } from 'rxjs';
@@ -31,14 +31,14 @@ export interface Note {
   selector: 'app-tuner',
   templateUrl: './tuner.component.html',
   styleUrls: ['./tuner.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TunerComponent implements OnInit, OnDestroy {
   public frequency: number;
   public selectedInstrument: Instrument;
   public selectedTuning: any;
   public tuning: any;
-  @ViewChild('test', { static: false }) test: ElementRef<HTMLDivElement>;
+  @ViewChild('freqSlider', { static: false }) freqSlider: ElementRef<HTMLInputElement>;
+  @ViewChild('noteDisplay', {static : false}) noteDisplay: ElementRef<HTMLHeadingElement>;
   public gauge: any;
   public opts: any;
   elem: any;
@@ -52,9 +52,10 @@ export class TunerComponent implements OnInit, OnDestroy {
   private tuningSubscription: Subscription;
 
   constructor(
-    private tunerService: TunerService,
+    public tunerService: TunerService,
     public settingsService: SettingsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2
   ) {}
 
   public selectString(note: Note) {
@@ -80,9 +81,9 @@ export class TunerComponent implements OnInit, OnDestroy {
       .pipe(
         throttleTime(300),
         distinctUntilChanged(),
-        filter((value) => value < 30 || value < this.closestNote.freq * 2.3),
+        filter((value) => value < 30 || value < this.closestNote.freq * 2),
         concatMap((value) => {
-          if (this.inRange(value, value * 1.98, value * 2.02)) {
+          if (this.inRange(value, value * 1.99, value * 2.01)) {
             return of(value / 2);
           } else {
             return of(value);
@@ -92,7 +93,7 @@ export class TunerComponent implements OnInit, OnDestroy {
         switchMap(async (value) => (this.frequency = value))
       )
       .subscribe(() => {
-        this.cdr.detectChanges();
+        console.log(this.freqSlider.nativeElement.valueAsNumber)
         if (this.settingsService.getAutoDetection()) {
           this.closestNote.freq = this.findClosest(
             this.tuning.map((notes: Note) => notes.freq),
@@ -101,6 +102,12 @@ export class TunerComponent implements OnInit, OnDestroy {
           this.closestNote.note = this.tuning.find(
             (note: Note) => note.freq === this.closestNote.freq
           ).note;
+          console.log(this.closestNote.note);
+        }
+        if (this.inRange(this.frequency, this.closestNote.freq * 0.99, this.closestNote.freq * 1.01)) {
+          this.renderer.setStyle(this.noteDisplay.nativeElement, 'color', '#00e676')
+        } else {
+          this.renderer.removeStyle(this.noteDisplay.nativeElement, 'color');
         }
       });
   }
