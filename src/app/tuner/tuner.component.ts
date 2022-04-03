@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -7,6 +6,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
 import {
   concatMap,
@@ -37,8 +37,10 @@ export class TunerComponent implements OnInit, OnDestroy {
   public selectedInstrument: Instrument;
   public selectedTuning: any;
   public tuning: any;
-  @ViewChild('freqSlider', { static: false }) freqSlider: ElementRef<HTMLInputElement>;
-  @ViewChild('noteDisplay', {static : false}) noteDisplay: ElementRef<HTMLHeadingElement>;
+  @ViewChild('freqSlider', { static: false })
+  freqSlider: ElementRef<HTMLInputElement>;
+  @ViewChild('noteDisplay', { static: false })
+  noteDisplay: ElementRef<HTMLHeadingElement>;
   public gauge: any;
   public opts: any;
   elem: any;
@@ -54,8 +56,8 @@ export class TunerComponent implements OnInit, OnDestroy {
   constructor(
     public tunerService: TunerService,
     public settingsService: SettingsService,
-    private cdr: ChangeDetectorRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
   ) {}
 
   public selectString(note: Note) {
@@ -77,52 +79,74 @@ export class TunerComponent implements OnInit, OnDestroy {
 
   private setupAndSubscribeToPitchSubject() {
     this.tunerService.setup();
-    this.pitchSubscription = this.tunerService.pitchSubject
-      .pipe(
-        throttleTime(300),
-        distinctUntilChanged(),
-        filter((value) => value < 30 || value < this.closestNote.freq * 2),
-        concatMap((value) => {
-          if (this.inRange(value, value * 1.99, value * 2.01)) {
-            return of(value / 2);
-          } else {
-            return of(value);
+    if (!this.pitchSubscription) {
+      this.pitchSubscription = this.tunerService.pitchSubject
+        .pipe(
+          throttleTime(300),
+          distinctUntilChanged(),
+          filter((value) => value < 30 || value < this.closestNote.freq * 2),
+          concatMap((value) => {
+            if (this.inRange(value, value * 1.99, value * 2.01)) {
+              return of(value / 2);
+            } else {
+              return of(value);
+            }
+          }),
+          map((value) => Math.round(value * 100 + Number.EPSILON) / 100),
+          switchMap(async (value) => (this.frequency = value))
+        )
+        .subscribe(() => {
+          if (this.settingsService.getAutoDetection()) {
+            this.closestNote.freq = this.findClosest(
+              this.tuning.map((notes: Note) => notes.freq),
+              this.frequency
+            );
+            this.closestNote.note = this.tuning.find(
+              (note: Note) => note.freq === this.closestNote.freq
+            ).note;
           }
-        }),
-        map((value) => Math.round(value * 100 + Number.EPSILON) / 100),
-        switchMap(async (value) => (this.frequency = value))
-      )
-      .subscribe(() => {
-        console.log(this.freqSlider.nativeElement.valueAsNumber)
-        if (this.settingsService.getAutoDetection()) {
-          this.closestNote.freq = this.findClosest(
-            this.tuning.map((notes: Note) => notes.freq),
-            this.frequency
-          );
-          this.closestNote.note = this.tuning.find(
-            (note: Note) => note.freq === this.closestNote.freq
-          ).note;
-          console.log(this.closestNote.note);
-        }
-        if (this.inRange(this.frequency, this.closestNote.freq * 0.99, this.closestNote.freq * 1.01)) {
-          this.renderer.setStyle(this.noteDisplay.nativeElement, 'color', '#00e676')
-        } else {
-          this.renderer.removeStyle(this.noteDisplay.nativeElement, 'color');
-        }
-      });
+          if (
+            this.inRange(
+              this.frequency,
+              this.closestNote.freq * 0.99,
+              this.closestNote.freq * 1.01
+            )
+          ) {
+            this.renderer.setStyle(
+              this.noteDisplay.nativeElement,
+              'color',
+              '#00e676'
+            );
+          } else {
+            this.renderer.removeStyle(this.noteDisplay.nativeElement, 'color');
+          }
+        });
+    }
   }
 
   ngOnInit() {
-    this.instrumentSubscription =
-      this.settingsService.selectedInstrument$.subscribe((selected) => {
-        this.selectedInstrument = selected;
-      });
-    this.tuningSubscription = this.settingsService.selectedTuning$.subscribe(
-      (selected) => {
-        this.selectedTuning = selected;
-        this.tuning = this.selectedTuning.notes;
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.pitchSubscription.unsubscribe();
+        this.instrumentSubscription.unsubscribe();
+        this.tuningSubscription.unsubscribe();
       }
-    );
+    });
+    if (this.instrumentSubscription === undefined) {
+      this.instrumentSubscription =
+        this.settingsService.selectedInstrument$.subscribe((selected) => {
+          this.selectedInstrument = selected;
+        });
+    }
+    if (this.tuningSubscription === undefined) {
+      this.tuningSubscription = this.settingsService.selectedTuning$.subscribe(
+        (selected) => {
+          this.selectedTuning = selected;
+          this.tuning = this.selectedTuning.notes;
+        }
+      );
+    }
+
     this.setupAndSubscribeToPitchSubject();
   }
 
