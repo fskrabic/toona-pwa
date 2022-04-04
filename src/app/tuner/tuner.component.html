@@ -1,27 +1,42 @@
 <div class="container">
   <div class="displayContainer">
     <h2 #noteDisplay>{{ closestNote.note }}</h2>
-    <!-- <canvas width=400 height=400  id="responsive" #foo></canvas> -->
   </div>
 
   <div class="freqContainer">
-    <h2>{{ frequency ? frequency : 0 }} Hz</h2>
-    <h2>Target freq: {{ closestNote.freq ? closestNote.freq : 0 }} Hz</h2>
-    <input disabled class="freqSlider" #freqSlider [value]="frequency" type="range" [min]="closestNote.freq - 50" [max]="closestNote.freq + 50" step="any" />
-    <div class="ticks">
+    <!-- <h2>{{ frequency ? frequency : 0 }} Hz</h2> -->
+    <h2>Target frequency: {{ closestNote.freq ? closestNote.freq : 0 }} Hz</h2>
+    <!-- <input
+      disabled
+      class="freqSlider"
+      #freqSlider
+      [value]="frequency"
+      type="range"
+      [min]="closestNote.freq - 50"
+      [max]="closestNote.freq + 50"
+      step="any"
+    /> -->
+   
+      <div class="custom-slider"><ngx-slider class="custom-slider" [(value)]="frequency" [options]="options"></ngx-slider></div>
+
+
+    <!-- <div class="ticks">
       <div class="centralTick">
         <span class="tick"> |</span>
-        
+
         <span class="tick"> |</span>
       </div>
-      
-      
-    </div>
+    </div> -->
   </div>
 
   <div class="buttons">
     <mat-button-toggle-group name="buttons">
-      <button class="noteButton" *ngFor="let note of tuning" (click)="selectString(note)" mat-fab>
+      <button
+        class="noteButton"
+        *ngFor="let note of tuning"
+        (click)="selectString(note)"
+        mat-fab
+      >
         {{ note.note }}
       </button>
     </mat-button-toggle-group>

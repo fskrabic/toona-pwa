@@ -20,11 +20,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { TunerComponent } from './tuner/tuner.component';
 import { MatSelectModule } from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
 import { AboutComponent } from './about/about.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MetronomeComponent } from './metronome/metronome.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,9 +57,10 @@ import { MetronomeComponent } from './metronome/metronome.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatSliderModule,
   ],
   providers: [TunerService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, NavigationComponent],
   exports: []
 })
 export class AppModule {}

@@ -56,12 +56,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "5mb",
-                  "maximumError": "6mb"
+                  "maximumError": "100mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
-                  "maximumError": "6kb"
+                  "maximumWarning": "8kb",
+                  "maximumError": "12kb"
                 }
               ],
               "fileReplacements": [
@@ -70,6 +70,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "optimization": true,
               "outputHashing": "all"
             },
             "development": {

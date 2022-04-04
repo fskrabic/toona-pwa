@@ -52,6 +52,7 @@ export class TunerService implements OnDestroy {
   };
 
   ngOnDestroy(): void {
+    console.log("on destroy")
     this.pitchSubscription.unsubscribe();
   }
 

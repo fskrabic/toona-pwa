@@ -1,6 +1,7 @@
 @import "~@angular/material/theming";
 
 @mixin test($theme) {
+  
   .displayContainer h2 {
     color: $primary;
   }
