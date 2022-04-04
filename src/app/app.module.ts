@@ -58,6 +58,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     MatIconModule,
     MatListModule,
     MatSliderModule,
+    NgxSliderModule
   ],
   providers: [TunerService],
   bootstrap: [AppComponent, NavigationComponent],
