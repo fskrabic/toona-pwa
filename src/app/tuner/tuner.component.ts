@@ -51,9 +51,9 @@ export class TunerComponent implements OnInit, OnDestroy {
     freq: 82.41,
   };
 
-  private pitchSubscription: Subscription;
-  private instrumentSubscription: Subscription;
-  private tuningSubscription: Subscription;
+  public pitchSubscription: Subscription;
+  public instrumentSubscription: Subscription;
+  public tuningSubscription: Subscription;
 
   public options: Options = {
     showTicks: true,

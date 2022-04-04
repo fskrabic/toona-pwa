@@ -61,7 +61,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     NgxSliderModule
   ],
   providers: [TunerService],
-  bootstrap: [AppComponent, NavigationComponent],
+  bootstrap: [AppComponent, NavigationComponent, TunerComponent, MetronomeComponent],
   exports: []
 })
 export class AppModule {}

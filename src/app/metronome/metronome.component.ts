@@ -16,6 +16,7 @@ import {
   transition,
   state,
 } from '@angular/animations';
+import { TunerComponent } from '../tuner/tuner.component';
 
 @Component({
   selector: 'app-metronome',
@@ -35,7 +36,8 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   constructor(
     private renderer: Renderer2,
     private router: Router,
-    public settingsService: SettingsService
+    public settingsService: SettingsService,
+    public t: TunerComponent
   ) {}
 
   @ViewChild('tapContainer') tapContainer: ElementRef<HTMLElement>;
@@ -71,6 +73,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public tapTempoMsg: string;
 
   ngOnInit(): void {
+    console.log(this.t.instrumentSubscription, this.t.pitchSubscription);
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.metronome.stop();
