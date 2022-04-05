@@ -11,10 +11,12 @@ export class TunerService implements OnDestroy {
 
   public pitchSubject: Subject<number> = new Subject();
   public pitchSubscription: Subscription;
+  public isSetup = false;
 
   constructor() {}
 
   setup = async () => {
+    this.isSetup = true;
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: false,

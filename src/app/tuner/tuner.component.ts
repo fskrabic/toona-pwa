@@ -1,3 +1,4 @@
+'use strict';
 import {
   Component,
   ElementRef,
@@ -6,7 +7,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Options } from '@angular-slider/ngx-slider';
 import { of, Subscription } from 'rxjs';
 import {
@@ -59,11 +60,11 @@ export class TunerComponent implements OnInit, OnDestroy {
     showTicks: true,
     showTicksValues: false,
     readOnly: true,
-    floor: parseFloat((this.closestNote.freq -50).toFixed(2)),
+    floor: parseFloat((this.closestNote.freq - 50).toFixed(2)),
     ceil: parseFloat((this.closestNote.freq + 50).toFixed(2)),
     step: 0.01,
     ticksArray: [
-      parseFloat((this.closestNote.freq -50).toFixed(2)),
+      parseFloat((this.closestNote.freq - 50).toFixed(2)),
       0.99 * this.closestNote.freq,
       this.closestNote.freq,
       this.closestNote.freq * 1.01,
@@ -91,11 +92,11 @@ export class TunerComponent implements OnInit, OnDestroy {
       showTicks: true,
       showTicksValues: false,
       readOnly: true,
-      floor: parseFloat((this.closestNote.freq -50).toFixed(2)),
+      floor: parseFloat((this.closestNote.freq - 50).toFixed(2)),
       ceil: parseFloat((this.closestNote.freq + 50).toFixed(2)),
       step: 0.01,
       ticksArray: [
-        parseFloat((this.closestNote.freq -50).toFixed(2)),
+        parseFloat((this.closestNote.freq - 50).toFixed(2)),
         0.99 * this.closestNote.freq,
         this.closestNote.freq,
         this.closestNote.freq * 1.01,
@@ -115,7 +116,9 @@ export class TunerComponent implements OnInit, OnDestroy {
   }
 
   private setupAndSubscribeToPitchSubject() {
-    this.tunerService.setup();
+    if (this.tunerService.isSetup === false) {
+      this.tunerService.setup();
+    }
     if (!this.pitchSubscription) {
       this.pitchSubscription = this.tunerService.pitchSubject
         .pipe(
@@ -129,13 +132,14 @@ export class TunerComponent implements OnInit, OnDestroy {
               return of(value);
             }
           }),
-          map(( value) => {
-            return Math.round(value * 100 + Number.EPSILON) / 100
+          map((value) => {
+            return Math.round(value * 100 + Number.EPSILON) / 100;
           }),
-          switchMap(async (value) => (this.frequency = parseFloat(value.toFixed(2))))
+          switchMap(
+            async (value) => (this.frequency = parseFloat(value.toFixed(2)))
+          )
         )
         .subscribe(() => {
-          
           if (this.settingsService.getAutoDetection()) {
             this.closestNote.freq = this.findClosest(
               this.tuning.map((notes: Note) => notes.freq),
@@ -167,7 +171,7 @@ export class TunerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (!!!this.frequency) {
-      this.frequency = this.closestNote.freq
+      this.frequency = this.closestNote.freq;
     }
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
