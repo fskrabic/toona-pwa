@@ -37,7 +37,6 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private router: Router,
     public settingsService: SettingsService,
-    public t: TunerComponent
   ) {}
 
   @ViewChild('tapContainer') tapContainer: ElementRef<HTMLElement>;
@@ -73,7 +72,6 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public tapTempoMsg: string;
 
   ngOnInit(): void {
-    console.log(this.t.instrumentSubscription, this.t.pitchSubscription);
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.metronome.stop();
