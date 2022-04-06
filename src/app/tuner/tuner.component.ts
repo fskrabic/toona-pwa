@@ -1,4 +1,3 @@
-'use strict';
 import {
   Component,
   ElementRef,
@@ -24,7 +23,6 @@ import {
   SettingsService,
   Tuning,
 } from '../settings-service/settings.service';
-import { ViewEncapsulation } from '@angular/core';
 export interface Note {
   note: string;
   freq: number;
@@ -33,7 +31,7 @@ export interface Note {
 @Component({
   selector: 'app-tuner',
   templateUrl: './tuner.component.html',
-  styleUrls: ['./tuner.component.css'],
+  styleUrls: ['./tuner.component.scss'],
 })
 export class TunerComponent implements OnInit, OnDestroy {
   public frequency: number;
@@ -60,16 +58,10 @@ export class TunerComponent implements OnInit, OnDestroy {
     showTicks: true,
     showTicksValues: false,
     readOnly: true,
-    floor: parseFloat((this.closestNote.freq - 50).toFixed(2)),
-    ceil: parseFloat((this.closestNote.freq + 50).toFixed(2)),
+    floor: parseFloat((this.closestNote.freq - 52).toFixed(2)),
+    ceil: parseFloat((this.closestNote.freq + 52).toFixed(2)),
     step: 0.01,
-    ticksArray: [
-      parseFloat((this.closestNote.freq - 50).toFixed(2)),
-      0.99 * this.closestNote.freq,
-      this.closestNote.freq,
-      this.closestNote.freq * 1.01,
-      parseFloat((this.closestNote.freq + 50).toFixed(2)),
-    ],
+    ticksArray: [this.closestNote.freq],
   };
 
   constructor(
@@ -92,16 +84,10 @@ export class TunerComponent implements OnInit, OnDestroy {
       showTicks: true,
       showTicksValues: false,
       readOnly: true,
-      floor: parseFloat((this.closestNote.freq - 50).toFixed(2)),
-      ceil: parseFloat((this.closestNote.freq + 50).toFixed(2)),
+      floor: parseFloat((this.closestNote.freq - 52).toFixed(2)),
+      ceil: parseFloat((this.closestNote.freq + 52).toFixed(2)),
       step: 0.01,
-      ticksArray: [
-        parseFloat((this.closestNote.freq - 50).toFixed(2)),
-        0.99 * this.closestNote.freq,
-        this.closestNote.freq,
-        this.closestNote.freq * 1.01,
-        parseFloat((this.closestNote.freq + 50).toFixed(2)),
-      ],
+      ticksArray: [this.closestNote.freq],
     };
   }
 
@@ -126,7 +112,7 @@ export class TunerComponent implements OnInit, OnDestroy {
           distinctUntilChanged(),
           filter((value) => value < 30 || value < this.closestNote.freq * 2),
           concatMap((value) => {
-            if (this.inRange(value, value * 1.99, value * 2.01)) {
+            if (this.inRange(value, value * 1.98, value * 2.02)) {
               return of(value / 2);
             } else {
               return of(value);
@@ -153,17 +139,19 @@ export class TunerComponent implements OnInit, OnDestroy {
           if (
             this.inRange(
               this.frequency,
-              this.closestNote.freq * 0.99,
-              this.closestNote.freq * 1.01
+              this.closestNote.freq - 0.4,
+              this.closestNote.freq + 0.4
             )
           ) {
-            this.renderer.setStyle(
+            this.renderer.addClass(
               this.noteDisplay.nativeElement,
-              'color',
-              '#00e676'
+              'correctFreq'
             );
           } else {
-            this.renderer.removeStyle(this.noteDisplay.nativeElement, 'color');
+            this.renderer.removeClass(
+              this.noteDisplay.nativeElement,
+              'correctFreq'
+            );
           }
         });
     }

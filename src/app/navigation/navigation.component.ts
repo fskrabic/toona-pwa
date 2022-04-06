@@ -5,11 +5,12 @@ import { map, shareReplay } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsService } from '../settings-service/settings.service';
 import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css'],
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -21,12 +22,16 @@ export class NavigationComponent {
 
   public width: number;
   public activeRoute: string;
+  
+  public title = 'my-app';
+  public isDark = this.themeService.isDark;
+  
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private cdr: ChangeDetectorRef,
     private snackbar: MatSnackBar,
     private settingsService: SettingsService,
+    private themeService: ThemeService,
     private router: Router
   ) {
     this.router.events.subscribe((val) => {
@@ -34,6 +39,11 @@ export class NavigationComponent {
         this.activeRoute = this.router.url;
       }
     });
+  }
+
+  toggleDarkTheme() {
+    this.themeService.toggleDarkTheme();
+    this.isDark = !this.isDark;
   }
 
   openSnackbar() {

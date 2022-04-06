@@ -1,9 +1,0 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Raleway, sans-serif; }
-
-@font-face {
-    font-family: "Digital";
-    src: local("Digital"), url(./assets/fonts/digital.ttf) format("truetype");
-}

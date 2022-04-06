@@ -21,7 +21,11 @@
     <mat-label style="margin-right: 2em">Pick a tuning: </mat-label>
     <mat-form-field>
       <mat-label>Tuning</mat-label>
-      <mat-select  [(ngModel)]="selectedTuning"  (ngModelChange)="setTuning()" name="tuning">
+      <mat-select
+        [(ngModel)]="selectedTuning"
+        (ngModelChange)="setTuning()"
+        name="tuning"
+      >
         <mat-option
           [disabled]="!selectedInstrument"
           *ngFor="let tuning of tunings"
@@ -33,5 +37,7 @@
     </mat-form-field></span
   >
 
-  <button mat-raised-button	 color="primary" (click)="saveSettings()"> Save </button>
+  <button mat-raised-button color="primary" (click)="saveSettings()">
+    Save
+  </button>
 </div>

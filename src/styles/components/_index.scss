@@ -1,0 +1,11 @@
+// src/styles/components/_index.scss
+
+@use "./button/variants" as button-variants;
+@use "../../app/tuner/tuner-theme" as tuner;
+@use "../../app/navigation/navigation-theme" as navigation;
+
+@mixin theme($theme, $typography-config, $variants) {
+  @include tuner.theme($theme, $typography-config);
+  @include navigation.theme($theme, $typography-config);
+//  @include button-variants.color($theme, $variants);
+}

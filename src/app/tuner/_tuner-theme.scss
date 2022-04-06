@@ -1,0 +1,109 @@
+// _alert-theme.scss
+
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  // Get the color config from the theme.
+  $color-config: mat.get-color-config($theme);
+
+  // Get the primary color palette from the color-config.
+  $primary-palette: map.get($color-config, "primary");
+  $secondary-palette: map.get($color-config, "secondary");
+  $accent-palette: map.get($color-config, "accent");
+  $warn-palette: map.get($color-config, "warn");
+
+  h2 {
+    color: mat.get-color-from-palette($primary-palette, 800)!important;
+  }
+
+  h2.correctFreq {
+    color: mat.get-color-from-palette($accent-palette, 600) !important;
+  }
+
+  .ngx-slider {
+    font-family: "Digital";
+  }
+  .custom-slider .ngx-slider .ngx-slider-bubble {
+    font-size: 1.5em !important;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-bar {
+    background: mat.get-color-from-palette($primary-palette, 400);
+    height: 7px;
+    border: 1px solid mat.get-color-from-palette($primary-palette, 900);
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-selection {
+    background: red;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-pointer {
+    width: 12px;
+    height: 22px;
+    bottom: 0;
+    background-color: mat.get-color-from-palette($primary-palette, 900);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-pointer:after {
+    display: none;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-bubble {
+    bottom: 25px;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-limit {
+    font-weight: bold;
+    font-size: 15px !important;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-ticks {
+      color: black!important;
+  }
+
+  .ngx-slider-inner-tooltip {
+      height:0%!important;
+    position: unset!important;
+  }
+
+  .mat-fab {
+    background-color: mat.get-color-from-palette(
+      $primary-palette,
+      700
+    ) !important;
+    font-family: "Digital";
+  }
+  .mat-fab {
+    &.cdk-focused {
+      background-color: mat.get-color-from-palette(
+        $accent-palette,
+        600
+      ) !important;
+    }
+  }
+}
+
+@mixin typography($typography-config) {
+  .alert {
+    .alert-heading {
+      @include mat.typography-level($typography-config, "title");
+    }
+    .alert-footer {
+      @include mat.typography-level($typography-config, "caption");
+    }
+  }
+}
+
+@mixin theme($theme, $typography-config) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+
+  @if $typography-config != null {
+    @include typography($typography-config);
+  }
+}

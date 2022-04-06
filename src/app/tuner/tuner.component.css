@@ -1,4 +1,4 @@
-.container {
+/* .container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,52 +67,52 @@ ngx-slider {
   width: 70vw;
 }
 
-::ng-deep {
+:host ::ng-deep .custom-slider .ngx-slider .ngx-slider-bar {
+  background: #ffe4d1;
+  height: 2px;
+}
+:host ::ng-deep .custom-slider .ngx-slider .ngx-slider-selection {
+  background: orange;
+}
 
+:host ::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer {
+  width: 8px;
+  height: 16px;
+  top: auto; /* to remove the default positioning */
+  bottom: 0;
+  background-color: #333;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
 
-  .custom-slider .ngx-slider .ngx-slider-bar {
-    background: #ffe4d1;
-    height: 2px;
-  }
-  .custom-slider .ngx-slider .ngx-slider-selection {
-    background: orange;
-  }
+:host ::ng-deep .custom-slider .ngx-slider .ngx-slider-pointer:after {
+  display: none;
+}
 
-  .custom-slider .ngx-slider .ngx-slider-pointer {
-    width: 8px;
-    height: 16px;
-    top: auto; /* to remove the default positioning */
-    bottom: 0;
-    background-color: #333;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-  }
+:host ::ng-deep .custom-slider .ngx-slider .ngx-slider-bubble {
+  bottom: 14px;
+}
 
-  .custom-slider .ngx-slider .ngx-slider-pointer:after {
-    display: none;
-  }
+:host ::ng-deep .custom-slider .ngx-slider .ngx-slider-limit {
+  font-weight: bold;
+  color: orange;
+}
 
-  .custom-slider .ngx-slider .ngx-slider-bubble {
-    bottom: 14px;
-  }
+:host ::ng-deep .ngx-slider-tick {
+  width: 1px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: red;
+  top: -1px;
+}
 
-  .custom-slider .ngx-slider .ngx-slider-limit {
-    font-weight: bold;
-    color: orange;
-  }
-
-  .ngx-slider-tick {
-    width: 1px;
-    height: 10px;
-    margin-left: 4px;
-    border-radius: 0;
-    background: red;
-    top: -1px;
-  }
-
-  .custom-slider .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-    background: orange;
-  }
+:host
+  ::ng-deep
+  .custom-slider
+  .ngx-slider
+  .ngx-slider-tick.ngx-slider-selected {
+  background: orange;
 }
 
 .centralTick {
@@ -125,7 +125,7 @@ ngx-slider {
 }
 .displayContainer h2 {
   font-family: "Digital";
-  font-size: 25em;
+  font-size: 20em;
 }
 mat-button-toggle-group {
   border: none;
@@ -145,4 +145,4 @@ mat-button-toggle-group {
 :host .mat-raised-button {
   color: red;
   border-radius: 50%;
-}
+} */

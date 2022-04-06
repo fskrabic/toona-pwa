@@ -45,7 +45,14 @@
               "src/model/group12-shard1of1",
               "src/model/group13-shard1of1"
             ],
-            "styles": ["src/custom-theme.scss", "src/styles.css"],
+            "styles": [
+              "src/styles.scss",
+              {
+                "input": "src/styles/themes/dark.scss",
+                "bundleName": "dark-theme",
+                "inject": false
+              }
+            ],
             "scripts": [],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"

@@ -5,28 +5,19 @@
 
   <div class="freqContainer">
     <!-- <h2>{{ frequency ? frequency : 0 }} Hz</h2> -->
-    <h2>Target frequency: {{ closestNote.freq ? closestNote.freq : 0 }} Hz</h2>
-    <!-- <input
-      disabled
-      class="freqSlider"
-      #freqSlider
-      [value]="frequency"
-      type="range"
-      [min]="closestNote.freq - 50"
-      [max]="closestNote.freq + 50"
-      step="any"
-    /> -->
-   
-      <div class="custom-slider"><ngx-slider class="custom-slider" [(value)]="frequency" [options]="options"></ngx-slider></div>
+    <h3>
+      {{ closestNote.freq ? closestNote.freq : 0 }} H<span
+        style="font-size: 0.6em"
+        >z</span
+      >
+    </h3>
 
-
-    <!-- <div class="ticks">
-      <div class="centralTick">
-        <span class="tick"> |</span>
-
-        <span class="tick"> |</span>
-      </div>
-    </div> -->
+    <div class="custom-slider">
+      <ngx-slider
+        [(value)]="frequency"
+        [options]="options"
+      ></ngx-slider>
+    </div>
   </div>
 
   <div class="buttons">
