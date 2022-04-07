@@ -13,23 +13,18 @@
     </h3>
 
     <div class="custom-slider">
-      <ngx-slider
-        [(value)]="frequency"
-        [options]="options"
-      ></ngx-slider>
+      <ngx-slider [(value)]="frequency" [options]="options"></ngx-slider>
     </div>
   </div>
 
-  <div class="buttons">
-    <mat-button-toggle-group name="buttons">
-      <button
-        class="noteButton"
-        *ngFor="let note of tuning"
-        (click)="selectString(note)"
-        mat-fab
-      >
-        {{ note.note }}
-      </button>
-    </mat-button-toggle-group>
-  </div>
+  <mat-button-toggle-group name="buttons">
+    <button
+      class="noteButton"
+      *ngFor="let note of tuning"
+      (click)="selectString(note)"
+      mat-fab
+    >
+      {{ note.note }}
+    </button>
+  </mat-button-toggle-group>
 </div>

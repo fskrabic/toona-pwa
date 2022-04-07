@@ -1,66 +1,59 @@
-// _alert-theme.scss
-
 @use "sass:map";
 @use "@angular/material" as mat;
 
 @mixin color($theme) {
-  // Get the color config from the theme.
   $color-config: mat.get-color-config($theme);
 
-  // Get the primary color palette from the color-config.
   $primary-palette: map.get($color-config, "primary");
   $secondary-palette: map.get($color-config, "secondary");
   $accent-palette: map.get($color-config, "accent");
   $warn-palette: map.get($color-config, "warn");
 
-    .mat-list-item {
-      font-family: 'Raleway';
-      font-size: 25px!important;
-    }
+  .mat-list-item {
+    font-family: "Raleway";
+    font-size: 25px !important;
+  }
 
+  .mat-toolbar {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .mat-drawer-container {
+    background-color: unset;
+  }
+
+  .dark-theme {
+    .mat-drawer {
+      background-color: #303030;
+    }
     .mat-toolbar {
-        font-size: 30px;
-        font-weight:bold;
+      color: white;
     }
-
-    .mat-drawer-container {
-      background-color: unset
+    .mat-list-item-content {
+      color: white;
     }
+  }
 
-    .mat-toolbar {
-        background-color: mat.get-color-from-palette($primary-palette)
-    }
+  .mat-toolbar {
+    background-color: mat.get-color-from-palette($primary-palette);
+  }
 
-    .mat-icon-button{
-        color: white;
-    }
+  .mat-icon-button {
+    color: white;
+  }
 
-    .mat-simple-snackbar {
-        font-size: 15px!important;
-    }
+  .mat-simple-snackbar {
+    font-size: 15px !important;
+  }
 
-    .mat-simple-snackbar .mat-button-wrapper {
-        font-size: 20px!important;
-        color: mat.get-color-from-palette($primary-palette, 700);
-    }
-
-    
-    // .dark-theme {
-    //     .mat-icon-button {
-    //         color: red!important;
-    //     }
-    // }
+  .mat-simple-snackbar .mat-button-wrapper {
+    font-size: 20px !important;
+    color: mat.get-color-from-palette($primary-palette, 700);
+  }
 }
 
 @mixin typography($typography-config) {
-  .alert {
-    .alert-heading {
-      @include mat.typography-level($typography-config, "title");
-    }
-    .alert-footer {
-      @include mat.typography-level($typography-config, "caption");
-    }
-  }
 }
 
 @mixin theme($theme, $typography-config) {

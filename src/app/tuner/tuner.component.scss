@@ -1,25 +1,25 @@
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 90vh;
-  }
-  .displayContainer {
-    height: 65vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .freqContainer {
-    height: 20vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
+}
+.displayContainer {
+  height: 65vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.freqContainer {
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 //   input[type="range"] {
 //     -webkit-appearance: none;
 //     background: transparent;
@@ -60,36 +60,33 @@
 //     background: white;
 //     border: 1px solid darkgrey;
 //   }
-  ngx-slider {
-    margin-top: 9vh;
-    width: 75vw;
-  }
-  
-  
-  
-  .displayContainer h2 {
-    font-family: "Digital";
-    font-size: 35vh;
-    color: currentColor;
-  }
-
-  .freqContainer h3 {
-    font-family: "Digital";
-    font-size: 8vh;
+ngx-slider {
+  margin-top: 9vh;
+  width: 75vw;
 }
-  mat-button-toggle-group {
-    border: none;
-  }
-  .buttons {
-    margin-top: 8vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    height: 15vh;
-    margin-bottom: 7vh;
-  }
-  .noteButton {
-    margin-right: 1.5vw;
-    margin-top: 1vh;
-  }
-  
+
+.displayContainer h2 {
+  font-family: "Digital";
+  font-size: 35vh;
+  color: currentColor;
+}
+
+.freqContainer h3 {
+  font-family: "Digital";
+  font-size: 8vh;
+}
+mat-button-toggle-group {
+  margin-top: 8vh;
+  border: none;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  height: 15vh;
+  margin-bottom: 11vh;
+  flex-wrap: wrap;
+}
+
+.noteButton {
+  margin-right: 1.5vw;
+  margin-top: 1vh;
+}

@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsService } from '../settings-service/settings.service';
-import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
+import { ActivationEnd, Router } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { ThemeService } from '../services/theme.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent {
+export class NavigationComponent implements  OnDestroy {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -21,6 +21,7 @@ export class NavigationComponent {
     );
 
   public activeRoute: string;
+  public hasFlashIcon: boolean;
   public isDark = this.themeService.isDark;
   private router$: Subscription;
 
@@ -34,6 +35,11 @@ export class NavigationComponent {
     this.router$ = this.router.events.subscribe((val) => {
       if (val instanceof ActivationEnd) {
         this.activeRoute = this.router.url;
+        if (this.activeRoute === '/metronome' || this.activeRoute === '/tuner') {
+          this.hasFlashIcon = true;
+        } else {
+          this.hasFlashIcon = false;
+        }
       }
     });
   }
@@ -56,7 +62,7 @@ export class NavigationComponent {
         ? 'enabled.'
         : 'disabled.';
       this.snackbar.open('Automatic string detection ' + message, 'Dismiss', {
-        duration: 300000,
+        duration: 3000,
       });
     }
   }

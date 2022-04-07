@@ -23,6 +23,7 @@ import {
   SettingsService,
   Tuning,
 } from '../settings-service/settings.service';
+import { getMatIconFailedToSanitizeUrlError } from '@angular/material/icon';
 export interface Note {
   note: string;
   freq: number;

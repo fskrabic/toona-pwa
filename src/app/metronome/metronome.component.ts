@@ -16,12 +16,13 @@ import {
   transition,
   state,
 } from '@angular/animations';
-import { TunerComponent } from '../tuner/tuner.component';
+import { MatButton } from '@angular/material/button';
+import { Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-metronome',
   templateUrl: './metronome.component.html',
-  styleUrls: ['./metronome.component.css'],
+  styleUrls: ['./metronome.component.scss'],
   animations: [
     trigger('flyIn', [
       state('in', style({})),
@@ -36,21 +37,21 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   constructor(
     private renderer: Renderer2,
     private router: Router,
-    public settingsService: SettingsService,
+    public settingsService: SettingsService
   ) {}
 
   @ViewChild('tapContainer') tapContainer: ElementRef<HTMLElement>;
 
   @ViewChild('increaseTempoBtn')
-  increaseTempoBtn: ElementRef<HTMLButtonElement>;
+  increaseTempoBtn: MatButton;
   @ViewChild('deacreaseTempoBtn')
-  decreaseTempoBtn: ElementRef<HTMLButtonElement>;
+  decreaseTempoBtn: MatButton;
   @ViewChild('decreaseMeasureCountBtn')
-  decreaseMeasureCountBtn: ElementRef<HTMLButtonElement>;
+  decreaseMeasureCountBtn: MatButton;
   @ViewChild('increaseMeasureCountBtn')
-  increaseMeasureCountBtn: ElementRef<HTMLButtonElement>;
-  @ViewChild('slider') slider: ElementRef<HTMLInputElement>;
-  @ViewChild('startBtn') startBtn: ElementRef<HTMLButtonElement>;
+  increaseMeasureCountBtn: MatButton;
+  @ViewChild('slider') slider: ElementRef;
+  @ViewChild('startBtn') startBtn: MatButton;
 
   private click1 = new Audio('assets/sounds/click1.mp3');
   private click2 = new Audio('assets/sounds/click2.mp3');
@@ -60,7 +61,12 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public beatsPerMeasure: number = 4;
   public tempoTextString: string = 'Allegro';
   public count: number = 0;
-  private isRunning: boolean = false;
+  public isRunning: boolean = false;
+  public metronomeOptions: Options = {
+    floor: 20,
+    ceil: 280,
+    step: 1
+  }
 
   public groundZero = 0;
   public lastTap = 0;
@@ -103,62 +109,54 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     this.metronome = new Timer(this.playClick, 60000 / this.bpm, {
       immediate: true,
     });
-    this.renderer.listen(this.increaseTempoBtn.nativeElement, 'click', () => {
-      if (this.bpm >= 280) {
-        return;
-      }
-      this.bpm++;
-      this.updateMetronome();
-    });
-    this.renderer.listen(this.decreaseTempoBtn.nativeElement, 'click', () => {
-      if (this.bpm <= 20) {
-        return;
-      }
-      this.bpm--;
-      this.updateMetronome();
-    });
-    this.renderer.listen(this.slider.nativeElement, 'input', () => {
-      this.bpm = this.slider.nativeElement.valueAsNumber;
-      this.updateMetronome();
-    });
-    this.renderer.listen(
-      this.increaseMeasureCountBtn.nativeElement,
-      'click',
-      () => {
-        if (this.beatsPerMeasure >= 12) {
-          return;
-        }
-        this.beatsPerMeasure++;
-        this.count = 0;
-      }
-    );
-    this.renderer.listen(
-      this.decreaseMeasureCountBtn.nativeElement,
-      'click',
-      () => {
-        if (this.beatsPerMeasure <= 2) {
-          return;
-        }
-        this.beatsPerMeasure--;
-        this.count = 0;
-      }
-    );
-    this.renderer.listen(this.startBtn.nativeElement, 'click', () => {
-      this.count = 0;
-      if (!this.isRunning) {
-        this.metronome.start();
-        this.isRunning = true;
-        this.startBtn.nativeElement.textContent = 'STOP';
-      } else {
-        this.metronome.stop();
-        this.isRunning = false;
-        this.startBtn.nativeElement.textContent = 'START';
-      }
-    });
+  }
+
+  public decreaseTempo() {
+    if (this.bpm <= 20) {
+      return;
+    }
+    this.bpm--;
+    this.updateMetronome();
+  }
+
+  public increaseTempo() {
+    if (this.bpm >= 280) {
+      return;
+    }
+    this.bpm++;
+    this.updateMetronome();
+  }
+
+  public startMetronome() {
+    this.count = 0;
+    if (!this.isRunning) {
+      this.metronome.start();
+      this.isRunning = true;
+    
+    } else {
+      this.metronome.stop();
+      this.isRunning = false;
+    }
+  }
+
+  public subtractBeats() {
+    if (this.beatsPerMeasure <= 2) {
+      return;
+    }
+    this.beatsPerMeasure--;
+    this.count = 0;
+  }
+
+  public addBeats() {
+    if (this.beatsPerMeasure >= 12) {
+      return;
+    }
+    this.beatsPerMeasure++;
+    this.count = 0;
   }
 
   private updateMetronome = () => {
-    this.slider.nativeElement.value = this.bpm.toString();
+   // this.slider.nativeElement.value = this.bpm.toString();
     this.metronome.timeInterval = 60000 / this.bpm;
 
     if (this.bpm <= 45) {

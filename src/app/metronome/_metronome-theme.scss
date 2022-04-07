@@ -1,0 +1,122 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+
+  $primary-palette: map.get($color-config, "primary");
+  $secondary-palette: map.get($color-config, "secondary");
+  $accent-palette: map.get($color-config, "accent");
+  $warn-palette: map.get($color-config, "warn");
+
+  div.bpm-display {
+    color: mat.get-color-from-palette($primary-palette, 700);
+  }
+
+  .tempo-text {
+    color: mat.get-color-from-palette($primary-palette, 600);
+  }
+  .mat-fab {
+    background-color: mat.get-color-from-palette(
+      $primary-palette,
+      700
+    ) !important;
+    font-family: "Digital";
+    border: 1px solid grey !important;
+  }
+  .mat-fab {
+    &.cdk-focused {
+      background-color: mat.get-color-from-palette(
+        $accent-palette,
+        600
+      ) !important;
+      &.decrease-tempo {
+        background-color: mat.get-color-from-palette(
+          $warn-palette,
+          600
+        ) !important;
+      }
+      &.subtract-beats {
+        background-color: mat.get-color-from-palette(
+          $warn-palette,
+          600
+        ) !important;
+      }
+    }
+  }
+  .mat-button-wrapper {
+    line-height: 15px !important;
+    padding: unset !important;
+  }
+
+  .ngx-slider {
+    top: -3px !important;
+  }
+
+  .ngx-slider .ngx-slider-pointer {
+    width: 20px !important;
+    height: 20px !important;
+    bottom: 0;
+    top: -8px !important;
+    background-color: mat.get-color-from-palette($primary-palette, 900);
+    border: 1px solid grey !important;
+  }
+
+  .ngx-slider .ngx-slider-pointer:after {
+    display: none;
+  }
+
+  .ngx-slider .ngx-slider-model-value {
+    bottom: 25px;
+    visibility: hidden !important;
+  }
+
+  .ngx-slider .ngx-slider-limit {
+    font-weight: bold;
+    font-size: 20px !important;
+  }
+
+  .ngx-slider .ngx-slider-bar {
+    background: mat.get-color-from-palette($primary-palette, 400);
+    height: 7px !important;
+    border: 1px solid mat.get-color-from-palette($primary-palette, 900);
+    border-radius: 5px;
+  }
+
+  @keyframes animateBackground {
+    0% {
+      background-color: mat.get-color-from-palette($primary-palette, 300);
+    }
+    100% {
+      background-color: white;
+    }
+  }
+
+  .dark-theme {
+    .tapContainer {
+      color: white !important;
+    }
+    @keyframes animateBackground {
+      0% {
+        background-color: mat.get-color-from-palette($primary-palette, 300);
+      }
+      100% {
+        background-color: #303030 !important;
+      }
+    }
+  }
+}
+
+@mixin typography($typography-config) {
+}
+
+@mixin theme($theme, $typography-config) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+
+  @if $typography-config != null {
+    @include typography($typography-config);
+  }
+}

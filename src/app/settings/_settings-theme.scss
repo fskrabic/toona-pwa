@@ -1,0 +1,75 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+
+  $primary-palette: map.get($color-config, "primary");
+  $accent-palette: map.get($color-config, "accent");
+  $warn-palette: map.get($color-config, "warn");
+
+  .dark-theme {
+    .container {
+      color: white;
+    }
+    .mat-select-value {
+      color: white !important;
+    }
+
+    .mat-form-field {
+      .mat-form-field-label {
+        color: white !important;
+      }
+      .mat-form-field-ripple {
+        background-color: white !important;
+      }
+      .mat-select-arrow {
+        color: white !important;
+      }
+      .mat-form-field-underline {
+        background-color: white;
+      }
+    }
+
+    .mat-form-field.mat-focused {
+      .mat-form-field-label {
+        color: #9c27b0 !important;
+      }
+      .mat-form-field-ripple {
+        background-color: #9c27b0 !important;
+      }
+      .mat-select-arrow {
+        color: #9c27b0 !important;
+      }
+      .mat-input-element {
+        color: mat.get-color-from-palette($primary-palette, 500) !important;
+      }
+    }
+
+    .mat-select-panel {
+      background-color: #303030;
+    }
+
+    .mat-option {
+      color: white;
+    }
+
+    .mat-option.mat-selected {
+      color: #9c27b0 !important;
+    }
+  }
+}
+
+@mixin typography($typography-config) {
+}
+
+@mixin theme($theme, $typography-config) {
+  $color-config: mat.get-color-config($theme);
+  @if $color-config != null {
+    @include color($theme);
+  }
+
+  @if $typography-config != null {
+    @include typography($typography-config);
+  }
+}

@@ -1,30 +1,25 @@
-// _alert-theme.scss
-
 @use "sass:map";
 @use "@angular/material" as mat;
 
 @mixin color($theme) {
-  // Get the color config from the theme.
   $color-config: mat.get-color-config($theme);
 
-  // Get the primary color palette from the color-config.
   $primary-palette: map.get($color-config, "primary");
   $secondary-palette: map.get($color-config, "secondary");
   $accent-palette: map.get($color-config, "accent");
   $warn-palette: map.get($color-config, "warn");
 
   h2 {
-    color: mat.get-color-from-palette($primary-palette, 500) !important;
+    color: mat.get-color-from-palette($primary-palette, 700) !important;
   }
 
   h2.correctFreq {
     color: mat.get-color-from-palette($accent-palette, 600) !important;
   }
 
-
   .freqContainer h3 {
-    color: mat.get-contrast-color-from-palette($accent-palette, A700);
-}
+    color: mat.get-color-from-palette($primary-palette, 500);
+  }
 
   .ngx-slider {
     font-family: "Digital";
@@ -37,10 +32,7 @@
     background: mat.get-color-from-palette($primary-palette, 400);
     height: 7px;
     border: 1px solid mat.get-color-from-palette($primary-palette, 900);
-  }
-
-  .custom-slider .ngx-slider .ngx-slider-selection {
-    background: red;
+    border-radius: 5px;
   }
 
   .custom-slider .ngx-slider .ngx-slider-pointer {
@@ -62,16 +54,20 @@
 
   .custom-slider .ngx-slider .ngx-slider-limit {
     font-weight: bold;
-    font-size: 15px !important;
+    font-size: 20px !important;
+  }
+
+  .custom-slider .ngx-slider .ngx-slider-tick {
+    background: mat.get-color-from-palette($accent-palette, 800);
+    height: 30px;
+    width: 9px;
+    top: -8px;
+    left: -5px;
+    border-radius: 2px;
   }
 
   .custom-slider .ngx-slider .ngx-slider-ticks {
     color: black !important;
-  }
-
-  .ngx-slider-inner-tooltip {
-    height: 0% !important;
-    position: unset !important;
   }
 
   .mat-fab {
@@ -92,14 +88,6 @@
 }
 
 @mixin typography($typography-config) {
-  .alert {
-    .alert-heading {
-      @include mat.typography-level($typography-config, "title");
-    }
-    .alert-footer {
-      @include mat.typography-level($typography-config, "caption");
-    }
-  }
 }
 
 @mixin theme($theme, $typography-config) {

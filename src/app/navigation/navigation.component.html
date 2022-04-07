@@ -41,7 +41,7 @@
       >
         <mat-icon>{{ isDark ? "dark_mode" : "light_mode" }}</mat-icon>
       </button>
-      <button type="button" mat-icon-button (click)="openSnackbar()">
+      <button *ngIf="hasFlashIcon" type="button" mat-icon-button (click)="openSnackbar()">
         <mat-icon aria-label="Auto detection mode button">flash_on</mat-icon>
       </button>
       </div>

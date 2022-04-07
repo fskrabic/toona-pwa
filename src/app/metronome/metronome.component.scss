@@ -19,7 +19,7 @@
 }
 .closeButton {
   position: absolute;
-  left: 1em;
+  left: 0.5em;
   height: 40px;
 }
 
@@ -40,12 +40,12 @@
 .bpm-display h1 {
   font-size: 3em;
   margin-bottom: 1em;
-  width: 70vw;
+  width: 75vw;
 }
 .tap-bpm-display {
   text-align: center;
   font-weight: bold;
-  height: 70vh;
+  height: 75vh;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
@@ -55,14 +55,15 @@
 }
 .tap-bpm-display .bpm {
   font-size: 4em;
+  margin-top: 0.8em;
 }
 .tap-bpm-display h1 {
   font-size: 3em;
   margin-bottom: 1em;
-  width: 70vw;
+  line-height: 1em;
 }
 .tempo-text {
-  font-size: 0.8em;
+  font-size: 1em;
   text-transform: uppercase;
   text-align: center;
 }
@@ -79,24 +80,15 @@
   border: 1px solid #ddd;
   text-align: center;
   cursor: pointer;
-}
-.tempo-settings .decrease-tempo {
-  line-height: 40px;
-  margin-right: 2%;
-}
-.tempo-settings .increase-tempo {
-  line-height: 48px;
-  margin-left: 2%;
+  line-height: 40px !important;
 }
 
 .start-stop {
-  width: 50px;
-  height: 50px;
-  border: 1px solid;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  font-size: 0.7em;
+  font-size: 1em;
   text-align: center;
-  color: black;
   line-height: 50px;
   margin: 0 auto;
   cursor: pointer;
@@ -121,61 +113,17 @@
   line-height: 30px;
 }
 .measures .subtract-beats {
-  line-height: 27px;
+  line-height: 24px;
 }
 .measures .measure-count {
   text-align: center;
   font-size: 2em;
-  line-height: 35px;
   text-transform: uppercase;
 }
-
-input[type="range"] {
-  -webkit-appearance: none;
-  background: transparent;
-  width: 70%;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-}
-input[type="range"]:focus {
-  outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  cursor: pointer;
-  margin-top: -8px;
-}
-input[type="range"]::-moz-range-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 1px;
-  background: #ddd;
-}
-input[type="range"]::-moz-range-track {
-  width: 100%;
-  height: 1px;
-  background: #ddd;
+.ngx-slider {
+  margin-top: 23px!important;
+  width: 70vw!important;
 }
 .addAnimation {
   animation: animateBackground 0.3s;
-}
-
-@keyframes animateBackground {
-  0% {
-    background-color:#00e676 ;
-  }
-  100% {
-    background-color: white;
-  }
 }
