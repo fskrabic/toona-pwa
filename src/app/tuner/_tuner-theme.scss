@@ -36,12 +36,11 @@
   }
 
   .custom-slider .ngx-slider .ngx-slider-pointer {
-    width: 12px;
+    width: 11px!important;
     height: 22px;
     bottom: 0;
     background-color: mat.get-color-from-palette($primary-palette, 900);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-radius: 2px;
   }
 
   .custom-slider .ngx-slider .ngx-slider-pointer:after {
@@ -59,10 +58,10 @@
 
   .custom-slider .ngx-slider .ngx-slider-tick {
     background: mat.get-color-from-palette($accent-palette, 800);
-    height: 30px;
-    width: 9px;
-    top: -8px;
-    left: -5px;
+    height: 35px;
+    width: 8px;
+    top: -11px;
+    left: -8.5px;
     border-radius: 2px;
   }
 
