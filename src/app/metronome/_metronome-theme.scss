@@ -96,6 +96,11 @@
     .tapContainer {
       color: white !important;
     }
+
+    .closeTapTempo.mat-icon {
+      color: white !important;
+    }
+
     @keyframes animateBackground {
       0% {
         background-color: mat.get-color-from-palette($primary-palette, 300);
@@ -104,6 +109,10 @@
         background-color: #303030 !important;
       }
     }
+  }
+
+  .closeTapTempo.mat-icon {
+    color: black ;
   }
 }
 
