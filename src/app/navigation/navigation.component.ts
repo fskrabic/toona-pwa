@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsService } from '../settings-service/settings.service';
@@ -20,12 +20,9 @@ export class NavigationComponent {
       shareReplay()
     );
 
-  public width: number;
   public activeRoute: string;
-  
-  public title = 'my-app';
   public isDark = this.themeService.isDark;
-  
+  private router$: Subscription;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -34,7 +31,7 @@ export class NavigationComponent {
     private themeService: ThemeService,
     private router: Router
   ) {
-    this.router.events.subscribe((val) => {
+    this.router$ = this.router.events.subscribe((val) => {
       if (val instanceof ActivationEnd) {
         this.activeRoute = this.router.url;
       }
@@ -59,8 +56,12 @@ export class NavigationComponent {
         ? 'enabled.'
         : 'disabled.';
       this.snackbar.open('Automatic string detection ' + message, 'Dismiss', {
-        duration: 3000,
+        duration: 300000,
       });
     }
+  }
+  
+  ngOnDestroy() {
+    this.router$.unsubscribe();
   }
 }

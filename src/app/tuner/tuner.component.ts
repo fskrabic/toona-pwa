@@ -76,6 +76,7 @@ export class TunerComponent implements OnInit, OnDestroy {
     this.closestNote = this.selectedTuning.notes.find(
       (notes: Note) => notes.note === note.note
     );
+    this.frequency = this.closestNote.freq;
     this.setOptions();
   }
 
@@ -108,7 +109,6 @@ export class TunerComponent implements OnInit, OnDestroy {
     if (!this.pitchSubscription) {
       this.pitchSubscription = this.tunerService.pitchSubject
         .pipe(
-          throttleTime(300),
           distinctUntilChanged(),
           filter((value) => value < 30 || value < this.closestNote.freq * 2),
           concatMap((value) => {

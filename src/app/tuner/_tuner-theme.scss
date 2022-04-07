@@ -14,12 +14,17 @@
   $warn-palette: map.get($color-config, "warn");
 
   h2 {
-    color: mat.get-color-from-palette($primary-palette, 800)!important;
+    color: mat.get-color-from-palette($primary-palette, 500) !important;
   }
 
   h2.correctFreq {
     color: mat.get-color-from-palette($accent-palette, 600) !important;
   }
+
+
+  .freqContainer h3 {
+    color: mat.get-contrast-color-from-palette($accent-palette, A700);
+}
 
   .ngx-slider {
     font-family: "Digital";
@@ -61,12 +66,12 @@
   }
 
   .custom-slider .ngx-slider .ngx-slider-ticks {
-      color: black!important;
+    color: black !important;
   }
 
   .ngx-slider-inner-tooltip {
-      height:0%!important;
-    position: unset!important;
+    height: 0% !important;
+    position: unset !important;
   }
 
   .mat-fab {

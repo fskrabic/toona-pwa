@@ -69,24 +69,24 @@
   
   .displayContainer h2 {
     font-family: "Digital";
-    font-size: 20em;
+    font-size: 35vh;
     color: currentColor;
   }
 
   .freqContainer h3 {
-      font-family: "Digital";
-      font-size: 4em;
-  }
+    font-family: "Digital";
+    font-size: 8vh;
+}
   mat-button-toggle-group {
     border: none;
   }
   .buttons {
-    margin-top: 5em;
+    margin-top: 8vh;
     width: 100%;
     display: flex;
     justify-content: center;
     height: 15vh;
-    margin-bottom: 3vh;
+    margin-bottom: 7vh;
   }
   .noteButton {
     margin-right: 1.5vw;

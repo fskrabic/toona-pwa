@@ -35,6 +35,15 @@
         color: white;
     }
 
+    .mat-simple-snackbar {
+        font-size: 15px!important;
+    }
+
+    .mat-simple-snackbar .mat-button-wrapper {
+        font-size: 20px!important;
+        color: mat.get-color-from-palette($primary-palette, 700);
+    }
+
     
     // .dark-theme {
     //     .mat-icon-button {
