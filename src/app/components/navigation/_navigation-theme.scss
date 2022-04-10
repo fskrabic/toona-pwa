@@ -13,6 +13,15 @@
     font-size: 25px !important;
   }
 
+  .mat-dialog-container {
+    background: #303030;
+    color: white;
+  }
+
+  .mat-dialog-container .mat-dialog-title {
+    color: mat.get-color-from-palette($primary-palette, 400)!important;
+  }
+
   .mat-toolbar {
     font-size: 30px;
     font-weight: bold;

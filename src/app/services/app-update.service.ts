@@ -9,12 +9,13 @@ export class AppUpdateService {
 public updatesAvailable: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
 constructor(private readonly updates: SwUpdate) {
-  this.updates.versionUpdates.subscribe(event => {
+  this.updates.versionUpdates.subscribe(() => {
     this.updatesAvailable.next(true);
   });
 }
 
 doAppUpdate() {
     this.updates.activateUpdate().then(() => document.location.reload());
+    this.updatesAvailable.next(false);
   }
 }

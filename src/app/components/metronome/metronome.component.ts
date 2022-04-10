@@ -155,8 +155,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     this.count = 0;
   }
 
-  private updateMetronome = () => {
-   // this.slider.nativeElement.value = this.bpm.toString();
+  public updateMetronome = () => {
     this.metronome.timeInterval = 60000 / this.bpm;
 
     if (this.bpm <= 45) {

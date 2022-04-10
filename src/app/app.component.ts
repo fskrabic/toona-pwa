@@ -2,7 +2,6 @@ import { OnInit, Component, ViewChild, TemplateRef } from '@angular/core';
 import {
   MatDialog,
   MatDialogConfig,
-  MatDialogRef,
 } from '@angular/material/dialog';
 import { AppUpdateService } from './services/app-update.service';
 export interface Note {
@@ -21,19 +20,12 @@ export class AppComponent implements OnInit {
   ) {}
 
   @ViewChild('dialog', { static: true }) updateDialog: TemplateRef<any>;
+  public dialogConfig = new MatDialogConfig();
 
   ngOnInit() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.height = '30vw';
-    dialogConfig.width = '30vh';
-    dialogConfig.position = {
-      top: '50%',
-      left: '50%',
-    };
     this.appUpdateService.updatesAvailable.subscribe((val) => {
       if (val) {
-        this.dialog.open(this.updateDialog, dialogConfig);
+        this.dialog.open(this.updateDialog, this.dialogConfig);
       }
     });
   }
