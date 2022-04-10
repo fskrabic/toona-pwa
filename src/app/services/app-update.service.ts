@@ -2,20 +2,25 @@ import { Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { BehaviorSubject, Subject } from 'rxjs';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppUpdateService {
+  public updatesAvailable: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
 
-public updatesAvailable: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  constructor(private readonly updates: SwUpdate) {
+    this.updates.versionUpdates.subscribe((event) => {
+      if (event.type === 'VERSION_READY') {
+        this.updatesAvailable.next(true);
+      }
+    });
+  }
 
-constructor(private readonly updates: SwUpdate) {
-  this.updates.versionUpdates.subscribe(() => {
-    this.updatesAvailable.next(true);
-  });
-}
-
-doAppUpdate() {
-    this.updates.activateUpdate().then(() => document.location.reload());
-    this.updatesAvailable.next(false);
+  doAppUpdate() {
+    this.updates.activateUpdate().then(() => {
+      this.updatesAvailable.next(false);
+      document.location.reload();
+    });
   }
 }
