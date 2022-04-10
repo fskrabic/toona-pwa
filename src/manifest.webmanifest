@@ -1,7 +1,7 @@
 {
-  "name": "toona-pwa",
-  "short_name": "toona-pwa",
-  "theme_color": "#1976d2",
+  "name": "Toona",
+  "short_name": "Toona",
+  "theme_color": "#1565c0",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",

@@ -7,7 +7,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { SettingsService } from '../settings-service/settings.service';
+import { SettingsService } from '../../services/settings.service';
 import Timer from './timer';
 import {
   trigger,

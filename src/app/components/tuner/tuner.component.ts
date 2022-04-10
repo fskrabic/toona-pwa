@@ -17,12 +17,12 @@ import {
   switchMap,
   throttleTime,
 } from 'rxjs/operators';
-import { TunerService } from '../../tuner-service/tuner.service';
+import { TunerService } from '../../services/tuner.service';
 import {
   Instrument,
   SettingsService,
   Tuning,
-} from '../settings-service/settings.service';
+} from '../../services/settings.service';
 import { getMatIconFailedToSanitizeUrlError } from '@angular/material/icon';
 export interface Note {
   note: string;

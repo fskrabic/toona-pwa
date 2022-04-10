@@ -8,25 +8,27 @@ import {
   SwRegistrationOptions,
 } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { TunerService } from 'src/tuner-service/tuner.service';
+import { TunerService } from 'src/app/services/tuner.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
-import { TunerComponent } from './tuner/tuner.component';
+import { TunerComponent } from './components/tuner/tuner.component';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
-import { AboutComponent } from './about/about.component';
-import { SettingsComponent } from './settings/settings.component';
+import { AboutComponent } from './components/about/about.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MetronomeComponent } from './metronome/metronome.component';
+import { MetronomeComponent } from './components/metronome/metronome.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { AppUpdateService } from './services/app-update.service';
 
 @NgModule({
   declarations: [
@@ -58,9 +60,10 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     MatIconModule,
     MatListModule,
     MatSliderModule,
-    NgxSliderModule
+    NgxSliderModule,
+    MatDialogModule,
   ],
-  providers: [TunerService],
+  providers: [TunerService, AppUpdateService],
   bootstrap: [AppComponent, NavigationComponent],
   exports: []
 })

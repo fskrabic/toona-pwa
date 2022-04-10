@@ -1,29 +1,24 @@
-// src/styles/themes/_light.scss
-
 @use "sass:map";
 @use "@angular/material" as mat;
 
-$my-app-light-primary: mat.define-palette(mat.$blue-palette, 800);
-$my-app-light-secondary: mat.define-palette(mat.$blue-grey-palette);
-$my-app-light-accent: mat.define-palette(mat.$green-palette, 800);
+$toona-light-primary: mat.define-palette(mat.$blue-palette, 800);
+$toona-light-accent: mat.define-palette(mat.$green-palette, 800);
+$toona-light-warn: mat.define-palette(mat.$red-palette);
 
-$my-app-light-warn: mat.define-palette(mat.$red-palette);
-
-$my-app-light-theme: mat.define-light-theme(
+$toona-light-theme: mat.define-light-theme(
   (
     color: (
-      primary: $my-app-light-primary,
-      secondary: $my-app-light-secondary,
-      accent: $my-app-light-accent,
-      warn: $my-app-light-warn,
+      primary: $toona-light-primary,
+      accent: $toona-light-accent,
+      warn: $toona-light-warn,
     ),
   )
 );
 
-$my-app-light-success: mat.define-palette(mat.$green-palette);
-$my-app-light-info: mat.define-palette(mat.$blue-palette);
+$toona-light-success: mat.define-palette(mat.$green-palette);
+$toona-light-info: mat.define-palette(mat.$blue-palette);
 
-$my-app-light-variants: (
-  success: $my-app-light-success,
-  info: $my-app-light-info,
+$toona-light-variants: (
+  success: $toona-light-success,
+  info: $toona-light-info,
 );

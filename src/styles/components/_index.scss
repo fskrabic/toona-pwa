@@ -1,11 +1,8 @@
-// src/styles/components/_index.scss
-
-@use "./button/variants" as button-variants;
-@use "../../app/tuner/tuner-theme" as tuner;
-@use "../../app/metronome/metronome-theme" as metronome;
-@use "../../app/navigation/navigation-theme" as navigation;
-@use "../../app/settings/settings-theme" as settings;
-@use "../../app/about/about-theme" as about;
+@use "../../app/components/tuner/tuner-theme" as tuner;
+@use "../../app/components/metronome/metronome-theme" as metronome;
+@use "../../app/components/navigation/navigation-theme" as navigation;
+@use "../../app/components/settings/settings-theme" as settings;
+@use "../../app/components/about/about-theme" as about;
 
 @mixin theme($theme, $typography-config, $variants) {
   @include tuner.theme($theme, $typography-config);

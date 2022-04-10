@@ -1,1 +1,19 @@
-<app-navigation></app-navigation>
+<app-navigation>
+  <ng-template #dialog>
+    <h2 matDialogTitle>Updates available!</h2>
+    <mat-dialog-content> 
+      <p> New update available for Toona! </p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Dismiss</button>
+      <button
+        mat-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        (click)="appUpdateService.doAppUpdate()"
+      >
+        Install
+      </button>
+    </mat-dialog-actions>
+  </ng-template>
+</app-navigation>

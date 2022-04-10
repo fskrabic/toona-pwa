@@ -4,7 +4,7 @@ import {
   Instrument,
   SettingsService,
   Tuning,
-} from '../settings-service/settings.service';
+} from '../../services/settings.service';
 
 @Component({
   selector: 'app-settings',

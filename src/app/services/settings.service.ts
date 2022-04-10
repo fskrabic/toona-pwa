@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Note } from '../tuner/tuner.component';
+import { Note } from '../components/tuner/tuner.component';
 
 export interface Instrument {
   code: string;
