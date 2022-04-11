@@ -11,28 +11,61 @@
     <div class="tempo-text">{{ tempoTextString }}</div>
     <div class="tempo-settings">
       <!-- <div #deacreaseTempoBtn class="adjust-tempo-btn decrease-tempo">-</div> -->
-      <button #decreaseTempoBtn (click)="decreaseTempo()" mat-fab class="adjust-tempo-btn decrease-tempo">-</button>
+      <button
+        #decreaseTempoBtn
+        (click)="decreaseTempo()"
+        mat-fab
+        class="adjust-tempo-btn decrease-tempo"
+      >
+        -
+      </button>
       <!-- <input #slider [value]="bpm" type="range" min="20" max="280" step="1" /> -->
-      <ngx-slider (valueChange)="updateMetronome()" [(value)]="bpm" [options]="metronomeOptions"></ngx-slider>
-      <button #decreaseTempoBtn (click)="increaseTempo()"mat-fab class="adjust-tempo-btn increase-tempo">+</button>
+      <ngx-slider
+        (valueChange)="updateMetronome()"
+        [(value)]="bpm"
+        [options]="metronomeOptions"
+      ></ngx-slider>
+      <button
+        #decreaseTempoBtn
+        (click)="increaseTempo()"
+        mat-fab
+        class="adjust-tempo-btn increase-tempo"
+      >
+        +
+      </button>
       <!-- <div #increaseTempoBtn class="adjust-tempo-btn increase-tempo">+</div> -->
     </div>
     <!-- <div #startBtn class="start-stop">START</div> -->
-    <button mat-fab #startBtn class="start-stop" (click)="startMetronome()"> {{isRunning ? 'STOP' : 'START'}} </button>
+    <button mat-fab #startBtn class="start-stop" (click)="startMetronome()">
+      {{ isRunning ? "STOP" : "START" }}
+    </button>
     <div class="measures">
-      <button mat-fab #decreaseMeasureCountBtn (click)="subtractBeats()" class="subtract-beats stepper">-</button>
+      <button
+        mat-fab
+        #decreaseMeasureCountBtn
+        (click)="subtractBeats()"
+        class="subtract-beats stepper"
+      >
+        -
+      </button>
       <div class="measure-count">{{ beatsPerMeasure }} / 4</div>
-      <button mat-fab #increaseMeasureCountBtn (click)="addBeats()" class="add-beats stepper">+</button>
+      <button
+        mat-fab
+        #increaseMeasureCountBtn
+        (click)="addBeats()"
+        class="add-beats stepper"
+      >
+        +
+      </button>
     </div>
   </div>
 </div>
 
 <button
   class="closeButton"
-  *ngIf="(settingsService.showTapTempo$ | async)"
+  *ngIf="settingsService.showTapTempo$ | async"
   (click)="close()"
   mat-icon-button
-  mat-dialog-close
 >
   <mat-icon class="closeTapTempo">keyboard_arrow_left</mat-icon>
 </button>
@@ -40,11 +73,11 @@
   [@flyIn]
   #tapContainer
   class="tapContainer"
-  *ngIf="(settingsService.showTapTempo$ | async)"
+  *ngIf="settingsService.showTapTempo$ | async"
 >
   <div class="tap-bpm-display">
     <h1>{{ tapTempoMsg }}</h1>
-      <span class="tempo">{{ bpm }}</span>
-      <span class="bpm">BPM</span>
+    <span class="tempo">{{ bpm }}</span>
+    <span class="bpm">BPM</span>
   </div>
 </div>

@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -6,13 +14,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsService } from '../../services/settings.service';
 import { ActivationEnd, Router } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
+import { AppUpdateService } from 'src/app/services/app-update.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
-export class NavigationComponent implements  OnDestroy {
+export class NavigationComponent implements OnDestroy {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -23,6 +33,7 @@ export class NavigationComponent implements  OnDestroy {
   public activeRoute: string;
   public hasFlashIcon: boolean;
   public isDark = this.themeService.isDark;
+  @ViewChild('settingsIcon', { static: false }) settingsIcon: MatIcon;
   private router$: Subscription;
 
   constructor(
@@ -30,12 +41,16 @@ export class NavigationComponent implements  OnDestroy {
     private snackbar: MatSnackBar,
     private settingsService: SettingsService,
     private themeService: ThemeService,
-    private router: Router
+    private router: Router,
+    public appUpdateService: AppUpdateService
   ) {
     this.router$ = this.router.events.subscribe((val) => {
       if (val instanceof ActivationEnd) {
         this.activeRoute = this.router.url;
-        if (this.activeRoute === '/metronome' || this.activeRoute === '/tuner') {
+        if (
+          this.activeRoute === '/metronome' ||
+          this.activeRoute === '/tuner'
+        ) {
           this.hasFlashIcon = true;
         } else {
           this.hasFlashIcon = false;
@@ -66,7 +81,7 @@ export class NavigationComponent implements  OnDestroy {
       });
     }
   }
-  
+
   ngOnDestroy() {
     this.router$.unsubscribe();
   }

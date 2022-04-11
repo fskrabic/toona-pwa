@@ -9,12 +9,28 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar class=".mat-display-3"> Menu</mat-toolbar>
+    <mat-toolbar class=".mat-display-3 nav-title"> Menu</mat-toolbar>
     <mat-nav-list>
-      <a class="display-2" mat-list-item routerLink="/tuner">Tuner</a>
-      <a class="mat-body" mat-list-item routerLink="/metronome">Metronome</a>
-      <a class="mat-body" mat-list-item routerLink="/settings">Settings</a>
-      <a class="mat-body" mat-list-item routerLink="/about">About</a>
+      <a class="display-2" mat-list-item routerLink="/tuner">
+        <mat-icon>tune</mat-icon> <span class="nav-text">Tuner</span></a
+      >
+      <a class="mat-body" mat-list-item routerLink="/metronome"
+        ><mat-icon>timer</mat-icon><span class="nav-text"> Metronome</span></a
+      >
+      <a class="mat-body" mat-list-item routerLink="/settings">
+        <mat-icon
+          class="update-icon"
+          *ngIf="appUpdateService.updatesAvailable | async; else settings"
+          >update</mat-icon
+        >
+        <ng-template #settings>
+          <mat-icon>settings</mat-icon>
+        </ng-template>
+        <span class="nav-text">Settings</span>
+      </a>
+      <a class="mat-body" mat-list-item routerLink="/about"
+        ><mat-icon>info</mat-icon> <span class="nav-text">About</span></a
+      >
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -29,21 +45,26 @@
       </button>
       <span
         ><a style="text-decoration: none; color: white" routerLink="/tuner"
-          >Toona2</a
+          >Toona</a
         ></span
       >
       <div class="sideButtons">
         <button
-        mat-icon-button
-        (click)="toggleDarkTheme()"
-        class="theme-toggle"
-        aria-label="Toggle Dark Theme"
-      >
-        <mat-icon>{{ isDark ? "dark_mode" : "light_mode" }}</mat-icon>
-      </button>
-      <button *ngIf="hasFlashIcon" type="button" mat-icon-button (click)="openSnackbar()">
-        <mat-icon aria-label="Auto detection mode button">flash_on</mat-icon>
-      </button>
+          mat-icon-button
+          (click)="toggleDarkTheme()"
+          class="theme-toggle"
+          aria-label="Toggle Dark Theme"
+        >
+          <mat-icon>{{ isDark ? "dark_mode" : "light_mode" }}</mat-icon>
+        </button>
+        <button
+          *ngIf="hasFlashIcon"
+          type="button"
+          mat-icon-button
+          (click)="openSnackbar()"
+        >
+          <mat-icon aria-label="Auto detection mode button">flash_on</mat-icon>
+        </button>
       </div>
     </mat-toolbar>
     <router-outlet></router-outlet>

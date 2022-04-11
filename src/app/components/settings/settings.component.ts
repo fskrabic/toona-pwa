@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppUpdateService } from 'src/app/services/app-update.service';
 import {
   Instrument,
   SettingsService,
@@ -14,7 +15,8 @@ import {
 export class SettingsComponent implements OnInit {
   constructor(
     private settingsService: SettingsService,
-    private router: Router
+    private router: Router,
+    public appUpdateService: AppUpdateService
   ) {}
 
   public instruments: Array<Instrument>;
@@ -40,5 +42,4 @@ export class SettingsComponent implements OnInit {
   public saveSettings() {
     this.router.navigate(['/tuner']);
   }
-
 }

@@ -40,4 +40,9 @@
   <button mat-raised-button color="primary" (click)="saveSettings()">
     Save
   </button>
+
+  <div class="updates" *ngIf="appUpdateService.updatesAvailable | async">
+    <h1>There are app updates available!</h1>
+    <button mat-raised-button color="primary" (click)="appUpdateService.doAppUpdate()">Install</button>
+  </div>
 </div>
