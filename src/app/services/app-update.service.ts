@@ -6,7 +6,7 @@ import { BehaviorSubject, timer } from 'rxjs';
 })
 export class AppUpdateService {
   public updatesAvailable: BehaviorSubject<boolean> = new BehaviorSubject(
-    true
+    false
   );
   public updateDialogDismissed: boolean = false;
 
