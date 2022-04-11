@@ -3,7 +3,7 @@
   "short_name": "Toona",
   "theme_color": "#1565c0",
   "background_color": "#fafafa",
-  "display": "fullscreen",
+  "display": "standalone",
   "scope": "/",
   "start_url": "https://toona.vercel.app",
   "icons": [
