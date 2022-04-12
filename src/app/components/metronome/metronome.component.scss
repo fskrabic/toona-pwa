@@ -15,6 +15,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 94vh;
 }
 .closeButton {
   position: absolute;
@@ -44,11 +45,11 @@
 .tap-bpm-display {
   text-align: center;
   font-weight: bold;
-  height: 75vh;
+  height: 62vh;
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  margin-top: 10vh;
+  margin-top: 3vh;
 }
 .tap-bpm-display .tempo {
   font-size: 8em;
