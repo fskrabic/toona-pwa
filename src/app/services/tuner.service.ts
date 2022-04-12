@@ -38,7 +38,7 @@ export class TunerService implements OnDestroy {
     if (this.audioContext.state !== 'running') {
       this.audioContext.resume();
     }
-    const src = interval(200);
+    const src = interval(350);
     if (!this.pitchSubscription) {
       this.pitchSubscription = src.subscribe(this.getPitch);
     }
