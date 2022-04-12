@@ -1,5 +1,3 @@
-// style-manager.service.ts
-
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })

@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {
-  ServiceWorkerModule,
-  SwRegistrationOptions,
-} from '@angular/service-worker';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TunerService } from 'src/app/services/tuner.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,11 +13,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { TunerComponent } from './components/tuner/tuner.component';
 import { MatSelectModule } from '@angular/material/select';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 import { AboutComponent } from './components/about/about.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { FormsModule } from '@angular/forms';
@@ -47,8 +43,6 @@ import { AppUpdateService } from './services/app-update.service';
     FormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
     BrowserAnimationsModule,
@@ -65,6 +59,6 @@ import { AppUpdateService } from './services/app-update.service';
   ],
   providers: [TunerService, AppUpdateService],
   bootstrap: [AppComponent, NavigationComponent],
-  exports: []
+  exports: [],
 })
 export class AppModule {}

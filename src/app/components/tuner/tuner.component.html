@@ -2,21 +2,17 @@
   <div class="displayContainer">
     <h2 #noteDisplay>{{ closestNote.note }}</h2>
   </div>
-
   <div class="freqContainer">
-    <!-- <h2>{{ frequency ? frequency : 0 }} Hz</h2> -->
     <h3>
       {{ closestNote.freq ? closestNote.freq : 0 }} H<span
         style="font-size: 0.6em"
         >z</span
       >
     </h3>
-
     <div class="custom-slider">
       <ngx-slider [(value)]="frequency" [options]="options"></ngx-slider>
     </div>
   </div>
-
   <mat-button-toggle-group name="buttons">
     <button
       class="noteButton"

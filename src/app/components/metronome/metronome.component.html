@@ -10,7 +10,6 @@
     </div>
     <div class="tempo-text">{{ tempoTextString }}</div>
     <div class="tempo-settings">
-      <!-- <div #deacreaseTempoBtn class="adjust-tempo-btn decrease-tempo">-</div> -->
       <button
         #decreaseTempoBtn
         (click)="decreaseTempo()"
@@ -19,7 +18,6 @@
       >
         -
       </button>
-      <!-- <input #slider [value]="bpm" type="range" min="20" max="280" step="1" /> -->
       <ngx-slider
         (valueChange)="updateMetronome()"
         [(value)]="bpm"
@@ -33,9 +31,7 @@
       >
         +
       </button>
-      <!-- <div #increaseTempoBtn class="adjust-tempo-btn increase-tempo">+</div> -->
     </div>
-    <!-- <div #startBtn class="start-stop">START</div> -->
     <button mat-fab #startBtn class="start-stop" (click)="startMetronome()">
       {{ isRunning ? "STOP" : "START" }}
     </button>

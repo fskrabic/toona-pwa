@@ -1,28 +1,28 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 h1 {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    font-size:30px;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  font-size: 30px;
 }
 mat-label {
-    margin-right: 2vw;
+  margin-right: 2vw;
 }
 .mat-raised-button {
-    margin-top: 3vh;
+  margin-top: 3vh;
 }
 .updates {
-    display: flex;
-    flex-direction: column;
-    margin-top: 8vh;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8vh;
+  align-items: center;
+  text-align: center;
 }
 
 .updates .mat-raised-button {
-    width: 4em;
+  width: 4em;
 }

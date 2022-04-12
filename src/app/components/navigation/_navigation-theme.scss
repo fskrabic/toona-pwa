@@ -19,11 +19,11 @@
   }
 
   .update-icon {
-    color: mat.get-color-from-palette($warn-palette, 400)!important;
+    color: mat.get-color-from-palette($warn-palette, 400) !important;
   }
 
   .mat-dialog-container .mat-dialog-title {
-    color: mat.get-color-from-palette($primary-palette, 400)!important;
+    color: mat.get-color-from-palette($primary-palette, 400) !important;
   }
 
   .mat-toolbar {

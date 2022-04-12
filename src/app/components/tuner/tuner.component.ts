@@ -15,7 +15,6 @@ import {
   filter,
   map,
   switchMap,
-  throttleTime,
 } from 'rxjs/operators';
 import { TunerService } from '../../services/tuner.service';
 import {
@@ -23,12 +22,10 @@ import {
   SettingsService,
   Tuning,
 } from '../../services/settings.service';
-import { getMatIconFailedToSanitizeUrlError } from '@angular/material/icon';
 export interface Note {
   note: string;
   freq: number;
 }
-
 @Component({
   selector: 'app-tuner',
   templateUrl: './tuner.component.html',
@@ -43,9 +40,7 @@ export class TunerComponent implements OnInit, OnDestroy {
   freqSlider: ElementRef<HTMLInputElement>;
   @ViewChild('noteDisplay', { static: false })
   noteDisplay: ElementRef<HTMLHeadingElement>;
-  public gauge: any;
-  public opts: any;
-  elem: any;
+
   public closestNote: Note = {
     note: 'E2',
     freq: 82.41,

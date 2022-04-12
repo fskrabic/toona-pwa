@@ -65,8 +65,8 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public metronomeOptions: Options = {
     floor: 20,
     ceil: 280,
-    step: 1
-  }
+    step: 1,
+  };
 
   public groundZero = 0;
   public lastTap = 0;
@@ -132,7 +132,6 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     if (!this.isRunning) {
       this.metronome.start();
       this.isRunning = true;
-    
     } else {
       this.metronome.stop();
       this.isRunning = false;
@@ -206,15 +205,15 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     this.count++;
   };
 
-  close() {
+  public close() {
     this.settingsService.showTapTempo$.next(false);
   }
 
-  isTouchDevice() {
+  public isTouchDevice() {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   }
 
-  tapTempo() {
+  private tapTempo() {
     window.addEventListener('keydown', function (e) {
       if (e.code === 'space' && e.target === document.body) {
         e.preventDefault();

@@ -18,14 +18,14 @@ export class AppUpdateService {
     });
   }
 
-  doAppUpdate() {
+  public doAppUpdate() {
     this.updates.activateUpdate().then(() => {
       this.updatesAvailable.next(false);
       document.location.reload();
     });
   }
 
-  addTimeoutForUpdateDialog() {
+  public addTimeoutForUpdateDialog() {
     this.updateDialogDismissed = true;
     timer(10 * 1000).subscribe(() => {
       this.updateDialogDismissed = false;

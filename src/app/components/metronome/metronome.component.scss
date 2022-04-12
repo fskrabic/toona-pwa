@@ -14,7 +14,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 94vh;
   width: 100%;
 }
 .closeButton {
@@ -49,13 +48,14 @@
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+  margin-top: 10vh;
 }
 .tap-bpm-display .tempo {
   font-size: 8em;
 }
 .tap-bpm-display .bpm {
   font-size: 4em;
-  margin-top: 0.8em;
+  margin-top: 0.7em;
 }
 .tap-bpm-display h1 {
   font-size: 3em;
@@ -122,8 +122,8 @@
   text-transform: uppercase;
 }
 .ngx-slider {
-  margin-top: 23px!important;
-  width: 70vw!important;
+  margin-top: 23px !important;
+  width: 70vw !important;
 }
 .addAnimation {
   animation: animateBackground 0.3s;
