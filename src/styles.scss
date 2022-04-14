@@ -5,13 +5,12 @@
 @use "./styles/typography/config" as typography;
 
 @include mat.core(typography.$toona-typography);
-
 @include mat.core-theme(light.$toona-light-theme);
 @include mat.all-component-themes(light.$toona-light-theme);
 @include components.theme(
   light.$toona-light-theme,
   typography.$toona-typography,
-  light.$toona-light-variants
+  null
 );
 
 

@@ -21,17 +21,12 @@ $toona-dark-theme: mat.define-dark-theme(
 $toona-dark-success: mat.define-palette(mat.$light-green-palette);
 $toona-dark-info: mat.define-palette(mat.$light-blue-palette);
 
-$toona-dark-variants: (
-  success: $toona-dark-success,
-  info: $toona-dark-info,
-);
-
 .dark-theme {
   @include mat.core-color($toona-dark-theme);
   @include mat.button-color($toona-dark-theme);
   @include components.theme(
     $toona-dark-theme,
     typography.$toona-typography,
-    $toona-dark-variants
+    null
   );
 }

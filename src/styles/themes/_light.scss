@@ -14,11 +14,3 @@ $toona-light-theme: mat.define-light-theme(
     ),
   )
 );
-
-$toona-light-success: mat.define-palette(mat.$green-palette);
-$toona-light-info: mat.define-palette(mat.$blue-palette);
-
-$toona-light-variants: (
-  success: $toona-light-success,
-  info: $toona-light-info,
-);

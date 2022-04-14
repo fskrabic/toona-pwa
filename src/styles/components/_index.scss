@@ -10,5 +10,4 @@
   @include metronome.theme($theme, $typography-config);
   @include settings.theme($theme, $typography-config);
   @include about.theme($theme, $typography-config);
-
 }

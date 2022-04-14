@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { SettingsService } from '../../services/settings.service';
-import Timer from './timer';
+import Metronome from './metronome';
 import {
   trigger,
   style,
@@ -80,7 +80,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.metronome.stop();
+        this.metronome.stopMetronome();
       }
     });
 
@@ -106,7 +106,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.metronome = new Timer(this.playClick, 60000 / this.bpm, {
+    this.metronome = new Metronome(this.playClick, 60000 / this.bpm, {
       immediate: true,
     });
   }
@@ -130,10 +130,10 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public startMetronome() {
     this.count = 0;
     if (!this.isRunning) {
-      this.metronome.start();
+      this.metronome.startMetronome();
       this.isRunning = true;
     } else {
-      this.metronome.stop();
+      this.metronome.stopMetronome();
       this.isRunning = false;
     }
   }
@@ -155,7 +155,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   }
 
   public updateMetronome = () => {
-    this.metronome.timeInterval = 60000 / this.bpm;
+    this.metronome.interval = 60000 / this.bpm;
 
     if (this.bpm <= 45) {
       this.tempoTextString = 'Grave';
