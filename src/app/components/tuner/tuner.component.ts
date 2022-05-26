@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -22,6 +23,9 @@ import {
   SettingsService,
   Tuning,
 } from '../../services/settings.service';
+import * as p5 from 'p5';
+import 'p5/lib/addons/p5.sound';
+
 export interface Note {
   note: string;
   freq: number;
@@ -31,7 +35,7 @@ export interface Note {
   templateUrl: './tuner.component.html',
   styleUrls: ['./tuner.component.scss'],
 })
-export class TunerComponent implements OnInit, OnDestroy {
+export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   public frequency: number;
   public selectedInstrument: Instrument;
   public selectedTuning: any;
@@ -50,6 +54,18 @@ export class TunerComponent implements OnInit, OnDestroy {
   public instrumentSubscription: Subscription;
   public tuningSubscription: Subscription;
 
+  public fft: any;
+
+  public canvas: HTMLCanvasElement;
+  public ctx: CanvasRenderingContext2D;
+
+  private HEIGHT = 1500;
+  private WIDTH = 1500;
+
+  private analyzerTime: AnalyserNode;
+  private analyzerFreq: AnalyserNode;
+  private audioContext: AudioContext;
+
   public options: Options = {
     showTicks: true,
     showTicksValues: false,
@@ -62,10 +78,14 @@ export class TunerComponent implements OnInit, OnDestroy {
 
   constructor(
     public tunerService: TunerService,
+    // public canvasService: CanvasService,
     public settingsService: SettingsService,
     private renderer: Renderer2,
     private router: Router
-  ) {}
+  ) {
+    // super();
+    // this.startP5JS(document.body)
+  }
 
   public selectString(note: Note) {
     this.settingsService.setAutoDetection(false);
@@ -98,9 +118,84 @@ export class TunerComponent implements OnInit, OnDestroy {
     );
   }
 
+  public initCanvas() {
+     this.canvas = document.querySelector('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    // canvas.width = window.innerHeight;
+    // canvas.width = window.innerWidth;
+    // canvas.height = this.HEIGHT;
+    this.canvas.height = this.canvas.width * 0.65;
+    
+  }
+
+  async getAudio() {
+    const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+    this.audioContext = new AudioContext();
+    this.analyzerTime = this.audioContext.createAnalyser();
+    this.analyzerFreq = this.audioContext.createAnalyser();
+    const source = this.audioContext.createMediaStreamSource(
+     stream
+    );
+    source.connect(this.analyzerTime);
+    source.connect(this.analyzerFreq)
+    this.analyzerTime.fftSize = 2 ** 8;
+    this.analyzerFreq.fftSize = 2 ** 10;
+    const timeData = new Uint8Array(this.analyzerTime.frequencyBinCount);
+    const frequencyData = new Uint8Array(this.analyzerFreq.frequencyBinCount);
+   // this.drawTimeData(timeData);
+    this.drawFrequencyData(frequencyData);
+  }
+
+  private drawFrequencyData(data: Uint8Array) {
+    this.analyzerFreq.getByteFrequencyData(data);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    const barWidth = (this.canvas.width / 512) * 5;
+    let x = 0;
+    data.forEach((amount) => {
+      const percent = amount / 255;
+      const barHeight = (this.canvas.height * percent )/ 2;
+      this.ctx.fillStyle = "red";
+      this.ctx.fillRect(
+       x+ 10,
+        parseInt((this.canvas.height - barHeight).toString()),
+        barWidth,
+        barHeight
+      );
+      x+= barWidth+ 5;
+    })
+    requestAnimationFrame(() => {this.drawFrequencyData(data)})
+  }
+  
+  private drawTimeData(data: Uint8Array) {
+    this.analyzerTime.getByteTimeDomainData(data);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = "#ffc600";
+    this.ctx.beginPath();
+    const sliceWidth = this.canvas.width / this.analyzerTime.fftSize ;
+    let x = 0;
+    data.forEach((data, i) => {
+      const v = data / 128;
+      const y = (v * this.canvas.height) / 2;
+      // draw our lines
+      if (i === 0) {
+        this.ctx.moveTo(x + 5, y + 5);
+      } else {
+       this.ctx.lineTo(x + 5 , y+ 5);
+      }
+      x += sliceWidth;
+    });
+    this.ctx.stroke();
+    // call itself as soon as possible
+    requestAnimationFrame(() => this.drawTimeData(data));
+  }
+
   private setupAndSubscribeToPitchSubject() {
     if (this.tunerService.isSetup === false) {
       this.tunerService.setup();
+      // this.drawCanvas();
     }
     if (!this.pitchSubscription) {
       this.pitchSubscription = this.tunerService.pitchSubject
@@ -153,7 +248,61 @@ export class TunerComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit() {
+    //  this.drawCanvas();
+  }
+
+  //  createp5() {
+  //    new p5(p => {
+  //     p.setup = () =>{
+
+  //       p.createCanvas(400, 800);
+  //       p.colorMode( p.HSB);
+  //       p.angleMode( p.DEGREES);
+  //       p.canvas.style.position = 'fixed'
+  //       p.canvas.style.top = '0'
+  //       p.canvas.style.left = '100px'
+  //        // let x = document.querySelector('.container');
+  //        //     (x as HTMLElement).style.background = 'url(' + .canvas.toDataURL() + ')';
+
+  //        this.fft = new p5.FFT(0, 512);
+  //        this.fft.setInput(this.tunerService.stream);
+
+  //      };
+
+  //      p.draw = async () => {
+  //        p.background(255, 204, 0);
+
+  //         var spectrum = this.fft.analyze();
+
+  //        console.log(spectrum);
+  //        p.stroke(255);
+  //        p.noStroke();
+  //        p.translate( p.width / 2, p.height / 2);
+  //        p.beginShape();
+  //        for (var i = 0; i < spectrum.length; i++) {
+  //          var angle =  p.map(i, 0, spectrum.length, 0, 360);
+  //          var amp = spectrum[i];
+  //          var r =  p.map(amp, 0, 256, 20, 100);
+  //          //fill(i, 255, 255);
+  //          var x = r *  p.cos(angle);
+  //          var y = r *  p.sin(angle);
+  //          p.stroke(i, 255, 255);
+  //          p.line(0, 0, x, y);
+  //          //vertex(x, y);
+  //          //var y = map(amp, 0, 256, height, 0);
+  //          //rect(i * w, y, w - 2, height - y);
+  //        }
+  //        //endShape();
+  //      };
+  //   })
+  // }
+
   ngOnInit() {
+    this.getAudio();
+    this.initCanvas();
+    // this.canvasService.setup();
+    //this.createp5();
     if (!!!this.frequency) {
       this.frequency = this.closestNote.freq;
     }

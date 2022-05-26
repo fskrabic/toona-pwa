@@ -6,22 +6,24 @@ import { Subject, interval, Subscription } from 'rxjs';
   providedIn: 'root',
 })
 export class TunerService implements OnDestroy {
-  private audioContext: AudioContext = new AudioContext();
+  public audioContext: AudioContext = new AudioContext();
+  
   private pitch: any;
 
   public pitchSubject: Subject<number> = new Subject();
   public pitchSubscription: Subscription;
   public isSetup = false;
+  public stream: MediaStream;
 
   constructor() {}
 
-  setup = async () => {
+  setup = async () =>  {
     this.isSetup = true;
-    const stream = await navigator.mediaDevices.getUserMedia({
+    this.stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: false,
-    });
-    this.startPitch(stream, this.audioContext);
+    })
+    this.startPitch(this.stream, this.audioContext);
     document.addEventListener('visibilitychange', this.checkTabFocused);
   };
 
