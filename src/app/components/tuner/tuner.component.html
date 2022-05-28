@@ -1,6 +1,6 @@
-<canvas class="responsive"></canvas>
+
 <div class="container">
-  
+  <canvas class="responsive"></canvas>
   <div class="displayContainer">
     <h2 #noteDisplay>{{ closestNote.note }}</h2>
   </div>
@@ -12,7 +12,7 @@
       >
     </h3>
     <div class="custom-slider">
-      <ngx-slider [(value)]="frequency" [options]="options"></ngx-slider>
+      <ngx-slider #freqSlider [(value)]="frequency" [options]="options"></ngx-slider>
     </div>
   </div>
   <mat-button-toggle-group name="buttons">

@@ -40,8 +40,7 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   public selectedInstrument: Instrument;
   public selectedTuning: any;
   public tuning: any;
-  @ViewChild('freqSlider', { static: false })
-  freqSlider: ElementRef<HTMLInputElement>;
+
   @ViewChild('noteDisplay', { static: false })
   noteDisplay: ElementRef<HTMLHeadingElement>;
 
@@ -54,18 +53,6 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   public instrumentSubscription: Subscription;
   public tuningSubscription: Subscription;
 
-  public fft: any;
-
-  public canvas: HTMLCanvasElement;
-  public ctx: CanvasRenderingContext2D;
-
-  private HEIGHT = 1500;
-  private WIDTH = 1500;
-
-  private analyzerTime: AnalyserNode;
-  private analyzerFreq: AnalyserNode;
-  private audioContext: AudioContext;
-
   public options: Options = {
     showTicks: true,
     showTicksValues: false,
@@ -76,16 +63,55 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     ticksArray: [this.closestNote.freq],
   };
 
+  private canvas: HTMLCanvasElement;
+  private ctx: CanvasRenderingContext2D;
+  private themeColor: string;
+
+  private analyzerTime: AnalyserNode;
+  private analyzerFreq: AnalyserNode;
+  private audioContext: AudioContext;
+
   constructor(
     public tunerService: TunerService,
-    // public canvasService: CanvasService,
     public settingsService: SettingsService,
     private renderer: Renderer2,
     private router: Router
-  ) {
-    // super();
-    // this.startP5JS(document.body)
-  }
+  ) {}
+
+  private themeObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mut) => {
+      if ((mut.target as HTMLElement).classList.contains('dark-theme')) {
+        this.themeColor = '#ff8f00';
+        this.ctx.fillStyle = '#ff8f00';
+      } else {
+        this.themeColor = '#1565c0';
+        this.ctx.fillStyle = '#1565c0';
+      }
+      return;
+    });
+  });
+
+  private sidenavObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mut) => {
+      const slider = document
+        .querySelector('.custom-slider')
+        .querySelector('ngx-slider');
+      if ((mut.target as HTMLElement).classList.contains('mat-drawer-opened')) {
+        (slider as HTMLElement).style.width = '66vw';
+      } else {
+        (slider as HTMLElement).style.width = '75vw';
+      }
+    });
+  });
+
+  private containerResizeObserver = new ResizeObserver((res) => {
+    res.forEach((re) => {
+      this.canvas.height = re.contentRect.height / 2;
+      this.canvas.width = re.contentRect.width * 0.95;
+      this.canvas.style.bottom = '0px';
+      this.ctx.fillStyle = this.themeColor;
+    });
+  });
 
   public selectString(note: Note) {
     this.settingsService.setAutoDetection(false);
@@ -108,41 +134,34 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
-  public inRange(x, min, max) {
+  public inRange(x: number, min: number, max: number) {
     return (x - min) * (x - max) <= 0;
   }
 
-  public findClosest(input, goal) {
+  public findClosest(input: Array<number>, goal: number) {
     return input.reduce((prev, curr) =>
       Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev
     );
   }
 
-  public initCanvas() {
-     this.canvas = document.querySelector('canvas');
+  private initCanvas() {
+    this.canvas = document.querySelector('canvas');
     this.ctx = this.canvas.getContext('2d');
-    // canvas.width = window.innerHeight;
-    // canvas.width = window.innerWidth;
-    // canvas.height = this.HEIGHT;
-    this.canvas.height = this.canvas.width * 0.65;
-    
   }
 
-  async getAudio() {
-    const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+  private async getAudio() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     this.audioContext = new AudioContext();
     this.analyzerTime = this.audioContext.createAnalyser();
     this.analyzerFreq = this.audioContext.createAnalyser();
-    const source = this.audioContext.createMediaStreamSource(
-     stream
-    );
+    const source = this.audioContext.createMediaStreamSource(stream);
     source.connect(this.analyzerTime);
-    source.connect(this.analyzerFreq)
+    source.connect(this.analyzerFreq);
     this.analyzerTime.fftSize = 2 ** 8;
     this.analyzerFreq.fftSize = 2 ** 10;
     const timeData = new Uint8Array(this.analyzerTime.frequencyBinCount);
     const frequencyData = new Uint8Array(this.analyzerFreq.frequencyBinCount);
-   // this.drawTimeData(timeData);
+    // this.drawTimeData(timeData);
     this.drawFrequencyData(frequencyData);
   }
 
@@ -150,31 +169,41 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.analyzerFreq.getByteFrequencyData(data);
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    const barWidth = (this.canvas.width / 512) * 5;
+    const barWidth = (this.canvas.width / 512) * 8;
     let x = 0;
+
+    if (!this.themeColor) {
+      if (document.body.classList.contains('dark-theme')) {
+        this.themeColor = '#ff8f00';
+      } else {
+        this.themeColor = '#1565c0';
+      }
+    }
     data.forEach((amount) => {
       const percent = amount / 255;
-      const barHeight = (this.canvas.height * percent )/ 2;
-      this.ctx.fillStyle = "red";
+      const barHeight = (this.canvas.height * percent) / 2;
+      this.ctx.fillStyle = this.themeColor;
       this.ctx.fillRect(
-       x+ 10,
+        x,
         parseInt((this.canvas.height - barHeight).toString()),
         barWidth,
         barHeight
       );
-      x+= barWidth+ 5;
-    })
-    requestAnimationFrame(() => {this.drawFrequencyData(data)})
+      x += barWidth + 5;
+    });
+    requestAnimationFrame(() => {
+      this.drawFrequencyData(data);
+    });
   }
-  
+
   private drawTimeData(data: Uint8Array) {
     this.analyzerTime.getByteTimeDomainData(data);
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = "#ffc600";
+    this.ctx.strokeStyle = '#ffc600';
     this.ctx.beginPath();
-    const sliceWidth = this.canvas.width / this.analyzerTime.fftSize ;
+    const sliceWidth = this.canvas.width / this.analyzerTime.fftSize;
     let x = 0;
     data.forEach((data, i) => {
       const v = data / 128;
@@ -183,7 +212,7 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
       if (i === 0) {
         this.ctx.moveTo(x + 5, y + 5);
       } else {
-       this.ctx.lineTo(x + 5 , y+ 5);
+        this.ctx.lineTo(x + 5, y + 5);
       }
       x += sliceWidth;
     });
@@ -195,7 +224,6 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   private setupAndSubscribeToPitchSubject() {
     if (this.tunerService.isSetup === false) {
       this.tunerService.setup();
-      // this.drawCanvas();
     }
     if (!this.pitchSubscription) {
       this.pitchSubscription = this.tunerService.pitchSubject
@@ -249,60 +277,18 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    //  this.drawCanvas();
+    const container = document.querySelector('.container');
+    const body = document.querySelector('body');
+    this.themeObserver.observe(body, { attributes: true });
+    this.containerResizeObserver.observe(container);
+    this.sidenavObserver.observe(document.querySelector('mat-sidenav'), {
+      attributes: true,
+    });
   }
-
-  //  createp5() {
-  //    new p5(p => {
-  //     p.setup = () =>{
-
-  //       p.createCanvas(400, 800);
-  //       p.colorMode( p.HSB);
-  //       p.angleMode( p.DEGREES);
-  //       p.canvas.style.position = 'fixed'
-  //       p.canvas.style.top = '0'
-  //       p.canvas.style.left = '100px'
-  //        // let x = document.querySelector('.container');
-  //        //     (x as HTMLElement).style.background = 'url(' + .canvas.toDataURL() + ')';
-
-  //        this.fft = new p5.FFT(0, 512);
-  //        this.fft.setInput(this.tunerService.stream);
-
-  //      };
-
-  //      p.draw = async () => {
-  //        p.background(255, 204, 0);
-
-  //         var spectrum = this.fft.analyze();
-
-  //        console.log(spectrum);
-  //        p.stroke(255);
-  //        p.noStroke();
-  //        p.translate( p.width / 2, p.height / 2);
-  //        p.beginShape();
-  //        for (var i = 0; i < spectrum.length; i++) {
-  //          var angle =  p.map(i, 0, spectrum.length, 0, 360);
-  //          var amp = spectrum[i];
-  //          var r =  p.map(amp, 0, 256, 20, 100);
-  //          //fill(i, 255, 255);
-  //          var x = r *  p.cos(angle);
-  //          var y = r *  p.sin(angle);
-  //          p.stroke(i, 255, 255);
-  //          p.line(0, 0, x, y);
-  //          //vertex(x, y);
-  //          //var y = map(amp, 0, 256, height, 0);
-  //          //rect(i * w, y, w - 2, height - y);
-  //        }
-  //        //endShape();
-  //      };
-  //   })
-  // }
 
   ngOnInit() {
     this.getAudio();
     this.initCanvas();
-    // this.canvasService.setup();
-    //this.createp5();
     if (!!!this.frequency) {
       this.frequency = this.closestNote.freq;
     }
@@ -335,5 +321,8 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pitchSubscription.unsubscribe();
     this.instrumentSubscription.unsubscribe();
     this.tuningSubscription.unsubscribe();
+    this.themeObserver.disconnect();
+    this.containerResizeObserver.disconnect();
+    this.sidenavObserver.disconnect();
   }
 }

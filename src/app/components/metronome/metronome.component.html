@@ -10,6 +10,14 @@
     </div>
     <div class="tempo-text">{{ tempoTextString }}</div>
     <div class="tempo-settings">
+      <ngx-slider
+        (valueChange)="updateMetronome()"
+        [(value)]="bpm"
+        [options]="metronomeOptions"
+      ></ngx-slider>
+    </div>
+
+    <div class="tempoButtons">
       <button
         #decreaseTempoBtn
         (click)="decreaseTempo()"
@@ -18,11 +26,6 @@
       >
         -
       </button>
-      <ngx-slider
-        (valueChange)="updateMetronome()"
-        [(value)]="bpm"
-        [options]="metronomeOptions"
-      ></ngx-slider>
       <button
         #decreaseTempoBtn
         (click)="increaseTempo()"
