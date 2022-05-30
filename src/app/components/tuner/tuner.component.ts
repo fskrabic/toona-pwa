@@ -23,8 +23,7 @@ import {
   SettingsService,
   Tuning,
 } from '../../services/settings.service';
-import * as p5 from 'p5';
-import 'p5/lib/addons/p5.sound';
+import { FormControl } from '@angular/forms';
 
 export interface Note {
   note: string;
@@ -48,6 +47,10 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     note: 'E2',
     freq: 82.41,
   };
+
+  public tuningControl = new FormControl();
+  public guitarTunings;
+  public bassTunings;
 
   public pitchSubscription: Subscription;
   public instrumentSubscription: Subscription;
@@ -208,7 +211,6 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     data.forEach((data, i) => {
       const v = data / 128;
       const y = (v * this.canvas.height) / 2;
-      // draw our lines
       if (i === 0) {
         this.ctx.moveTo(x + 5, y + 5);
       } else {
@@ -217,7 +219,6 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
       x += sliceWidth;
     });
     this.ctx.stroke();
-    // call itself as soon as possible
     requestAnimationFrame(() => this.drawTimeData(data));
   }
 
@@ -310,6 +311,8 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
         (selected) => {
           this.selectedTuning = selected;
           this.tuning = this.selectedTuning.notes;
+          this.closestNote.note = selected.notes[0].note;
+          this.closestNote.freq = selected.notes[0].freq;
         }
       );
     }

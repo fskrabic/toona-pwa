@@ -20,7 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { AboutComponent } from './components/about/about.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MetronomeComponent } from './components/metronome/metronome.component';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -56,6 +56,7 @@ import { AppUpdateService } from './services/app-update.service';
     MatSliderModule,
     NgxSliderModule,
     MatDialogModule,
+    ReactiveFormsModule,
   ],
   providers: [TunerService, AppUpdateService],
   bootstrap: [AppComponent, NavigationComponent],

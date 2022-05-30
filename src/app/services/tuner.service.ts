@@ -60,14 +60,14 @@ export class TunerService implements OnDestroy {
   }
 
   checkTabFocused = () => {
-    if (document.visibilityState === 'visible') {
-      if (this.audioContext.state === 'suspended') {
-        this.audioContext.resume();
-      }
-    } else {
-      if (this.audioContext.state === 'running') {
-        this.audioContext.suspend();
-      }
-    }
+    // if (document.visibilityState === 'visible') {
+    //   if (this.audioContext.state === 'suspended') {
+    //     this.audioContext.resume();
+    //   }
+    // } else {
+    //   if (this.audioContext.state === 'running') {
+    //     this.audioContext.suspend();
+    //   }
+    // }
   };
 }

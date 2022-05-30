@@ -1,10 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
-    #drawer
     (click)="sidenav.toggle()"
     class="sidenav"
     fixedInViewport
     #sidenav
+    disableClose="true"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
@@ -39,15 +39,43 @@
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
-        (click)="drawer.toggle()"
+        (click)="sidenav.toggle()"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span
-        ><a style="text-decoration: none; color: white" routerLink="/tuner"
-          >Toona</a
-        ></span
-      >
+      <span>
+        <mat-form-field>
+          <mat-select
+            (selectionChange)="tuningSelected($event)"
+            appearance="fill"
+            (valueChange)="valChange($event)"
+            [formControl]="tuningControl"
+            disableOptionCentering="true"
+          >
+            <mat-optgroup
+              *ngFor="let instrument of allTunings"
+              [label]="instrument.instrument"
+            >
+              <mat-option
+                *ngFor="let tuning of instrument.tunings"
+                [value]="tuning.code"
+              >
+                <span style="font-size: max(20px, 2vw)">{{ tuning.name }}</span
+                ><br />
+                <span
+                  style="
+                    font-size: max(15px, 0.5vw);
+                    position: absolute;
+                    bottom: 12px;
+                    right: 2px;
+                  "
+                  >{{ tuning.noteString }}</span
+                >
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </span>
       <div class="sideButtons">
         <button
           mat-icon-button
@@ -67,6 +95,6 @@
         </button>
       </div>
     </mat-toolbar>
-    <router-outlet></router-outlet>
+    <router-outlet> </router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

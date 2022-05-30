@@ -13,9 +13,96 @@
     font-size: 25px !important;
   }
 
+  ::-webkit-scrollbar {
+    width: 7px;
+    overflow-y: scroll;
+    background: grey;
+  }
+
+  .mat-select-panel-wrap {
+    position: relative !important;
+    //top: 50px!important;
+  }
+
+  .mat-optgroup {
+    font-family: "Raleway";
+  }
+
+  .mat-option {
+    font-family: "Raleway";
+  }
+
+  .mat-optgroup-label {
+    font-family: "Raleway";
+    height: 30px !important;
+    font-weight: bold !important;
+    line-height: unset !important;
+    text-transform: uppercase;
+    font-size: 20px !important;
+    // padding-top: 5px;
+    padding-top: 10px !important;
+    border-bottom: 1px solid mat.get-color-from-palette($primary-palette, 400) !important;
+    text-align: center !important;
+    background-color: mat.get-color-from-palette($primary-palette, 700);
+  }
+
+  .mat-option:last-child {
+    border-bottom: 1px solid mat.get-color-from-palette($primary-palette, 400) !important;
+  }
+
+  .mat-form-field {
+    font-family: "Raleway";
+  }
+
+  .mat-select-panel-wrap .mat-select-panel {
+    max-width: unset!important;
+    min-width: calc(100% + 52px) !important;
+    width: 30vw !important;
+    position: absolute !important;
+    top: 48px !important;
+    left: 0 !important;
+    min-height: 50vh!important;
+   
+  }
+
+  .mat-select-placeholder {
+    //transition: unset !important;
+    -webkit-text-fill-color: unset !important;
+    color: white !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: mat.get-color-from-palette($primary-palette, 600) !important;
+    border-radius: 10px;
+  }
   .mat-dialog-container {
     background: #303030;
     color: white;
+  }
+  .mat-option {
+    white-space: normal !important;
+    line-height: normal !important;
+  }
+
+  .mat-select-value {
+    white-space: normal !important;
+    line-height: normal !important;
+  }
+
+  .mat-select-value-text {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  } 
+
+  .mat-select{
+    min-width: fit-content!important;
+  }
+  .mat-form-field-underline {
+    display: none !important;
   }
 
   .update-icon {
