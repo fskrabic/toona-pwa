@@ -72,6 +72,7 @@
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    transform: unset!important;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -122,6 +123,10 @@
     background-color: unset;
   }
 
+  .mat-select-arrow-wrapper {
+    padding-left: 0.5vw!important;
+  }
+
   .dark-theme {
     .mat-drawer {
       background-color: #303030;
@@ -131,6 +136,15 @@
     }
     .mat-list-item-content {
       color: white;
+    }
+  }
+
+  :not(.dark-theme) {
+    .mat-select-arrow {
+      color: white !important;
+    }
+    .mat-select-value-text {
+      color: white!important;
     }
   }
 
