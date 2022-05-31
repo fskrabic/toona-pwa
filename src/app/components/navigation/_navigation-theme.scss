@@ -8,6 +8,10 @@
   $accent-palette: map.get($color-config, "accent");
   $warn-palette: map.get($color-config, "warn");
 
+  * {
+    font-family: "Raleway";
+  }
+
   .mat-list-item {
     font-family: "Raleway";
     font-size: 25px !important;
@@ -126,6 +130,8 @@
   .mat-select-arrow-wrapper {
     padding-left: 0.5vw!important;
   }
+
+  
 
   .dark-theme {
     .mat-drawer {
