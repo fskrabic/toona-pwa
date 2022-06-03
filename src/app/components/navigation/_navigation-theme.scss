@@ -12,6 +12,14 @@
     font-family: "Raleway";
   }
 
+  .mat-icon {
+    font-family: "Material Icons" !important ;
+  }
+
+  .mat-optgroup-label {
+    font-family: "Raleway";
+  }
+
   .mat-list-item {
     font-family: "Raleway";
     font-size: 25px !important;
@@ -25,25 +33,14 @@
 
   .mat-select-panel-wrap {
     position: relative !important;
-    //top: 50px!important;
-  }
-
-  .mat-optgroup {
-    font-family: "Raleway";
-  }
-
-  .mat-option {
-    font-family: "Raleway";
   }
 
   .mat-optgroup-label {
-    font-family: "Raleway";
     height: 30px !important;
     font-weight: bold !important;
     line-height: unset !important;
     text-transform: uppercase;
     font-size: 20px !important;
-    // padding-top: 5px;
     padding-top: 10px !important;
     border-bottom: 1px solid mat.get-color-from-palette($primary-palette, 400) !important;
     text-align: center !important;
@@ -59,24 +56,22 @@
   }
 
   .mat-select-panel-wrap .mat-select-panel {
-    max-width: unset!important;
+    max-width: unset !important;
     min-width: calc(100% + 52px) !important;
     width: 30vw !important;
     position: absolute !important;
     top: 48px !important;
     left: 0 !important;
-    min-height: 50vh!important;
-   
+    min-height: 50vh !important;
   }
 
   .mat-select-placeholder {
-    //transition: unset !important;
     -webkit-text-fill-color: unset !important;
     color: white !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    transform: unset!important;
+    transform: unset !important;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -101,10 +96,10 @@
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-  } 
+  }
 
-  .mat-select{
-    min-width: fit-content!important;
+  .mat-select {
+    min-width: fit-content !important;
   }
   .mat-form-field-underline {
     display: none !important;
@@ -128,10 +123,8 @@
   }
 
   .mat-select-arrow-wrapper {
-    padding-left: 0.5vw!important;
+    padding-left: 0.5vw !important;
   }
-
-  
 
   .dark-theme {
     .mat-drawer {
@@ -150,7 +143,7 @@
       color: white !important;
     }
     .mat-select-value-text {
-      color: white!important;
+      color: white !important;
     }
   }
 
