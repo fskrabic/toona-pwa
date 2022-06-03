@@ -2,6 +2,33 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Note } from '../components/tuner/tuner.component';
 
+import {
+  guitarStandard,
+  guitarCeltic,
+  guitarDropA,
+  guitarDropD,
+  guitarHalfStepDown,
+  guitarOpenA,
+  guitarOpenB,
+  guitarOpenC,
+  guitarOpenD,
+  guitarOpenE,
+  guitarOpenF,
+  guitarOpenG,
+  bassStandard,
+  bassCStandard,
+  bassDropC,
+  bassDropD,
+  bassHalfStepDown,
+  bassPiccolo,
+  bassWholeStepDown,
+  ukuleleBaritone,
+  ukuleleC,
+  ukuleleLowG,
+  ukuleleSlackKey,
+  ukuleleStandard,
+} from './tuning.consts';
+
 export interface Instrument {
   code: string;
   name: string;
@@ -33,462 +60,99 @@ export class SettingsService {
     code: 'guitar-standard',
     noteString: 'E2 A2 D3 G3 B3 E4',
     name: 'Standard',
-    notes: [
-      {
-        note: 'E2',
-        freq: 82.41,
-      },
-      {
-        note: 'A2',
-        freq: 110,
-      },
-      {
-        note: 'D3',
-        freq: 146.83,
-      },
-      {
-        note: 'G3',
-        freq: 196,
-      },
-      {
-        note: 'B3',
-        freq: 246.94,
-      },
-      {
-        note: 'E4',
-        freq: 329.63,
-      },
-    ],
+    notes: guitarStandard,
   });
-
-  public guitarStandard: Note[] = [
-    {
-      note: 'E2',
-      freq: 82.41,
-    },
-    {
-      note: 'A2',
-      freq: 110,
-    },
-    {
-      note: 'D3',
-      freq: 146.83,
-    },
-    {
-      note: 'G3',
-      freq: 196,
-    },
-    {
-      note: 'B3',
-      freq: 246.94,
-    },
-    {
-      note: 'E4',
-      freq: 329.63,
-    },
-  ];
-  public guitarDropD: Note[] = [
-    {
-      note: 'D2',
-      freq: 73.42,
-    },
-    {
-      note: 'A2',
-      freq: 110,
-    },
-    {
-      note: 'D3',
-      freq: 146.83,
-    },
-    {
-      note: 'G3',
-      freq: 196,
-    },
-    {
-      note: 'B4',
-      freq: 246.94,
-    },
-    {
-      note: 'E4',
-      freq: 329.63,
-    },
-  ];
-  public guitarDropA: Note[] = [
-    {
-      note: 'A1',
-      freq: 55,
-    },
-    {
-      note: 'A2',
-      freq: 110,
-    },
-    {
-      note: 'D3',
-      freq: 146.83,
-    },
-    {
-      note: 'G3',
-      freq: 196,
-    },
-    {
-      note: 'B4',
-      freq: 246.94,
-    },
-    {
-      note: 'E4',
-      freq: 329.63,
-    },
-  ];
-
-  public guitarOpenA: Note[] = [
-    {
-      note: 'E2',
-      freq: 82.41,
-    },
-    {
-      note: 'A2',
-      freq: 110,
-    },
-    {
-      note: 'C#3',
-      freq: 138.59,
-    },
-    {
-      note: 'E3',
-      freq: 164.81,
-    },
-    {
-      note: 'A3',
-      freq: 220,
-    },
-    {
-      note: 'E4',
-      freq: 329.63,
-    },
-  ];
-
-  public guitarOpenB: Note[] = [
-    {
-      note: 'B1',
-      freq: 61.74,
-    },
-    {
-      note: 'F#2',
-      freq: 92.5,
-    },
-    {
-      note: 'B2',
-      freq: 123.47,
-    },
-    {
-      note: 'F#3',
-      freq: 185,
-    },
-    {
-      note: 'B3',
-      freq: 246.94,
-    },
-    {
-      note: 'D#4',
-      freq: 311.13,
-    },
-  ];
-
-  public guitarOpenC: Note[] = [
-    {
-      note: 'C2',
-      freq: 65.41,
-    },
-    {
-      note: 'G2',
-      freq: 98,
-    },
-    {
-      note: 'C3',
-      freq: 130.81,
-    },
-    {
-      note: 'G3',
-      freq: 196,
-    },
-    {
-      note: 'C4',
-      freq: 261.63,
-    },
-    {
-      note: 'E4',
-      freq: 329.63,
-    },
-  ];
-
-  public guitarOpenD: Note[] = [
-    {
-      note: 'D2',
-      freq: 73.42,
-    },
-    {
-      note: 'A2',
-      freq: 110,
-    },
-    {
-      note: 'D3',
-      freq: 146.83,
-    },
-    {
-      note: 'F#3',
-      freq: 185,
-    },
-    {
-      note: 'A3',
-      freq: 220,
-    },
-    {
-      note: 'D4',
-      freq: 293.66,
-    },
-  ];
-  public guitarOpenE: Note[] = [
-    {
-      note: 'E2',
-      freq: 82.41,
-    },
-    {
-      note: 'B2',
-      freq: 123.47,
-    },
-    {
-      note: 'E3',
-      freq: 164.81,
-    },
-    {
-      note: 'G#3',
-      freq: 207.65,
-    },
-    {
-      note: 'B3',
-      freq: 246.94,
-    },
-    {
-      note: 'E4',
-      freq: 329.63,
-    },
-  ];
-  public guitarOpenF: Note[] = [
-    {
-      note: 'C2',
-      freq: 65.41,
-    },
-    {
-      note: 'F2',
-      freq: 87.31,
-    },
-    {
-      note: 'C3',
-      freq: 130.81,
-    },
-    {
-      note: 'F3',
-      freq: 174.61,
-    },
-    {
-      note: 'A3',
-      freq: 220,
-    },
-    {
-      note: 'F4',
-      freq: 349.23,
-    },
-  ];
-
-  public guitarOpenG: Note[] = [
-    {
-      note: 'D2',
-      freq: 73.42,
-    },
-    {
-      note: 'G2',
-      freq: 98,
-    },
-    {
-      note: 'D3',
-      freq: 146.83,
-    },
-    {
-      note: 'G3',
-      freq: 196,
-    },
-    {
-      note: 'B3',
-      freq: 246.94,
-    },
-    {
-      note: 'D4',
-      freq: 293.66,
-    },
-  ];
-
-  public guitarCeltic: Note[] = [
-    {
-      note: 'D2',
-      freq: 73.42,
-    },
-    {
-      note: 'A2',
-      freq: 110,
-    },
-    {
-      note: 'D3',
-      freq: 146.83,
-    },
-    {
-      note: 'G3',
-      freq: 196,
-    },
-    {
-      note: 'A3',
-      freq: 220,
-    },
-    {
-      note: 'D4',
-      freq: 293.66,
-    },
-  ]
-
-  public guitarHalfStepDown: Note[] = [
-    {
-      note: 'D#2',
-      freq: 77.78,
-    },
-    {
-      note: 'G#2',
-      freq: 103.83,
-    },
-    {
-      note: 'C#3',
-      freq: 138.59,
-    },
-    {
-      note: 'F#3',
-      freq: 185,
-    },
-    {
-      note: 'A#3',
-      freq: 233.08,
-    },
-    {
-      note: 'D#4',
-      freq: 311.13,
-    },
-  ]
-
-  public bassStandard: Note[] = [
-    {
-      note: 'E1',
-      freq: 41.203,
-    },
-    {
-      note: 'A1',
-      freq: 55,
-    },
-    {
-      note: 'D2',
-      freq: 73.416,
-    },
-    {
-      note: 'G2',
-      freq: 97.99,
-    },
-  ];
 
   public instruments: Instrument[] = [
     { code: 'guitar', name: 'Guitar', numberOfStrings: 6 },
     { code: 'bass', name: 'Bass', numberOfStrings: 4 },
     { code: '7stringguitar', name: '7 String Guitar', numberOfStrings: 7 },
+    { code: 'ukulele', name: 'Ukulele', numberOfStrings: 4}
   ];
   private guitarTunings: Tuning[] = [
     {
       instrument: 'guitar',
       code: 'guitar-standard',
       name: 'Standard',
-      notes: this.guitarStandard,
-      noteString: this.getNotes(this.guitarStandard),
+      notes: guitarStandard,
+      noteString: this.getNotes(guitarStandard),
     },
     {
       instrument: 'guitar',
       code: 'guitar-half-step-down',
       name: 'Half-step down',
-      notes: this.guitarHalfStepDown,
-      noteString: this.getNotes(this.guitarHalfStepDown),
+      notes: guitarHalfStepDown,
+      noteString: this.getNotes(guitarHalfStepDown),
     },
     {
       instrument: 'guitar',
       code: 'guitar-drop-d',
       name: 'Drop D',
-      notes: this.guitarDropD,
-      noteString: this.getNotes(this.guitarDropD),
+      notes: guitarDropD,
+      noteString: this.getNotes(guitarDropD),
     },
     {
       instrument: 'guitar',
       code: 'guitar-drop-a',
       name: 'Drop A',
-      notes: this.guitarDropA,
-      noteString: this.getNotes(this.guitarDropA),
+      notes: guitarDropA,
+      noteString: this.getNotes(guitarDropA),
     },
     {
       instrument: 'guitar',
       code: 'guitar-open-a',
       name: 'Open A',
-      notes: this.guitarOpenA,
-      noteString: this.getNotes(this.guitarOpenA),
+      notes: guitarOpenA,
+      noteString: this.getNotes(guitarOpenA),
     },
     {
       instrument: 'guitar',
       code: 'guitar-open-b',
       name: 'Open B',
-      notes: this.guitarOpenB,
-      noteString: this.getNotes(this.guitarOpenB),
+      notes: guitarOpenB,
+      noteString: this.getNotes(guitarOpenB),
     },
     {
       instrument: 'guitar',
       code: 'guitar-open-c',
       name: 'Open C',
-      notes: this.guitarOpenC,
-      noteString: this.getNotes(this.guitarOpenC),
+      notes: guitarOpenC,
+      noteString: this.getNotes(guitarOpenC),
     },
     {
       instrument: 'guitar',
       code: 'guitar-open-d',
       name: 'Open D',
-      notes: this.guitarOpenD,
-      noteString: this.getNotes(this.guitarOpenD),
+      notes: guitarOpenD,
+      noteString: this.getNotes(guitarOpenD),
     },
     {
       instrument: 'guitar',
       code: 'guitar-open-e',
       name: 'Open E',
-      notes: this.guitarOpenE,
-      noteString: this.getNotes(this.guitarOpenE),
+      notes: guitarOpenE,
+      noteString: this.getNotes(guitarOpenE),
     },
     {
       instrument: 'guitar',
       code: 'guitar-open-f',
       name: 'Open F',
-      notes: this.guitarOpenF,
-      noteString: this.getNotes(this.guitarOpenF),
+      notes: guitarOpenF,
+      noteString: this.getNotes(guitarOpenF),
     },
     {
       instrument: 'guitar',
       code: 'guitar-open-g',
       name: 'Open G',
-      notes: this.guitarOpenG,
-      noteString: this.getNotes(this.guitarOpenG),
+      notes: guitarOpenG,
+      noteString: this.getNotes(guitarOpenG),
     },
     {
       instrument: 'guitar',
       code: 'guitar-celtic',
       name: 'Celtic',
-      notes: this.guitarCeltic,
-      noteString: this.getNotes(this.guitarCeltic),
+      notes: guitarCeltic,
+      noteString: this.getNotes(guitarCeltic),
     },
   ];
   private bassTunings: Tuning[] = [
@@ -496,8 +160,88 @@ export class SettingsService {
       instrument: 'bass',
       code: 'bass-standard',
       name: 'Standard',
-      notes: this.bassStandard,
-      noteString: this.getNotes(this.bassStandard),
+      notes: bassStandard,
+      noteString: this.getNotes(bassStandard),
+    },
+    {
+      instrument: 'bass',
+      code: 'bass-half-step-down',
+      name: 'Half-step down',
+      notes: bassHalfStepDown,
+      noteString: this.getNotes(bassHalfStepDown),
+    },
+    {
+      instrument: 'bass',
+      code: 'bass-whole-step-down',
+      name: 'Whole-step down',
+      notes: bassWholeStepDown,
+      noteString: this.getNotes(bassWholeStepDown),
+    },
+    {
+      instrument: 'bass',
+      code: 'bass-c-standard',
+      name: 'C Standard',
+      notes: bassCStandard,
+      noteString: this.getNotes(bassCStandard),
+    },
+    {
+      instrument: 'bass',
+      code: 'bass-drop-c',
+      name: 'Drop C',
+      notes: bassDropC,
+      noteString: this.getNotes(bassDropC),
+    },
+    {
+      instrument: 'bass',
+      code: 'bass-drop-d',
+      name: 'Drop D',
+      notes: bassDropD,
+      noteString: this.getNotes(bassDropD),
+    },
+    {
+      instrument: 'bass',
+      code: 'bass-piccolo',
+      name: 'Piccolo',
+      notes: bassPiccolo,
+      noteString: this.getNotes(bassPiccolo),
+    },
+  ];
+
+  private ukuleleTunings: Tuning[] = [
+    {
+      instrument: 'ukulele',
+      code: 'ukulele-standard',
+      name: 'Standard',
+      notes: ukuleleStandard,
+      noteString: this.getNotes(ukuleleStandard),
+    },
+    {
+      instrument: 'ukulele',
+      code: 'ukulele-c',
+      name: 'C Standard',
+      notes: ukuleleC,
+      noteString: this.getNotes(ukuleleC),
+    },
+    {
+      instrument: 'ukulele',
+      code: 'ukulele-baritone',
+      name: 'Baritone',
+      notes: ukuleleBaritone,
+      noteString: this.getNotes(ukuleleBaritone),
+    },
+    {
+      instrument: 'ukulele',
+      code: 'ukulele-low-g',
+      name: 'Low G',
+      notes: ukuleleLowG,
+      noteString: this.getNotes(ukuleleLowG),
+    },
+    {
+      instrument: 'ukulele',
+      code: 'ukulele-slack-key',
+      name: 'Slack key',
+      notes: ukuleleSlackKey,
+      noteString: this.getNotes(ukuleleSlackKey),
     },
   ];
 
@@ -509,6 +253,9 @@ export class SettingsService {
   }
   public getBassTunings() {
     return this.bassTunings;
+  }
+  public getUkuleleTunings() {
+    return this.ukuleleTunings;
   }
   public getAutoDetection() {
     return this.autoDetectionMode;

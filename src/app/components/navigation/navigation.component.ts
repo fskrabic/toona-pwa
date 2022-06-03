@@ -42,6 +42,7 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
   public tuningControl = new FormControl();
   public guitarTunings: Tuning[];
   public bassTunings: Tuning[];
+  public ukueleleTunings: Tuning[];
   public allTunings: Array<any>;
 
   constructor(
@@ -76,9 +77,11 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.guitarTunings = this.settingsService.getGuitarTunings();
     this.bassTunings = this.settingsService.getBassTunings();
+    this.ukueleleTunings = this.settingsService.getUkuleleTunings();
     this.allTunings = [
       { instrument: 'Guitar', tunings: this.guitarTunings },
       { instrument: 'Bass', tunings: this.bassTunings },
+      { instrument: 'Ukulele', tunings: this.ukueleleTunings}
     ];
   }
 
