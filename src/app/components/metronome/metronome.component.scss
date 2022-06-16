@@ -30,19 +30,19 @@
   height: 65vh;
   justify-content: space-between;
 }
-.bpm-display {
+.bpmDisplay {
   text-align: center;
   font-weight: bold;
 }
-.bpm-display .tempo {
+.bpmDisplay .tempo {
   font-size: 4em;
 }
-.bpm-display h1 {
+.bpmDisplay h1 {
   font-size: 3em;
   margin-bottom: 1em;
   width: 75vw;
 }
-.tap-bpm-display {
+.tapBpmDisplay {
   text-align: center;
   font-weight: bold;
   height: 62vh;
@@ -51,25 +51,25 @@
   flex-direction: column;
   margin-top: 3vh;
 }
-.tap-bpm-display .tempo {
+.tapBpmDisplay .tempo {
   font-size: 7em;
 }
-.tap-bpm-display .bpm {
+.tapBpmDisplay .bpm {
   font-size: 4em;
   margin-top: 0.7em;
 }
-.tap-bpm-display h1 {
+.tapBpmDisplay h1 {
   font-size: 3em;
   margin-bottom: 1em;
   line-height: 1em;
   margin-top: -1.5em;
 }
-.tempo-text {
+.tempoText {
   font-size: 1em;
   text-transform: uppercase;
   text-align: center;
 }
-.tempo-settings {
+.tempoSettings {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -80,7 +80,7 @@
   justify-content: center;
   gap: 5vw;
 }
-.adjust-tempo-btn {
+.adjustTempoBtn {
   width: 48px;
   height: 48px;
   font-size: 40px;
@@ -91,7 +91,7 @@
   line-height: 40px !important;
 }
 
-.start-stop {
+.startStop {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -108,8 +108,8 @@
   gap: 1em;
 }
 .measures .stepper {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   font-size: 25px;
   border-radius: 50%;
   border: 1.5px solid #ddd;
@@ -117,16 +117,17 @@
   cursor: pointer;
 }
 
-.measures .add-beats {
+.measures .addBeats {
   line-height: 30px;
 }
-.measures .subtract-beats {
-  line-height: 24px;
+.measures .subtractBeats {
+  line-height: 0px;
 }
-.measures .measure-count {
+.measures .measureCount {
   text-align: center;
   font-size: 2em;
   text-transform: uppercase;
+  margin-top: 9px;
 }
 .ngx-slider {
   margin-top: 23px !important;

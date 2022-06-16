@@ -77,28 +77,6 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public showTapTempo: boolean = false;
   public tapTempoMsg: string;
 
-  private sidenavObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mut) => {
-      const slider = document
-        .querySelector('.tempo-settings')
-        .querySelector('ngx-slider');
-        console.log(window.innerWidth)
-      if ((mut.target as HTMLElement).classList.contains('mat-drawer-opened')) {
-        if (window.innerWidth < 1100) {
-          (slider as HTMLElement).style.width = '49vw';
-        } else {
-          (slider as HTMLElement).style.width = '70vw';
-        }
-      } else {
-        if (window.innerWidth < 1100) {
-          (slider as HTMLElement).style.width = '49vw';
-        } else {
-          (slider as HTMLElement).style.width = '70vw';
-        }
-      }
-    });
-  });
-
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -131,9 +109,6 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     this.metronome = new Metronome(this.playClick, 60000 / this.bpm, {
       immediate: true,
     });
-    // this.sidenavObserver.observe(document.querySelector('mat-sidenav'), {
-    //   attributes: true,
-    // });
   }
 
   public decreaseTempo() {

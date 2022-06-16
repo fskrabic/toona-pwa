@@ -48,7 +48,6 @@
           <mat-select
             (selectionChange)="tuningSelected($event)"
             appearance="fill"
-            (valueChange)="valChange($event)"
             [formControl]="tuningControl"
             disableOptionCentering="true"
           >
@@ -86,7 +85,7 @@
           <mat-icon>{{ isDark ? "dark_mode" : "light_mode" }}</mat-icon>
         </button>
         <button
-          *ngIf="hasFlashIcon"
+          *ngIf="hasFlashIcon | async"
           type="button"
           mat-icon-button
           (click)="openSnackbar()"

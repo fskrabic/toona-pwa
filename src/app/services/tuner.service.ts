@@ -7,7 +7,7 @@ import { Subject, interval, Subscription } from 'rxjs';
 })
 export class TunerService implements OnDestroy {
   public audioContext: AudioContext = new AudioContext();
-  
+
   private pitch: any;
 
   public pitchSubject: Subject<number> = new Subject();
@@ -17,12 +17,12 @@ export class TunerService implements OnDestroy {
 
   constructor() {}
 
-  setup = async () =>  {
+  setup = async () => {
     this.isSetup = true;
     this.stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: false,
-    })
+    });
     this.startPitch(this.stream, this.audioContext);
     document.addEventListener('visibilitychange', this.checkTabFocused);
   };
@@ -40,7 +40,7 @@ export class TunerService implements OnDestroy {
     if (this.audioContext.state !== 'running') {
       this.audioContext.resume();
     }
-    const src = interval(350);
+    const src = interval(500);
     if (!this.pitchSubscription) {
       this.pitchSubscription = src.subscribe(this.getPitch);
     }
@@ -60,14 +60,14 @@ export class TunerService implements OnDestroy {
   }
 
   checkTabFocused = () => {
-    // if (document.visibilityState === 'visible') {
-    //   if (this.audioContext.state === 'suspended') {
-    //     this.audioContext.resume();
-    //   }
-    // } else {
-    //   if (this.audioContext.state === 'running') {
-    //     this.audioContext.suspend();
-    //   }
-    // }
+    if (document.visibilityState === 'visible') {
+      if (this.audioContext.state === 'suspended') {
+        this.audioContext.resume();
+      }
+    } else {
+      if (this.audioContext.state === 'running') {
+        this.audioContext.suspend();
+      }
+    }
   };
 }

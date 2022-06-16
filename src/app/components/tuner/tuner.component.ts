@@ -10,13 +10,7 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { Options } from '@angular-slider/ngx-slider';
 import { of, Subscription } from 'rxjs';
-import {
-  concatMap,
-  distinctUntilChanged,
-  filter,
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { concatMap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { TunerService } from '../../services/tuner.service';
 import {
   Instrument,
@@ -24,6 +18,8 @@ import {
   Tuning,
 } from '../../services/settings.service';
 import { FormControl } from '@angular/forms';
+import { ChromaticNotes } from 'src/app/services/note.consts';
+import { guitarStandard } from 'src/app/services/tuning.consts';
 
 export interface Note {
   note: string;
@@ -38,8 +34,7 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   public frequency: number;
   public selectedInstrument: Instrument;
   public selectedTuning: any;
-  public tuning: any;
-
+  public tuning = guitarStandard;
   @ViewChild('noteDisplay', { static: false })
   noteDisplay: ElementRef<HTMLHeadingElement>;
 
@@ -51,6 +46,7 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   public tuningControl = new FormControl();
   public guitarTunings;
   public bassTunings;
+  public chromaticNotes: Note[];
 
   public pitchSubscription: Subscription;
   public instrumentSubscription: Subscription;
@@ -60,9 +56,9 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     showTicks: true,
     showTicksValues: false,
     readOnly: true,
-    floor: parseFloat((this.closestNote.freq - 52).toFixed(2)),
-    ceil: parseFloat((this.closestNote.freq + 52).toFixed(2)),
-    step: 0.01,
+    floor: parseFloat((this.closestNote.freq - 5).toFixed(2)),
+    ceil: parseFloat((this.closestNote.freq + 5).toFixed(2)),
+    step: 0.02,
     ticksArray: [this.closestNote.freq],
   };
 
@@ -70,7 +66,6 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   private ctx: CanvasRenderingContext2D;
   private themeColor: string;
 
-  private analyzerTime: AnalyserNode;
   private analyzerFreq: AnalyserNode;
   private audioContext: AudioContext;
 
@@ -104,6 +99,7 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         (slider as HTMLElement).style.width = '75vw';
       }
+      return;
     });
   });
 
@@ -114,6 +110,7 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.canvas.style.bottom = '0px';
       this.ctx.fillStyle = this.themeColor;
     });
+    return;
   });
 
   public selectString(note: Note) {
@@ -126,18 +123,31 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private setOptions() {
-    this.options = {
-      showTicks: true,
-      showTicksValues: false,
-      readOnly: true,
-      floor: parseFloat((this.closestNote.freq - 52).toFixed(2)),
-      ceil: parseFloat((this.closestNote.freq + 52).toFixed(2)),
-      step: 0.01,
-      ticksArray: [this.closestNote.freq],
-    };
+    if (this.settingsService.isChromatic$.value) {
+      this.options = {
+        showTicks: true,
+        showTicksValues: false,
+        readOnly: true,
+        floor: parseFloat((this.closestNote.freq - 5).toFixed(2)),
+        ceil: parseFloat((this.closestNote.freq + 5).toFixed(2)),
+        step: 0.02,
+        ticksArray: [this.closestNote.freq],
+      };
+    } else {
+      this.options = {
+        showTicks: true,
+        showTicksValues: false,
+        readOnly: true,
+        floor: parseFloat((this.closestNote.freq - 5).toFixed(2)),
+        ceil: parseFloat((this.closestNote.freq + 5).toFixed(2)),
+        step: 0.02,
+        ticksArray: [this.closestNote.freq],
+      };
+    }
   }
 
   public inRange(x: number, min: number, max: number) {
+    console.log(x, min, max);
     return (x - min) * (x - max) <= 0;
   }
 
@@ -155,16 +165,11 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   private async getAudio() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     this.audioContext = new AudioContext();
-    this.analyzerTime = this.audioContext.createAnalyser();
     this.analyzerFreq = this.audioContext.createAnalyser();
     const source = this.audioContext.createMediaStreamSource(stream);
-    source.connect(this.analyzerTime);
     source.connect(this.analyzerFreq);
-    this.analyzerTime.fftSize = 2 ** 8;
     this.analyzerFreq.fftSize = 2 ** 10;
-    const timeData = new Uint8Array(this.analyzerTime.frequencyBinCount);
     const frequencyData = new Uint8Array(this.analyzerFreq.frequencyBinCount);
-    // this.drawTimeData(timeData);
     this.drawFrequencyData(frequencyData);
   }
 
@@ -199,29 +204,6 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private drawTimeData(data: Uint8Array) {
-    this.analyzerTime.getByteTimeDomainData(data);
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = '#ffc600';
-    this.ctx.beginPath();
-    const sliceWidth = this.canvas.width / this.analyzerTime.fftSize;
-    let x = 0;
-    data.forEach((data, i) => {
-      const v = data / 128;
-      const y = (v * this.canvas.height) / 2;
-      if (i === 0) {
-        this.ctx.moveTo(x + 5, y + 5);
-      } else {
-        this.ctx.lineTo(x + 5, y + 5);
-      }
-      x += sliceWidth;
-    });
-    this.ctx.stroke();
-    requestAnimationFrame(() => this.drawTimeData(data));
-  }
-
   private setupAndSubscribeToPitchSubject() {
     if (this.tunerService.isSetup === false) {
       this.tunerService.setup();
@@ -230,22 +212,68 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.pitchSubscription = this.tunerService.pitchSubject
         .pipe(
           distinctUntilChanged(),
-          filter((value) => value < 30 || value < this.closestNote.freq * 2),
           concatMap((value) => {
-            if (this.inRange(value, value * 1.98, value * 2.02)) {
+            if (
+              this.inRange(
+                value,
+                this.closestNote.freq * 1.95,
+                this.closestNote.freq * 2.05
+              )
+            ) {
               return of(value / 2);
+            } else if (
+              this.inRange(
+                value,
+                this.closestNote.freq * 2.95,
+                this.closestNote.freq * 3.05
+              )
+            ) {
+              return of(value / 3);
+            } else if (
+              this.inRange(
+                value,
+                this.closestNote.freq * 3.95,
+                this.closestNote.freq * 4.05
+              )
+            ) {
+              return of(value / 4);
+            } else if (
+              this.inRange(
+                value,
+                this.closestNote.freq * 4.95,
+                this.closestNote.freq * 5.05
+              )
+            ) {
+              return of(value / 5);
             } else {
               return of(value);
             }
           }),
-          map((value) => {
-            return Math.round(value * 100 + Number.EPSILON) / 100;
-          }),
+          //filter((value) => value < 30 || value < this.closestNote.freq * 2),
+          // map((value) => {
+          //   if (
+          //     this.settingsService.getAutoDetection() ||
+          //     this.settingsService.isChromatic$.value
+          //   ) {
+          //     return value;
+          //   } else {
+          //     if (value < 30 || value > this.closestNote.freq * 2) {
+          //       return null;
+          //     } else {
+          //       return value;
+          //     }
+          //   }
+          // }),
+
+          // map((value) => {
+          //   return Math.round(value * 100 + Number.EPSILON) / 100;
+          // }),
           switchMap(
             async (value) => (this.frequency = parseFloat(value.toFixed(2)))
           )
         )
         .subscribe(() => {
+          console.log(this.frequency);
           if (this.settingsService.getAutoDetection()) {
             this.closestNote.freq = this.findClosest(
               this.tuning.map((notes: Note) => notes.freq),
@@ -255,12 +283,22 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
               (note: Note) => note.freq === this.closestNote.freq
             ).note;
             this.setOptions();
+          } else if (this.settingsService.isChromatic$.value) {
+            this.closestNote.freq = this.findClosest(
+              this.chromaticNotes.map((notes: Note) => notes.freq),
+              this.frequency
+            );
+            this.closestNote.note = this.chromaticNotes.find(
+              (note: Note) => note.freq === this.closestNote.freq
+            ).note;
+            this.setOptions();
           }
+
           if (
             this.inRange(
               this.frequency,
-              this.closestNote.freq - 0.4,
-              this.closestNote.freq + 0.4
+              this.closestNote.freq - 0.6,
+              this.closestNote.freq + 0.6
             )
           ) {
             this.renderer.addClass(
@@ -277,6 +315,10 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  private getChromaticNotes() {
+    this.chromaticNotes = ChromaticNotes;
+  }
+
   ngAfterViewInit() {
     const container = document.querySelector('.container');
     const body = document.querySelector('body');
@@ -290,6 +332,7 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.getAudio();
     this.initCanvas();
+    this.getChromaticNotes();
     if (!!!this.frequency) {
       this.frequency = this.closestNote.freq;
     }

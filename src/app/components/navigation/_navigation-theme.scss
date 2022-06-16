@@ -51,6 +51,10 @@
     border-bottom: 1px solid mat.get-color-from-palette($primary-palette, 400) !important;
   }
 
+  .mat-option-text {
+    font-weight: 500;
+  }
+
   .mat-form-field {
     font-family: "Raleway";
   }
@@ -126,6 +130,20 @@
     padding-left: 0.5vw !important;
   }
 
+  .mat-option {
+    &.mat-active {
+      background-color: mat.get-color-from-palette(
+        $accent-palette,
+        300
+      ) !important;
+    }
+  }
+
+  .mat-form-field-infix {
+    width: 150px!important;
+  }
+
+
   .dark-theme {
     .mat-drawer {
       background-color: #303030;
@@ -136,6 +154,7 @@
     .mat-list-item-content {
       color: white;
     }
+   
   }
 
   :not(.dark-theme) {

@@ -33,13 +33,18 @@ ngx-slider {
 
 .displayContainer h2 {
   font-family: "Digital";
-  font-size: 35vh;
-  color: currentColor;
+  font-size: max(22vw, 30vh) !important;
 }
 
 .freqContainer h3 {
   font-family: "Digital";
   font-size: 8vh;
+}
+
+.placeholder {
+  margin-top: 8vh;
+  height: 15vh;
+  margin-bottom: 11vh;
 }
 
 mat-button-toggle-group {

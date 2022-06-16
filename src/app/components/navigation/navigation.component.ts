@@ -1,13 +1,12 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsService, Tuning } from '../../services/settings.service';
@@ -32,7 +31,7 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
   public activeRoute: string;
-  public hasFlashIcon: boolean;
+  public hasFlashIcon: BehaviorSubject<boolean> = new BehaviorSubject(true);
   public isDark = this.themeService.isDark;
   @ViewChild('settingsIcon', { static: false }) settingsIcon: MatIcon;
   @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
@@ -43,6 +42,7 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
   public guitarTunings: Tuning[];
   public bassTunings: Tuning[];
   public ukueleleTunings: Tuning[];
+  public chromaticTuning: Tuning[];
   public allTunings: Array<any>;
 
   constructor(
@@ -60,9 +60,9 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
           this.activeRoute === '/metronome' ||
           this.activeRoute === '/tuner'
         ) {
-          this.hasFlashIcon = true;
+          this.hasFlashIcon.next(true);
         } else {
-          this.hasFlashIcon = false;
+          this.hasFlashIcon.next(false);
         }
       }
     });
@@ -75,13 +75,18 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.settingsService.isChromatic$.subscribe((val) => {
+      this.hasFlashIcon.next(!val);
+    });
     this.guitarTunings = this.settingsService.getGuitarTunings();
     this.bassTunings = this.settingsService.getBassTunings();
     this.ukueleleTunings = this.settingsService.getUkuleleTunings();
+    this.chromaticTuning = this.settingsService.getChromatic();
     this.allTunings = [
       { instrument: 'Guitar', tunings: this.guitarTunings },
       { instrument: 'Bass', tunings: this.bassTunings },
-      { instrument: 'Ukulele', tunings: this.ukueleleTunings}
+      { instrument: 'Ukulele', tunings: this.ukueleleTunings },
+      { instrument: 'Extras', tunings: this.chromaticTuning },
     ];
   }
 
@@ -128,6 +133,12 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
     span2.textContent = tuning.noteString;
     span1.style.fontSize = '17px';
     span2.style.fontSize = '13px';
+    let content = document.querySelector('div.mat-select-trigger');
+    if (span2.textContent === '') {
+      (content as HTMLElement).style.marginTop = '15px';
+    } else {
+      (content as HTMLElement).style.marginTop = null;
+    }
     matSelectText.append(span1);
     matSelectText.append(span2);
   }
@@ -138,12 +149,17 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.createAndAppendSpanElements(tuning);
     });
-    this.settingsService.selectedInstrument$.next(found[0].instrument);
-    this.settingsService.setTuning(found[0]);
-  }
-
-  valChange(e) {
-    console.log(e);
+    if (found[0].code === 'chromatic') {
+      this.settingsService.setChromaticTuner(true);
+      this.settingsService.setAutoDetection(false);
+      this.hasFlashIcon.next(false);
+    } else {
+      this.hasFlashIcon.next(false);
+      this.settingsService.setAutoDetection(true);
+      this.settingsService.setChromaticTuner(false);
+      this.settingsService.selectedInstrument$.next(found[0].instrument);
+      this.settingsService.setTuning(found[0]);
+    }
   }
 
   openSnackbar() {

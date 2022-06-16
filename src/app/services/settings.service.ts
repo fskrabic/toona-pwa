@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Note } from '../components/tuner/tuner.component';
+import { ChromaticNotes } from './note.consts';
 
 import {
   guitarStandard,
@@ -35,11 +36,11 @@ export interface Instrument {
   numberOfStrings: number;
 }
 export interface Tuning {
-  instrument: string;
+  instrument?: string;
   code: string;
   name: string;
   notes: Note[];
-  noteString: string;
+  noteString?: string;
 }
 
 @Injectable({
@@ -51,6 +52,8 @@ export class SettingsService {
   private autoDetectionMode: boolean = true;
 
   public showTapTempo$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  public isChromatic$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   public selectedInstrument$: BehaviorSubject<Instrument> = new BehaviorSubject(
     { code: 'guitar', name: 'Guitar', numberOfStrings: 6 }
@@ -67,7 +70,14 @@ export class SettingsService {
     { code: 'guitar', name: 'Guitar', numberOfStrings: 6 },
     { code: 'bass', name: 'Bass', numberOfStrings: 4 },
     { code: '7stringguitar', name: '7 String Guitar', numberOfStrings: 7 },
-    { code: 'ukulele', name: 'Ukulele', numberOfStrings: 4}
+    { code: 'ukulele', name: 'Ukulele', numberOfStrings: 4 },
+  ];
+  private chromatic: Tuning[] = [
+    {
+      code: 'chromatic',
+      name: 'Chromatic',
+      notes: ChromaticNotes,
+    },
   ];
   private guitarTunings: Tuning[] = [
     {
@@ -251,6 +261,9 @@ export class SettingsService {
   public getGuitarTunings() {
     return this.guitarTunings;
   }
+  public getChromatic() {
+    return this.chromatic;
+  }
   public getBassTunings() {
     return this.bassTunings;
   }
@@ -266,6 +279,9 @@ export class SettingsService {
   }
   public setAutoDetection(value: boolean) {
     this.autoDetectionMode = value;
+  }
+  public setChromaticTuner(value: boolean) {
+    this.isChromatic$.next(value);
   }
   private getNotes(notes: Note[]) {
     let noteString: string = '';
