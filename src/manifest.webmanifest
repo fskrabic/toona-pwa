@@ -7,6 +7,24 @@
   "start_url": "https://toona.vercel.app",
   "icons": [
     {
+      "src": "assets/icons/20x20.png",
+      "sizes": "20x20",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/29x29.png",
+      "sizes": "29x29",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/40x40.png",
+      "sizes": "40x40",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
       "src": "assets/icons/48x48.png",
       "sizes": "48x48",
       "type": "image/png",
