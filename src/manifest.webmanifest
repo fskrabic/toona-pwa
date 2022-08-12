@@ -1,7 +1,6 @@
 {
   "name": "Toona",
   "short_name": "Toona",
-  "theme_color": "#1565c0",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
