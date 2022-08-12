@@ -5,20 +5,9 @@ import { Injectable } from '@angular/core';
 export class ThemeService {
   isDark = false;
 
-  toggleDarkTheme() {
-    if (this.isDark) {
-      this.removeStyle('dark-theme');
-      document.body.classList.remove('dark-theme');
-      this.isDark = false;
-    } else {
-      const href = 'dark-theme.css';
-      getLinkElementForKey('dark-theme').setAttribute('href', href);
-      document.body.classList.add('dark-theme');
-      this.isDark = true;
-      document
-        .querySelector('meta[name="theme-color"]')
-        .setAttribute('content', '#303030');
-    }
+  toggleStatusBarColor(color: string) {
+    document.querySelector('meta[name="theme-color"]')
+    .setAttribute('content', color)
   }
 
   removeStyle(key: string) {
@@ -27,8 +16,24 @@ export class ThemeService {
       document.head.removeChild(existingLinkElement);
     }
   }
-}
+  
+  toggleDarkTheme() {
+    if (this.isDark) {
+      this.removeStyle('dark-theme');
+      document.body.classList.remove('dark-theme');
+      this.toggleStatusBarColor('#1565c0')
+      this.isDark = false;
+    } else {
+      const href = 'dark-theme.css';
+      getLinkElementForKey('dark-theme').setAttribute('href', href);
+      document.body.classList.add('dark-theme');
+      this.isDark = true;
+      this.toggleStatusBarColor('#303030');
+    }
+  }
 
+  
+} 
 function getLinkElementForKey(key: string) {
   return getExistingLinkElementByKey(key) || createLinkElementWithKey(key);
 }
