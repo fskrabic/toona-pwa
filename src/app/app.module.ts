@@ -19,7 +19,6 @@ import { TunerComponent } from './components/tuner/tuner.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { AboutComponent } from './components/about/about.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MetronomeComponent } from './components/metronome/metronome.component';
@@ -31,7 +30,6 @@ import { AppUpdateService } from './services/app-update.service';
     AppComponent,
     NavigationComponent,
     TunerComponent,
-    SettingsComponent,
     AboutComponent,
     MetronomeComponent,
   ],

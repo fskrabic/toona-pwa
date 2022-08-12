@@ -71,12 +71,12 @@
 <div
   [@flyIn]
   #tapContainer
-  class="tapContainer"
+  class="tapContainer notSelectable"
   *ngIf="settingsService.showTapTempo$ | async"
 >
-  <div class="tapBpmDisplay">
-    <h1>{{ tapTempoMsg }}</h1>
-    <span class="tempo">{{ bpm }}</span>
-    <span class="bpm">BPM</span>
+  <div class="tapBpmDisplay notSelectable">
+    <h1 class="notSelectable">{{ tapTempoMsg }}</h1>
+    <span class="tempo notSelectable">{{ bpm }}</span>
+    <span class="bpm notSelectable">BPM</span>
   </div>
 </div>

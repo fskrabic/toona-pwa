@@ -1,13 +1,11 @@
 @use "../../app/components/tuner/tuner-theme" as tuner;
 @use "../../app/components/metronome/metronome-theme" as metronome;
 @use "../../app/components/navigation/navigation-theme" as navigation;
-@use "../../app/components/settings/settings-theme" as settings;
 @use "../../app/components/about/about-theme" as about;
 
 @mixin theme($theme, $typography-config, $variants) {
   @include tuner.theme($theme, $typography-config);
   @include navigation.theme($theme, $typography-config);
   @include metronome.theme($theme, $typography-config);
-  @include settings.theme($theme, $typography-config);
   @include about.theme($theme, $typography-config);
 }

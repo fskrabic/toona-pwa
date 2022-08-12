@@ -147,7 +147,6 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public inRange(x: number, min: number, max: number) {
-    console.log(x, min, max);
     return (x - min) * (x - max) <= 0;
   }
 
@@ -170,16 +169,15 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
     source.connect(this.analyzerFreq);
     this.analyzerFreq.fftSize = 2 ** 10;
     const frequencyData = new Uint8Array(this.analyzerFreq.frequencyBinCount);
+   
     this.drawFrequencyData(frequencyData);
   }
 
   private drawFrequencyData(data: Uint8Array) {
     this.analyzerFreq.getByteFrequencyData(data);
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     const barWidth = (this.canvas.width / 512) * 8;
-    let x = 0;
-
+    let spacing = 0;
     if (!this.themeColor) {
       if (document.body.classList.contains('dark-theme')) {
         this.themeColor = '#ff8f00';
@@ -192,12 +190,12 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
       const barHeight = (this.canvas.height * percent) / 2;
       this.ctx.fillStyle = this.themeColor;
       this.ctx.fillRect(
-        x,
+        spacing,
         parseInt((this.canvas.height - barHeight).toString()),
         barWidth,
         barHeight
       );
-      x += barWidth + 5;
+      spacing += barWidth + 5;
     });
     requestAnimationFrame(() => {
       this.drawFrequencyData(data);
@@ -249,31 +247,11 @@ export class TunerComponent implements OnInit, OnDestroy, AfterViewInit {
               return of(value);
             }
           }),
-          //filter((value) => value < 30 || value < this.closestNote.freq * 2),
-          // map((value) => {
-          //   if (
-          //     this.settingsService.getAutoDetection() ||
-          //     this.settingsService.isChromatic$.value
-          //   ) {
-          //     return value;
-          //   } else {
-          //     if (value < 30 || value > this.closestNote.freq * 2) {
-          //       return null;
-          //     } else {
-          //       return value;
-          //     }
-          //   }
-          // }),
-
-          // map((value) => {
-          //   return Math.round(value * 100 + Number.EPSILON) / 100;
-          // }),
           switchMap(
             async (value) => (this.frequency = parseFloat(value.toFixed(2)))
           )
         )
         .subscribe(() => {
-          console.log(this.frequency);
           if (this.settingsService.getAutoDetection()) {
             this.closestNote.freq = this.findClosest(
               this.tuning.map((notes: Note) => notes.freq),

@@ -7,9 +7,7 @@ import { Subject, interval, Subscription } from 'rxjs';
 })
 export class TunerService implements OnDestroy {
   public audioContext: AudioContext = new AudioContext();
-
   private pitch: any;
-
   public pitchSubject: Subject<number> = new Subject();
   public pitchSubscription: Subscription;
   public isSetup = false;
@@ -26,7 +24,6 @@ export class TunerService implements OnDestroy {
     this.startPitch(this.stream, this.audioContext);
     document.addEventListener('visibilitychange', this.checkTabFocused);
   };
-
   public startPitch = (stream: MediaStream, audioContext: AudioContext) => {
     this.pitch = pitchDetection(
       '../../model',
@@ -35,7 +32,6 @@ export class TunerService implements OnDestroy {
       this.modelLoaded
     );
   };
-
   public modelLoaded = () => {
     if (this.audioContext.state !== 'running') {
       this.audioContext.resume();

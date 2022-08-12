@@ -68,7 +68,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     step: 1,
   };
 
-  public groundZero = 0;
+  public startingTime = 0;
   public lastTap = 0;
   public counter = 0;
   public tapDiff = 0;
@@ -106,9 +106,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.metronome = new Metronome(this.playClick, 60000 / this.bpm, {
-      immediate: true,
-    });
+    this.metronome = new Metronome(this.playClick, 60000 / this.bpm);
   }
 
   public decreaseTempo() {
@@ -157,7 +155,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
   public updateMetronome = () => {
     this.metronome.interval = 60000 / this.bpm;
 
-    if (this.bpm <= 45) {
+    if (this.bpm <= 40) {
       this.tempoTextString = 'Grave';
     }
     if (this.bpm > 40 && this.bpm < 45) {
@@ -234,7 +232,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     );
 
     if (this.lastTap === 0) {
-      this.groundZero = new Date().getTime();
+      this.startingTime = new Date().getTime();
       this.counter = 0;
     }
 
@@ -242,14 +240,15 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
     this.elapsed = new Date().getTime() - this.previousTap;
 
     this.previousTap = this.lastTap;
-    this.tapDiff = this.lastTap - this.groundZero;
+    this.tapDiff = this.lastTap - this.startingTime;
+    this.counter++;
     if (this.tapDiff !== 0) {
       this.bpm = Math.round((60000 * this.counter) / this.tapDiff);
       if (this.bpm > 280) {
         this.bpm = 280;
       }
     }
-    this.counter++;
+   
     if (this.elapsed > 3000) {
       this.lastTap = 0;
     }
