@@ -1,3 +1,4 @@
+declare var setMetaThemeColor: Function;
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
@@ -14,6 +15,9 @@ export class ThemeService {
       getLinkElementForKey('dark-theme').setAttribute('href', href);
       document.body.classList.add('dark-theme');
       this.isDark = true;
+      document
+        .querySelector('meta[name="theme-color"]')
+        .setAttribute('content', '#303030');
     }
   }
 
