@@ -118,10 +118,13 @@
 }
 
 .measures .addBeats {
-  line-height: 30px;
+  display: flex;
+  justify-content: center;
 }
 .measures .subtractBeats {
-  line-height: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .measures .measureCount {
   text-align: center;

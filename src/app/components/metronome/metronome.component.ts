@@ -42,17 +42,6 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('tapContainer') tapContainer: ElementRef<HTMLElement>;
 
-  @ViewChild('increaseTempoBtn')
-  increaseTempoBtn: MatButton;
-  @ViewChild('deacreaseTempoBtn')
-  decreaseTempoBtn: MatButton;
-  @ViewChild('decreaseMeasureCountBtn')
-  decreaseMeasureCountBtn: MatButton;
-  @ViewChild('increaseMeasureCountBtn')
-  increaseMeasureCountBtn: MatButton;
-  @ViewChild('slider') slider: ElementRef;
-  @ViewChild('startBtn') startBtn: MatButton;
-
   private click1 = new Audio('assets/sounds/click1.mp3');
   private click2 = new Audio('assets/sounds/click2.mp3');
 
@@ -248,7 +237,7 @@ export class MetronomeComponent implements OnInit, AfterViewInit {
         this.bpm = 280;
       }
     }
-   
+
     if (this.elapsed > 3000) {
       this.lastTap = 0;
     }

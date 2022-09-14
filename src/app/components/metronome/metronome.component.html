@@ -19,42 +19,38 @@
 
     <div class="tempoButtons">
       <button
-        #decreaseTempoBtn
         (click)="decreaseTempo()"
         mat-fab
         class="adjustTempoBtn decreaseTempo"
       >
-        -
+        <mat-icon style="line-height: 14%">minimize</mat-icon>
       </button>
       <button
-        #decreaseTempoBtn
         (click)="increaseTempo()"
         mat-fab
         class="adjustTempoBtn increaseTempo"
       >
-        +
+        <mat-icon style="line-height: 67%">add</mat-icon>
       </button>
     </div>
-    <button mat-fab #startBtn class="startStop" (click)="startMetronome()">
+    <button mat-fab class="startStop" (click)="startMetronome()">
       {{ isRunning ? "STOP" : "START" }}
     </button>
     <div class="measures">
       <button
         mat-fab
-        #decreaseMeasureCountBtn
         (click)="subtractBeats()"
         class="subtractBeats stepper"
       >
-        -
+      <mat-icon style="line-height: 11px">minimize</mat-icon>
       </button>
       <div class="measureCount">{{ beatsPerMeasure }} / 4</div>
       <button
         mat-fab
-        #increaseMeasureCountBtn
         (click)="addBeats()"
         class="addBeats stepper"
       >
-        +
+        <mat-icon style="line-height: 38%">add</mat-icon>
       </button>
     </div>
   </div>
