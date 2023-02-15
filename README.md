@@ -1,6 +1,6 @@
 # Toona
 
-PWA instrument tuner developed with Angular and ml5.js.
+PWA instrument tuner and metronome developed with Angular and ml5.js.
 
 # Installation and running the application
 
