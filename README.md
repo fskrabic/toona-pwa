@@ -1,6 +1,10 @@
 # Toona
 
 PWA instrument tuner and metronome developed using Angular 13 and ml5.js.
+It's rushed and hacky but sometimes it also works. For some time. Might update sometimes.
+
+[](https://img.youtube.com/vi/SJUhlRoBL8M/0.jpg)](https://www.youtube.com/watch?v=SJUhlRoBL8M)
+
 
 # Installation and running the application
 
