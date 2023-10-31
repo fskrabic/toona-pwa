@@ -1,5 +1,7 @@
 # Toona
 
+<img style="display:flex;justify-content:center" src="https://i.ibb.co/CKHhjs0/Maskable-icon-x512.png" alt="Maskable-icon-x512" border="0" />
+
 PWA instrument tuner and metronome developed using Angular 13 and ml5.js.
 It's rushed and hacky but sometimes it also works. Sometimes.
 
